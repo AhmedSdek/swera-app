@@ -36,9 +36,7 @@ header video{
     margin-bottom: 3%;
     text-transform: uppercase;
 }
-.header-main h2,h4{
-    color: white;
-}
+
 .btn-d{
     border-radius: 10px 50px 10px 50px;
     overflow: hidden;

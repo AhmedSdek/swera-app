@@ -20,8 +20,9 @@ import Err from './comp/Err';
 import Dashboard from './comp/admin/Dashboard';
 import ReSale from './comp/admin/reSale/ReSale';
 import SaleData from './comp/admin/SaleData';
-import MaverickDeals from './comp/MaverickDeals';
+import MaverickDeals from './comp/deals/MaverickDeals';
 import DataBase from './comp/admin/Find home Data/DataBase';
+import DealDetails from './comp/deals/DealDetails';
 function App() {
   const [loading, setLoading] = useState(false);
   const [mode, setMode] = useState(localStorage.getItem('mtTheme') === null ? 'light' : localStorage.getItem('mtTheme'));
@@ -71,6 +72,7 @@ function App() {
                 </Route>
                 <Route path='/' element={<Home />} />
                 <Route path='/maverickdeals' element={<MaverickDeals />} />
+                <Route path='/maverickdeals/:dealId' element={<DealDetails />} />
                 <Route path='/*' element={<Err />} />
                 <Route path="/sell" element={<Sell />} />
                 <Route path="/signin" element={<Signin />} />

@@ -354,8 +354,8 @@ function ReSale() {
                                     label="Delivery"
                                     onChange={handleDeliveryChange}
                                 >
-                                    <MenuItem value='Apartment'>Delivered</MenuItem>
-                                    <MenuItem value="Duplex">no</MenuItem>
+                                    <MenuItem value='Delivered'>Delivered</MenuItem>
+                                    <MenuItem value="no">no</MenuItem>
 
                                 </Select>
                             </FormControl>
@@ -605,4 +605,4 @@ function ReSale() {
     )
 }
 
-export default ReSale
+export default ReSale 

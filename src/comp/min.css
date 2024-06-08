@@ -1,6 +1,9 @@
 #navs{
     background-color: #0000008a;
 }
+p{
+    margin: 0 !important;
+}
 .nav-link{
     color: white !important;
     font-weight: bold !important;
@@ -63,9 +66,6 @@ footer h3{
 .social-cont > div{
     padding: 8px;
     font-size: 25px;
-}
-.social-cont > div > a{
-    /* color: white !important; */
 }
 .up{
     display: none !important;
@@ -130,4 +130,31 @@ footer h3{
     .details-div .data-div .company-photo{
         width: 100%;
     }
+}
+.svgicon{
+    width: 30px;
+    min-height: 27px;
+    border-radius: 5px;
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    align-items: flex-end;
+    background-color: rgb(239, 241, 244);
+    padding: 1px 3px;
+    overflow: hidden;
+    position: relative;
+}
+.svgicon p{
+    color: rgb(33, 36, 39);
+    font-family: materialMedium;
+    font-size: 12px;
+    position: absolute;
+    top: 1px;
+    inset-inline-start: 1px;
+    margin: 0px !important;
+    padding: 0px !important;
+}
+.svgicon svg{
+    position: absolute;
+    bottom: 4px;
 }

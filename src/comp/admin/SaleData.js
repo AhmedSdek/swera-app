@@ -57,44 +57,8 @@ function SaleData() {
                                                     Area:   {`${item.data().Area} m²`}
                                                 </Typography>
                                             </CardContent>
-
                                         </Card>
                                     </Link >
-                                    {/* <Card sx={{ padding: '5px', height: '100%' }}>
-                                                <Stack>
-                                                    <img style={{ width: '100%', height: '100%' }} src={item.data().img[0]} alt='' />
-                                                </Stack>
-                                                <Typography>
-                                                    Location:    {item.data().Location}
-                                                </Typography>
-                                                <Typography>
-                                                    finsh:   {item.data().Finsh}
-                                                </Typography>
-                                                <Typography>
-                                                    Phone Num:   {item.data().Phone}
-                                                </Typography>
-                                                <Typography>
-                                                    Sale:   {item.data().Sale}
-                                                </Typography>
-                                                <Typography>
-                                                    Type:     {item.data().Type}
-                                                </Typography>
-                                                <Typography>
-                                                    Level:     {item.data().Level}
-                                                </Typography>
-                                                <Typography>
-                                                    Discrabtion:     {item.data().Dis}
-                                                </Typography>
-                                                <Typography>
-                                                    BathRoom:     {item.data().Bath}
-                                                </Typography>
-                                                <Typography>
-                                                    BedRoom:  {item.data().Bed}
-                                                </Typography>
-                                                <Typography>
-                                                    Area:   {`${item.data().Area} m²`}
-                                                </Typography>
-                                            </Card> */}
                                 </Col>
                             )
                         })}

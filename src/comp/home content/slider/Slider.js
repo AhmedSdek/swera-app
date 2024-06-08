@@ -2,7 +2,7 @@ import { data } from '../../Data';
 import React from "react";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
-import { FreeMode, Pagination,Autoplay,Navigation } from "swiper";
+import { FreeMode, Pagination, Autoplay, Navigation } from 'swiper/modules';
 
 // Import Swiper styles
 import "swiper/css";
