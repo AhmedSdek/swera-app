@@ -4,10 +4,12 @@ import Slider from './slider/Slider';
 import Projucts from './projucts/Projucts';
 import { Fade } from 'react-awesome-reveal';
 import './home.css';
+
 function Home(){
+
     return(
         <>
-        <Fade direction='left' >
+            {/* <Fade direction='left' > */}
         <header>
             <Container fluid>
                 <video src={video} width="100%" muted autoPlay loop></video>
@@ -26,8 +28,9 @@ function Home(){
             </Container>
         </header>
         <Slider />
+
         <Projucts />
-        </Fade>
+            {/* </Fade> */}
 
         </> 
     )

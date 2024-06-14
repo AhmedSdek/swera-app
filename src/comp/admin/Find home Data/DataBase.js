@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import { db, storage } from '../../../firebase/config';
 import { useNavigate } from 'react-router-dom';
-import { Box, Button, Card, FormControl, FormControlLabel, FormLabel, InputLabel, LinearProgress, MenuItem, Radio, RadioGroup, Select, Stack, TextField, Typography, styled } from '@mui/material';
+import { Box, Button, Card, Divider, FormControl, FormControlLabel, FormLabel, InputLabel, LinearProgress, MenuItem, Radio, RadioGroup, Select, Stack, TextField, Typography, styled } from '@mui/material';
 import ReactLoading from 'react-loading';
 import 'react-phone-input-2/lib/style.css'
 import { AddPhotoAlternate, Info } from '@mui/icons-material';
-import { doc, setDoc } from "firebase/firestore";
+import { arrayUnion, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 function DataBase() {
@@ -22,57 +22,42 @@ function DataBase() {
         whiteSpace: 'nowrap',
         width: 1,
     });
-    // const [user] = useAuthState(auth);
+    const [dev, setDev] = React.useState('');
+    const [devName, setDevName] = React.useState('');
+    const [icon, setIcon] = useState('')
+    const [devDis, setDevDis] = React.useState('');
+    const [proj, setProj] = React.useState('');
+    const [url, setUrl] = useState([])
+    const [price, setPrice] = React.useState('');
+    const [district, setDistrict] = React.useState('');
+    const [projDis, setProjDis] = React.useState('');
     const [btn, setBtn] = useState(false);
-    const [name, setName] = React.useState('');
-    const [phone, setPhone] = React.useState('');
-    const [type, setType] = React.useState('');
+    const [startPrice, setStartPrice] = React.useState('');
     const [area, setArea] = React.useState('');
     const [bed, setBed] = React.useState('');
     const [bath, setBath] = React.useState('');
-    const [level, setLevel] = React.useState('');
     const [finsh, setFinsh] = React.useState('');
     const [location, setLocation] = React.useState('');
     const [sale, setSale] = React.useState('');
-    const [dis, setDis] = React.useState('');
+    const [layout, setLayout] = useState([])
+    const [masterplan, setMasterplan] = useState([])
+    const [prog2, setProg2] = useState(0)
+    const [prog3, setProg3] = useState(0)
     const [prog, setProg] = useState(0)
-    const [country, setCountry] = React.useState('');
-    const [url, setUrl] = useState([])
 
-    const handleNameChange = (event) => {
-        setName(event.target.value);
+
+    const handleDevChange = (event) => {
+        setDev(event.target.value);
+        setDevName(event.target.value)
     };
-    const handleTypeChange = (event) => {
-        setType(event.target.value);
+    const handleDevDisChange = (event) => {
+        setDevDis(event.target.value);
     };
-    const handleAreaChange = (event) => {
-        setArea(event.target.value);
-    };
-    const handlebedChange = (event) => {
-        setBed(event.target.value);
-    };
-    const handlebathChange = (event) => {
-        setBath(event.target.value);
-    };
-    const handlelevelChange = (event) => {
-        setLevel(event.target.value);
-    };
-    const handleFinshChange = (event) => {
-        setFinsh(event.target.value);
-    };
-    const handlelocationChange = (event) => {
-        setLocation(event.target.value);
-    };
-    const handleSaleChange = (event) => {
-        setSale(event.target.value);
-    };
-    const handleDisChange = (event) => {
-        setDis(event.target.value);
+    const handleProjChange = (event) => {
+        setProj(event.target.value);
     };
     const handleFileChange = async (event) => {
         for (let i = 0; i < event.target.files.length; i++) {
-            console.log(event.target.files.length)
-            // console.log(i)
             const storageRef = ref(storage, event.target.files[i].name);
             const uploadTask = uploadBytesResumable(storageRef, event.target.files[i]);
 
@@ -124,41 +109,192 @@ function DataBase() {
             );
         }
     };
+    const handleDistrictChange = (event) => {
+        setDistrict(event.target.value);
+    };
+    const handlePriceChange = (event) => {
+        setPrice(event.target.value);
+    };
+    const handleProjDisChange = (event) => {
+        setProjDis(event.target.value);
+    };
+    const handleStartPriceChange = (event) => {
+        setStartPrice(event.target.value);
+    };
+    const handleAreaChange = (event) => {
+        setArea(event.target.value);
+    };
+    const handlebedChange = (event) => {
+        setBed(event.target.value);
+    };
+    const handlebathChange = (event) => {
+        setBath(event.target.value);
+    };
+    const handleFinshChange = (event) => {
+        setFinsh(event.target.value);
+    };
+    const handlelocationChange = (event) => {
+        setLocation(event.target.value);
+    };
+    const handleSaleChange = (event) => {
+        setSale(event.target.value);
+    };
+    const handleMasterplanImgChange = async (event) => {
+        for (let i = 0; i < event.target.files.length; i++) {
+            // console.log(i)
+            const storageRef = ref(storage, event.target.files[i].name);
+            const uploadTask = uploadBytesResumable(storageRef, event.target.files[i]);
+
+            uploadTask.on('state_changed',
+                (snapshot) => {
+                    // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+                    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    // console.log('Upload is ' + progress + '% done');
+                    setProg3(progress);
+                    if (i < event.target.files.length) {
+                        setBtn(true)
+                    }
+                    switch (snapshot.state) {
+                        case 'paused':
+                            console.log('Upload is paused');
+                            break;
+                        case 'running':
+                            console.log('Upload is running');
+                            break;
+                    }
+                },
+                (error) => {
+                    // A full list of error codes is available at
+                    // https://firebase.google.com/docs/storage/web/handle-errors
+                    switch (error.code) {
+                        case 'storage/unauthorized':
+                            // User doesn't have permission to access the object
+                            break;
+                        case 'storage/canceled':
+                            // User canceled the upload
+                            break;
+
+                        // ...
+
+                        case 'storage/unknown':
+                            // Unknown error occurred, inspect error.serverResponse
+                            break;
+                    }
+                },
+                () => {
+                    // Upload completed successfully, now we can get the download URL
+                    getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
+                        console.log('File available at', downloadURL);
+                        setMasterplan((old) => [...old, downloadURL]);
+                        setBtn(false)
+                        // Add a new document in collection "cities"
+                    });
+                }
+            );
+        }
+    };
+    const handleLayoutimgChange = async (event) => {
+        for (let i = 0; i < event.target.files.length; i++) {
+            // console.log(i)
+            const storageRef = ref(storage, event.target.files[i].name);
+            const uploadTask = uploadBytesResumable(storageRef, event.target.files[i]);
+
+            uploadTask.on('state_changed',
+                (snapshot) => {
+                    // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+                    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    // console.log('Upload is ' + progress + '% done');
+                    setProg2(progress);
+                    if (i < event.target.files.length) {
+                        setBtn(true)
+                    }
+                    switch (snapshot.state) {
+                        case 'paused':
+                            console.log('Upload is paused');
+                            break;
+                        case 'running':
+                            console.log('Upload is running');
+                            break;
+                    }
+                },
+                (error) => {
+                    // A full list of error codes is available at
+                    // https://firebase.google.com/docs/storage/web/handle-errors
+                    switch (error.code) {
+                        case 'storage/unauthorized':
+                            // User doesn't have permission to access the object
+                            break;
+                        case 'storage/canceled':
+                            // User canceled the upload
+                            break;
+
+                        // ...
+
+                        case 'storage/unknown':
+                            // Unknown error occurred, inspect error.serverResponse
+                            break;
+                    }
+                },
+                () => {
+                    // Upload completed successfully, now we can get the download URL
+                    getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
+                        console.log('File available at', downloadURL);
+                        setLayout((old) => [...old, downloadURL]);
+                        setBtn(false)
+                        // Add a new document in collection "cities"
+                    });
+                }
+            );
+        }
+    };
 
     const sendData = async () => {
-        setBtn(true)
-
+        setBtn(true);
         try {
-            await setDoc(doc(db, 'data', `${new Date().getTime()}`), {
-                Name: name,
-                id: `${new Date().getTime()}`,
-                Phone: phone,
-                Type: type,
-                Area: area,
-                Bed: bed,
-                Bath: bath,
-                Level: level,
-                Finsh: finsh,
-                Location: location,
-                Sale: sale,
-                Dis: dis,
-                img: url
-            });
+            const res = await getDoc(doc(db, 'admin', devName));
+            if (!res.exists()) {
+                await setDoc(doc(db, 'admin', devName), {
+                    devName: devName,
+                    devIcon: icon,
+                    devPricesStart: startPrice,
+                    devDis: devDis,
+                    dev:
+                        [
+                            {
+                                proj: proj,
+                                projImgs: url,
+                                district: district,
+                                price: price,
+                                projDes: projDis,
+                                masterplanImg: masterplan,
+                                id: new Date().getTime(),
+                                Location: location,
+                                Layoutimg: layout,
+                            },
+
+                        ]
+                });
+            } else {
+                await updateDoc(doc(db, 'admin', devName), {
+
+                    dev: arrayUnion({
+                        proj: proj,
+                        projImgs: url,
+                        district: district,
+                        price: price,
+                        projDes: projDis,
+                        masterplanImg: masterplan,
+                        id: new Date().getTime(),
+                        Location: location,
+                        Layoutimg: layout,
+                    })
+                })
+            }
         } catch (er) {
         }
         setBtn(false)
-        setName('')
-        setPhone('')
-        setArea('')
-        setBath('')
-        setBed('')
-        setType('')
-        setDis('')
-        setFinsh('')
-        setLevel('')
-        setSale('')
-        setLocation('')
     }
+
     return (
         <>
             <Box style={{ width: '100%', flexDirection: 'column', display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '70px 0 0' }}>
@@ -188,82 +324,142 @@ function DataBase() {
 
                         <Stack sx={{ flexDirection: 'row', width: { xs: '100%', md: '50%' }, padding: '5px' }}>
                             <FormControl sx={{ width: '100%' }}>
-                                <InputLabel id="demo-simple-select-label">Arya</InputLabel>
+                                <InputLabel id="demo-simple-select-label">Dev</InputLabel>
                                 <Select
                                     required
                                     sx={{ minWidth: 'fit-content' }}
                                     labelId="demo-simple-select-label"
                                     id="demo-simple-select"
-                                    value={type}
-                                    label="Type"
-                                    onChange={handleTypeChange}
+                                    value={dev}
+                                    label="Dev"
+                                    onChange={handleDevChange}
                                 >
-                                    <MenuItem value='Apartment'>Apartment</MenuItem>
-                                    <MenuItem value="Duplex">Duplex</MenuItem>
-                                    <MenuItem value="Studio">Studio</MenuItem>
-                                    <MenuItem value="Penthouse">Penthouse</MenuItem>
-                                    <MenuItem value="Family">Family house</MenuItem>
-                                    <MenuItem value="Standalone">Standalone</MenuItem>
-                                    <MenuItem value="Twin house">Twin house
-                                    </MenuItem>
-                                    <MenuItem value="One storey Villa">One storey Villa</MenuItem>
-                                    <MenuItem value="Chalet">Chalet</MenuItem>
-                                    <MenuItem value="Townhouse">Townhouse</MenuItem>
-                                    <MenuItem value="Cabin">Cabin</MenuItem>
-                                    <MenuItem value="Clinic">Clinic</MenuItem>
-                                    <MenuItem value="Office">Office</MenuItem>
-                                    <MenuItem value="Retail">Retail</MenuItem>
-
-
+                                    <MenuItem value='Mountain-View'>Mountain View</MenuItem>
+                                    <MenuItem value='Hyde-Park'> Hyde Park</MenuItem>
                                 </Select>
                             </FormControl>
                         </Stack>
+
+                        <Stack sx={{ flexDirection: 'row', width: { xs: '100%', md: '50%' }, padding: '5px' }}>
+                            <FormControl sx={{ width: '100%' }}>
+                                <InputLabel id="demo-simple-select-label">DevIcon</InputLabel>
+                                <Select
+                                    required
+                                    sx={{ minWidth: 'fit-content' }}
+                                    labelId="demo-simple-select-label"
+                                    id="demo-simple-select"
+                                    value={icon}
+                                    label="DevIcon"
+                                    onChange={(e) => { setIcon(e.target.value) }}
+                                >
+                                    <MenuItem value='https://eu2.contabostorage.com/8dc285ed427646378a15bf7489806b0a:coldwellbanker/logos/4-1-2023/mountain-view-400xauto.png'>Mountain View</MenuItem>
+                                    <MenuItem value='https://eu2.contabostorage.com/8dc285ed427646378a15bf7489806b0a:coldwellbanker/logos/4-1-2023/hyde-park-400xauto.png'>Hyde Park</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Stack>
+
                         <TextField
-                            sx={{ margin: '10px', padding: '5px', width: { xs: '100%', md: '50%' } }}
-                            value={name}
+                            id="outlined-multiline-static"
+                            label="Dev Description"
+                            multiline
                             required
-                            // edit
-                            id="Arya" label="Arya"
-                            variant="outlined" type="text"
+                            value={devDis}
+                            rows={4}
+                            sx={{ margin: '10px', padding: '5px', width: { xs: '100%', md: '50%' } }}
                             onChange={(e) => {
-                                handleNameChange(e)
+                                handleDevDisChange(e)
                             }}
                         />
                         <TextField
+                            // هيتعدل لبدايه سعر الدفيلوبر
                             sx={{ margin: '10px', padding: '5px', width: { xs: '100%', md: '50%' } }}
-                            value={name}
+                            value={startPrice}
                             required
-                            // edite
-                            id="Price" label="Price"
-                            variant="outlined" type="text"
+                            id="devprice" label="Start Price"
+                            variant="outlined" type="number"
                             onChange={(e) => {
-                                handleNameChange(e)
+                                handleStartPriceChange(e)
                             }}
                         />
+                        <Divider />
+                        <Stack sx={{ flexDirection: 'row', width: { xs: '100%', md: '50%' }, padding: '5px' }}>
+                            <FormControl sx={{ width: '100%' }}>
+                                <InputLabel id="demo-simple-select-label">Project</InputLabel>
+                                <Select
+                                    required
+                                    sx={{ minWidth: 'fit-content' }}
+                                    labelId="demo-simple-select-label"
+                                    id="demo-simple-select"
+                                    value={proj}
+                                    label="Project"
+                                    onChange={handleProjChange}
+                                >
+                                    <MenuItem value='mountainviewchilloutparkphase1'>mountainviewchilloutparkphase1</MenuItem>
+                                    <MenuItem value='mountain-view-hyde-park-phase-2020'>mountain-view-hyde-park-phase-2020</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Stack>
+
+                        <Box sx={{ width: { xs: '100%', md: '50%' }, padding: '5px' }}>
+                            <Typography variant='body2'>
+                                Upload Your Project Images ...
+                            </Typography>
+                            <Button
+                                component="label"
+                                variant="outlined"
+                                sx={{ padding: '10px', margin: '15px' }}
+                                startIcon={<AddPhotoAlternate />}
+                                onChange={(e) => {
+                                    handleFileChange(e)
+                                }}
+                            >
+                                <VisuallyHiddenInput type="file" multiple />
+                            </Button>
+                            <LinearProgress variant="determinate" value={prog} />
+                        </Box>
+
+                        <Stack sx={{ flexDirection: 'row', width: { xs: '100%', md: '50%' }, padding: '5px' }}>
+                            <FormControl sx={{ width: '100%' }}>
+                                <InputLabel id="demo-simple-select-label">District</InputLabel>
+                                <Select
+                                    required
+                                    sx={{ minWidth: 'fit-content' }}
+                                    labelId="demo-simple-select-label"
+                                    id="demo-simple-select"
+                                    value={district}
+                                    label="District"
+                                    onChange={handleDistrictChange}
+                                >
+                                    <MenuItem value='New Cairo'>New Cairo</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Stack>
+
                         <TextField
                             sx={{ margin: '10px', padding: '5px', width: { xs: '100%', md: '50%' } }}
-                            value={name}
+                            value={price}
                             required
-                            // edite
-                            id="RefNum" label="RefNum"
-                            variant="outlined" type="numper"
+                            id="price" label="Price"
+                            variant="outlined" type="number"
                             onChange={(e) => {
-                                handleNameChange(e)
-                            }}
-                        />
-                        <TextField
-                            sx={{ margin: '10px', padding: '5px', width: { xs: '100%', md: '50%' } }}
-                            value={name}
-                            required
-                            // edite
-                            id="Delivery" label="Delivery"
-                            variant="outlined" type="text"
-                            onChange={(e) => {
-                                handleNameChange(e)
+                                handlePriceChange(e)
                             }}
                         />
 
-                        <Stack sx={{ flexDirection: 'row', width: { xs: '100%', md: '50%' }, padding: '5px' }}>
+                        <TextField
+                            id="outlined-multiline-static"
+                            label="Project Description"
+                            multiline
+                            required
+                            value={projDis}
+                            rows={4}
+                            sx={{ margin: '10px', padding: '5px', width: { xs: '100%', md: '50%' } }}
+                            onChange={(e) => {
+                                handleProjDisChange(e)
+                            }}
+                        />
+
+                        {/* <Stack sx={{ flexDirection: 'row', width: { xs: '100%', md: '50%' }, padding: '5px' }}>
                             <FormControl sx={{ width: '100%' }}>
                                 <InputLabel id="demo-simple-select-label">Type</InputLabel>
                                 <Select
@@ -294,9 +490,9 @@ function DataBase() {
 
                                 </Select>
                             </FormControl>
-                        </Stack>
+                        </Stack> */}
 
-                        <TextField
+                        {/* <TextField
                             sx={{ margin: '10px', padding: '5px', width: { xs: '100%', md: '50%' } }}
                             id="arya" label="Area(m)" variant="outlined" type="number"
                             required
@@ -304,8 +500,8 @@ function DataBase() {
                             onChange={(e) => {
                                 handleAreaChange(e)
                             }}
-                        />
-
+                        /> */}
+                        {/*
                         <Stack sx={{ flexDirection: 'row', width: { xs: '100%', md: '50%' }, padding: '5px' }}>
                             <FormControl sx={{ width: '100%' }}>
                                 <InputLabel id="Bedrooms">Bedrooms</InputLabel>
@@ -332,6 +528,7 @@ function DataBase() {
                                 </Select>
                             </FormControl>
                         </Stack>
+
                         <Stack sx={{ flexDirection: 'row', width: { xs: '100%', md: '50%' }, padding: '5px' }}>
                             <FormControl sx={{ width: '100%' }}>
                                 <InputLabel id="Bathrooms">Bathrooms</InputLabel>
@@ -351,28 +548,9 @@ function DataBase() {
                                     <MenuItem value={5}>5</MenuItem>
                                 </Select>
                             </FormControl>
-                        </Stack>
-                        <Stack sx={{ flexDirection: 'row', width: { xs: '100%', md: '50%' }, padding: '5px' }}>
-                        </Stack>
-                        <Box sx={{ width: { xs: '100%', md: '50%' }, padding: '5px' }}>
-                            <Typography variant='body2'>
-                                Upload Your Images ...
-                            </Typography>
-                            <Button
-                                component="label"
-                                variant="outlined"
-                                // tabIndex={-1}
-                                sx={{ padding: '10px', margin: '15px' }}
-                                startIcon={<AddPhotoAlternate />}
-                                onChange={(e) => {
-                                    handleFileChange(e)
-                                }}
-                            >
-                                <VisuallyHiddenInput type="file" multiple />
-                            </Button>
-                            <LinearProgress variant="determinate" value={prog} />
-                        </Box>
-                        <FormControl sx={{ width: { xs: '100%', md: '50%' }, padding: '5px' }} >
+                        </Stack> */}
+
+                        {/* <FormControl sx={{ width: { xs: '100%', md: '50%' }, padding: '5px' }} >
                             <FormLabel required id="demo-row-radio-buttons-group-label">Finishing</FormLabel>
                             <RadioGroup
                                 row
@@ -389,7 +567,8 @@ function DataBase() {
                                 <FormControlLabel value="Cor & Shell" control={<Radio />} label="Cor & Shell" />
                                 <FormControlLabel value="Furnished" control={<Radio />} label="Furnished" />
                             </RadioGroup>
-                        </FormControl>
+                        </FormControl> */}
+
                         <Box sx={{ width: { xs: '100%', md: '50%' }, padding: '5px' }}>
                             <Typography variant='body2'>
                                 Layout Images ...
@@ -397,17 +576,17 @@ function DataBase() {
                             <Button
                                 component="label"
                                 variant="outlined"
-                                // tabIndex={-1}
                                 sx={{ padding: '10px', margin: '15px' }}
                                 startIcon={<AddPhotoAlternate />}
                                 onChange={(e) => {
-                                    handleFileChange(e)
+                                    handleLayoutimgChange(e)
                                 }}
                             >
                                 <VisuallyHiddenInput type="file" multiple />
                             </Button>
-                            <LinearProgress variant="determinate" value={prog} />
+                            <LinearProgress variant="determinate" value={prog2} />
                         </Box>
+
                         <Box sx={{ width: { xs: '100%', md: '50%' }, padding: '5px' }}>
                             <Typography variant='body2'>
                                 Master plan Images ...
@@ -419,12 +598,12 @@ function DataBase() {
                                 sx={{ padding: '10px', margin: '15px' }}
                                 startIcon={<AddPhotoAlternate />}
                                 onChange={(e) => {
-                                    handleFileChange(e)
+                                    handleMasterplanImgChange(e)
                                 }}
                             >
                                 <VisuallyHiddenInput type="file" multiple />
                             </Button>
-                            <LinearProgress variant="determinate" value={prog} />
+                            <LinearProgress variant="determinate" value={prog3} />
                         </Box>
                         <TextField
                             sx={{ margin: '10px', padding: '5px', width: { xs: '100%', md: '50%' } }}
@@ -435,7 +614,7 @@ function DataBase() {
                                 handlelocationChange(e)
                             }}
                         />
-                        <FormControl required sx={{ width: { xs: '100%', md: '50%' }, padding: '5px' }}>
+                        {/* <FormControl required sx={{ width: { xs: '100%', md: '50%' }, padding: '5px' }}>
                             <RadioGroup
                                 row
 
@@ -449,53 +628,8 @@ function DataBase() {
                                 <FormControlLabel value="Sale" control={<Radio />} label="Sale" />
                                 <FormControlLabel value="Rent" control={<Radio />} label="Rent" />
                             </RadioGroup>
-                        </FormControl>
-
-
-                        <TextField
-                            id="outlined-multiline-static"
-                            label="Description"
-                            multiline
-                            required
-                            value={dis}
-                            rows={4}
-                            sx={{ margin: '10px', padding: '5px', width: { xs: '100%', md: '50%' } }}
-                            onChange={(e) => {
-                                handleDisChange(e)
-                            }}
-                        />
-
-                        <TextField
-                            id="outlined-multiline-static"
-                            label="TitleDescription"
-                            // edite
-                            multiline
-                            required
-                            value={dis}
-                            rows={4}
-                            sx={{ margin: '10px', padding: '5px', width: { xs: '100%', md: '50%' } }}
-                            onChange={(e) => {
-                                handleDisChange(e)
-                            }}
-                        />
-
-                        <TextField
-                            id="outlined-multiline-static"
-                            label="About"
-                            // edite
-                            multiline
-                            required
-                            value={dis}
-                            rows={4}
-                            sx={{ margin: '10px', padding: '5px', width: { xs: '100%', md: '50%' } }}
-                            onChange={(e) => {
-                                handleDisChange(e)
-                            }}
-                        />
-
-
+                        </FormControl>  */}
                         <Button disabled={btn} variant="contained" type="submit" style={{ width: '50%' }}
-
                             className="btn">
                             {btn ? <ReactLoading type={'spin'} height={'20px'} width={'20px'} /> : "Send"}
                         </Button>
