@@ -8,11 +8,12 @@ import { Card, Container, Stack, Typography } from '@mui/material';
 function ProjectDe() {
     const { devId } = useParams();
     const { projId } = useParams();
+    console.log(projId)
     const [value, loading, error] = useDocument(doc(db, 'admin', devId));
 
     // console.log(projId)
 
-    if (value) {
+    if (value) { 
         return (
             <>
                 {value.data().dev.filter(person => person.proj === projId).map((fil) => {

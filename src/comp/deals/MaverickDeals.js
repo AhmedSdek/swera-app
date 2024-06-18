@@ -6,15 +6,45 @@ import { Col, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { HashLoader } from 'react-spinners';
 import { db } from '../../firebase/config';
+import './styles.css'
 function MaverickDeals() {
     const [value, loading, error] = useCollection(collection(db, 'Resell'));
     if (value) {
         return (
             <Box sx={{ padding: '70px 0 0' }}>
                 <Container>
-                    <h2>
-                        maverick deals
-                    </h2>
+                    <div className="mav-header">
+                        <h4 style={{ fontWeight: 'bold' }}>Choose maverick deals Enjoy within days!</h4>
+                        <p>The “Move Now Pay Later” service is a financing option offered by Nawy that not only allows you to choose your perfect home but move in immediately while setting up a flexible payment plan that suits you. Nawy has your back from the beginning of the buying process to the end and provides the hassle-free service of managing all paperwork. Here is how to better understand how this service works:</p>
+                    </div>
+                    <div className="mav-steps">
+                        <div className="step">
+                            <div className="step-number">
+                                <span>1</span>
+                                <span>Step</span>
+                            </div>
+                            <p>After requesting one of our property consultants’ assistance, you will be able to look at the ready to move properties available in our inventory and explore them thoroughly with your assigned sales representative</p>
+                        </div>
+                        <div className="step">
+                            <div className="step-number">
+                                <span>2</span>
+                                <span>Step</span>
+                            </div>
+                            <p>Once settled on your desired property, then comes the step of setting up your flexible payment plan. Nawy is one of the few entities that offers plans extending up to 10 years.</p>
+                        </div>
+                        <div className="step">
+                            <div className="step-number">
+                                <span>3</span>
+                                <span>Step</span>
+                            </div>
+                            <p>As soon as you have your optimum payment plan in place, Nawy will proceed to handle all paperwork and logistics to obtain and provide your property for you. In under 45 days, your new home will be available for you to move in.</p>
+                        </div>
+                    </div>
+
+
+                    <h4 style={{ fontWeight: 'bold' }}>
+                        Maverick deals
+                    </h4>
                     <Row style={{ justifyContent: 'space-between' }}>
                         {value.docs.map((item, index) => {
                             return (
@@ -88,7 +118,7 @@ function MaverickDeals() {
     }
     if (loading) {
         return (
-            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
                 <HashLoader
                     color={'#0d4d8f'}
                     loading={loading}

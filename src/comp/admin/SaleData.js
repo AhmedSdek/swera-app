@@ -1,11 +1,11 @@
 import React from 'react'
-import { db } from '../../firebase/config';
 import { useCollection } from "react-firebase-hooks/firestore";
 import { collection } from "firebase/firestore";
 import { Box, Card, CardContent, Container, Typography } from '@mui/material';
 import { Col, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { HashLoader } from 'react-spinners';
+import { db } from '../../firebase/config';
 function SaleData() {
     const [value, loading, error] = useCollection(collection(db, 'data'));
     if (value) {
@@ -20,7 +20,7 @@ function SaleData() {
                             // console.log(item.data())
                             return (
                                 <Col className=" col-sm-6 col-12" style={{ marginBottom: '15px' }} key={index}>
-                                    <Link to={`/${item.data().id}`} style={{ textDecoration: 'none' }}>
+                                    <Link to={`/dashboard/details/${item.data().id}`} style={{ textDecoration: 'none' }}>
                                         <Card >
                                             <Box sx={{ height: '216px' }}>
                                                 <img style={{ height: '100%', width: '100%', objectFit: 'cover' }} src={item.data().img[0]} alt='' />

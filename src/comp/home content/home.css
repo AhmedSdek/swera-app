@@ -68,3 +68,8 @@ header video{
         width: 100%;
     }
 }
+.home-header{
+    background-image: url('./egyptheader.jpg');
+    background-size: 100% 70%;
+    background-repeat: no-repeat;
+}

@@ -4,6 +4,8 @@ import { useParams } from "react-router-dom";
 import { Box, Card, Container, Divider, Stack, Typography } from "@mui/material";
 import { Col, Row } from "react-bootstrap";
 import { db } from "../../firebase/config";
+import React, { useRef, useState } from 'react';
+// Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 // Import Swiper styles
@@ -16,6 +18,7 @@ import './styles.css';
 // import required modules
 import { EffectCoverflow, Pagination } from 'swiper/modules';
 
+
 function DealDetails() {
 
     let { dealId } = useParams();
@@ -26,7 +29,6 @@ function DealDetails() {
         )
     }
     if (value) {
-        console.log(value.data())
         return (
             <Box sx={{ marginTop: '56px', padding: '15px 0' }}>
                 <Container>
@@ -43,7 +45,7 @@ function DealDetails() {
                                 modifier: 1,
                                 slideShadows: true,
                             }}
-                            pagination={false}
+                            
                             modules={[EffectCoverflow, Pagination]}
                             className="mySwiper"
                         >
@@ -52,40 +54,42 @@ function DealDetails() {
                                     <SwiperSlide key={index}>
                                         <img src={el} alt="" />
                                     </SwiperSlide>
-
                                 )
                             })}
-
                         </Swiper>
                         <Col>
-                            <div style={{ lineHeight: '1' }}>
-                                <Typography component='h2' variant="h4" sx={{ color: 'rgb(30, 65, 100)', lineHeight: '1' }}>
-                                    {` ${value.data().dis2}`}
+                            <div style={{ lineHeight: '1',margin:'10px 0 40px' }}>
+                                <Typography component='h2' variant="h5" sx={{ color: 'rgb(30, 65, 100)', lineHeight: '1',fontWeight:'bold' }}>
+                                    {` ${value.data().imgtext}`}
                                 </Typography>
                                 <Typography variant="caption" sx={{ lineHeight: '1' }}>
-                                    {`Location : ${value.data().Location}`}
+                                    {` ${value.data().Location}`}
+                                </Typography>
+                                <Typography sx={{ fontWeight: 'bold', margin: '10px 0 !important',color:'black' }}>
+                                {value.data().price} EGP
                                 </Typography>
                             </div>
-                            <Typography sx={{ fontWeight: 'bold', margin: '10px 0 !important' }}>
-                                {value.data().price} EGP
+                            <Typography component='h3' variant="h5" sx={{ color: 'rgb(30, 65, 100)',fontWeight:'bold' }}>
+                                About
+                            </Typography>
+                            <hr />
+                            <Typography>
+                                {`${value.data().Type}`}
                             </Typography>
                             <Typography>
-                                {`Type : ${value.data().Type}`}
+                                {`Finishing : ${value.data().Finsh}`}
                             </Typography>
                             <Typography>
-                                {`Finsh : ${value.data().Finsh}`}
+                                {`Reference No.  : ${value.data().refNum}`}
                             </Typography>
                             <Typography>
-                                {`BedRoom : ${value.data().Bed}`}
+                                {`Bedrooms : ${value.data().Bed}`}
                             </Typography>
                             <Typography>
-                                {`BathRoom : ${value.data().Bath}`}
+                                {`Bathrooms : ${value.data().Bath}`}
                             </Typography>
                             <Typography>
-                                {`Area : ${value.data().Area}`}
-                            </Typography>
-                            <Typography>
-                                {`Dis : ${value.data().Dis}`}
+                                {`Arya : ${value.data().Area} m²`}
                             </Typography>
 
                             <Stack sx={{ flexDirection: 'row', gap: 2 }}>
@@ -103,6 +107,10 @@ function DealDetails() {
                                 </div>
                             </Stack>
                             <Typography>
+                                {`${value.data().Dis}`}
+                            </Typography>
+
+                            <Typography>
                                 About:  {value.data().dis3}
                             </Typography>
                         </Col>
@@ -115,3 +123,22 @@ function DealDetails() {
 }
 
 export default DealDetails
+
+
+// export default function DealDetails() {
+//     return (
+//         <>
+//             <Swiper
+             
+//             >
+//                 {value.data().img.map((el, index) => {
+//                     return (
+//                         <SwiperSlide key={index}>
+//                             <img src={el} alt="" />
+//                         </SwiperSlide>
+//                     )
+//                 })}
+//             </Swiper>
+//         </>
+//     );
+// }

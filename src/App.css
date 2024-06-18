@@ -43,3 +43,56 @@
 span{
   margin: 0 !important;
 }
+.steps-card-container{
+  width: 100%;
+  display: flex;
+  gap: 16px;
+  -webkit-box-pack: center;
+  justify-content: center;
+  flex-direction: column;
+        -webkit-box-align: center;
+        align-items: center;
+        order: 3;
+        margin-top: 0px;
+        margin-bottom: 16px;
+}
+.stepDev{
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  gap: 16px;
+  background-color: rgb(228, 235, 242);
+  border-radius: 10px;
+  flex-direction: row;
+        margin: 0px 16px;
+        width: 100%;
+        min-width: 100px;
+        height: auto;
+        gap: 0px;
+}
+.step-number{
+  margin: 16px;
+    min-height: 70px;
+    height: 70px;
+    max-height: 70px;
+    min-width: 70px;
+    width: 70px;
+    max-width: 70px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 100%;
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    line-height: 1.25;
+}
+.step-number span{
+  font-size: 22px;
+}
+.step-text span{
+  font-weight: bold;
+  color: black;
+}

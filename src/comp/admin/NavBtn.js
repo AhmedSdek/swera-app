@@ -21,15 +21,19 @@ export default function NavBtn() {
     const listData = [
         {
             text: 'Sale Data',
-            to: '/dashboard'
+            to: ''
         },
         {
             text: 'Resell Form',
-            to: '/dashboard/resale'
+            to: 'resale'
         },
         {
             text: 'Database',
-            to: '/dashboard/database'
+            to: 'database'
+        },
+        {
+            text: 'New Launches',
+            to: 'newlaunchesform'
         }
     ]
     const DrawerList = (

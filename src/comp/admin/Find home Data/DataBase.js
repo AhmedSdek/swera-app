@@ -1,13 +1,14 @@
 import React, { useState } from 'react'
 import { db, storage } from '../../../firebase/config';
 import { useNavigate } from 'react-router-dom';
-import { Box, Button, Card, Divider, FormControl, FormControlLabel, FormLabel, InputLabel, LinearProgress, MenuItem, Radio, RadioGroup, Select, Stack, TextField, Typography, styled } from '@mui/material';
+import { Box, Button, Card, Divider, FormControl, InputLabel, LinearProgress, MenuItem, Select, Stack, TextField, Typography, styled } from '@mui/material';
 import ReactLoading from 'react-loading';
 import 'react-phone-input-2/lib/style.css'
 import { AddPhotoAlternate, Info } from '@mui/icons-material';
 import { arrayUnion, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-
+import { data } from '../../Data';
+// import data from
 function DataBase() {
     const [messege, setMessege] = React.useState(false);
     const nav = useNavigate()
@@ -33,19 +34,10 @@ function DataBase() {
     const [projDis, setProjDis] = React.useState('');
     const [btn, setBtn] = useState(false);
     const [startPrice, setStartPrice] = React.useState('');
-    const [area, setArea] = React.useState('');
-    const [bed, setBed] = React.useState('');
-    const [bath, setBath] = React.useState('');
-    const [finsh, setFinsh] = React.useState('');
     const [location, setLocation] = React.useState('');
-    const [sale, setSale] = React.useState('');
-    const [layout, setLayout] = useState([])
     const [masterplan, setMasterplan] = useState([])
-    const [prog2, setProg2] = useState(0)
     const [prog3, setProg3] = useState(0)
     const [prog, setProg] = useState(0)
-
-
     const handleDevChange = (event) => {
         setDev(event.target.value);
         setDevName(event.target.value)
@@ -121,23 +113,8 @@ function DataBase() {
     const handleStartPriceChange = (event) => {
         setStartPrice(event.target.value);
     };
-    const handleAreaChange = (event) => {
-        setArea(event.target.value);
-    };
-    const handlebedChange = (event) => {
-        setBed(event.target.value);
-    };
-    const handlebathChange = (event) => {
-        setBath(event.target.value);
-    };
-    const handleFinshChange = (event) => {
-        setFinsh(event.target.value);
-    };
     const handlelocationChange = (event) => {
         setLocation(event.target.value);
-    };
-    const handleSaleChange = (event) => {
-        setSale(event.target.value);
     };
     const handleMasterplanImgChange = async (event) => {
         for (let i = 0; i < event.target.files.length; i++) {
@@ -193,61 +170,6 @@ function DataBase() {
             );
         }
     };
-    const handleLayoutimgChange = async (event) => {
-        for (let i = 0; i < event.target.files.length; i++) {
-            // console.log(i)
-            const storageRef = ref(storage, event.target.files[i].name);
-            const uploadTask = uploadBytesResumable(storageRef, event.target.files[i]);
-
-            uploadTask.on('state_changed',
-                (snapshot) => {
-                    // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-                    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                    // console.log('Upload is ' + progress + '% done');
-                    setProg2(progress);
-                    if (i < event.target.files.length) {
-                        setBtn(true)
-                    }
-                    switch (snapshot.state) {
-                        case 'paused':
-                            console.log('Upload is paused');
-                            break;
-                        case 'running':
-                            console.log('Upload is running');
-                            break;
-                    }
-                },
-                (error) => {
-                    // A full list of error codes is available at
-                    // https://firebase.google.com/docs/storage/web/handle-errors
-                    switch (error.code) {
-                        case 'storage/unauthorized':
-                            // User doesn't have permission to access the object
-                            break;
-                        case 'storage/canceled':
-                            // User canceled the upload
-                            break;
-
-                        // ...
-
-                        case 'storage/unknown':
-                            // Unknown error occurred, inspect error.serverResponse
-                            break;
-                    }
-                },
-                () => {
-                    // Upload completed successfully, now we can get the download URL
-                    getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
-                        console.log('File available at', downloadURL);
-                        setLayout((old) => [...old, downloadURL]);
-                        setBtn(false)
-                        // Add a new document in collection "cities"
-                    });
-                }
-            );
-        }
-    };
-
     const sendData = async () => {
         setBtn(true);
         try {
@@ -269,7 +191,7 @@ function DataBase() {
                                 masterplanImg: masterplan,
                                 id: new Date().getTime(),
                                 Location: location,
-                                Layoutimg: layout,
+                                // Layoutimg: layout,
                             },
 
                         ]
@@ -286,7 +208,7 @@ function DataBase() {
                         masterplanImg: masterplan,
                         id: new Date().getTime(),
                         Location: location,
-                        Layoutimg: layout,
+                        // Layoutimg: layout,
                     })
                 })
             }
@@ -294,13 +216,12 @@ function DataBase() {
         }
         setBtn(false)
     }
-
     return (
         <>
             <Box style={{ width: '100%', flexDirection: 'column', display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '70px 0 0' }}>
                 <Stack sx={{ alignItems: 'center', marginBottom: '10px' }}>
                     <Typography variant='h5'>
-                        Resale
+                        Maverick Deals
                     </Typography>
                 </Stack>
                 <Card sx={{ width: { xs: '90%', sm: '80%' }, display: 'flex', alignItems: 'center', flexDirection: 'column', padding: '20px', margin: '10px 0 ' }}>
@@ -334,8 +255,11 @@ function DataBase() {
                                     label="Dev"
                                     onChange={handleDevChange}
                                 >
-                                    <MenuItem value='Mountain-View'>Mountain View</MenuItem>
-                                    <MenuItem value='Hyde-Park'> Hyde Park</MenuItem>
+                                    {data.map((devName) => {
+                                        return (
+                                            <MenuItem key={devName.id} value={devName.name}>{devName.name}</MenuItem>
+                                        )
+                                    })}
                                 </Select>
                             </FormControl>
                         </Stack>
@@ -352,8 +276,11 @@ function DataBase() {
                                     label="DevIcon"
                                     onChange={(e) => { setIcon(e.target.value) }}
                                 >
-                                    <MenuItem value='https://eu2.contabostorage.com/8dc285ed427646378a15bf7489806b0a:coldwellbanker/logos/4-1-2023/mountain-view-400xauto.png'>Mountain View</MenuItem>
-                                    <MenuItem value='https://eu2.contabostorage.com/8dc285ed427646378a15bf7489806b0a:coldwellbanker/logos/4-1-2023/hyde-park-400xauto.png'>Hyde Park</MenuItem>
+                                    {data.map((devName) => {
+                                        return (
+                                            <MenuItem key={devName.id} value={devName.image}>{devName.name}</MenuItem>
+                                        )
+                                    })}
                                 </Select>
                             </FormControl>
                         </Stack>
@@ -371,7 +298,6 @@ function DataBase() {
                             }}
                         />
                         <TextField
-                            // هيتعدل لبدايه سعر الدفيلوبر
                             sx={{ margin: '10px', padding: '5px', width: { xs: '100%', md: '50%' } }}
                             value={startPrice}
                             required
@@ -569,7 +495,7 @@ function DataBase() {
                             </RadioGroup>
                         </FormControl> */}
 
-                        <Box sx={{ width: { xs: '100%', md: '50%' }, padding: '5px' }}>
+                        {/* <Box sx={{ width: { xs: '100%', md: '50%' }, padding: '5px' }}>
                             <Typography variant='body2'>
                                 Layout Images ...
                             </Typography>
@@ -585,7 +511,7 @@ function DataBase() {
                                 <VisuallyHiddenInput type="file" multiple />
                             </Button>
                             <LinearProgress variant="determinate" value={prog2} />
-                        </Box>
+                        </Box> */}
 
                         <Box sx={{ width: { xs: '100%', md: '50%' }, padding: '5px' }}>
                             <Typography variant='body2'>

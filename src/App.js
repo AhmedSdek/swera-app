@@ -14,8 +14,8 @@ import HashLoader from "react-spinners/HashLoader";
 import Details from './comp/Details';
 import Signin from './Auth/Signin';
 import Regester from './Auth/Regester';
-import { Box, ThemeProvider, createTheme } from '@mui/material';
-import Sell from './comp/Sale/Sell';
+import { Box, Stack, ThemeProvider, createTheme } from '@mui/material';
+import Sell from './comp/Sell/Sell';
 import Err from './comp/Err';
 import Dashboard from './comp/admin/Dashboard';
 import ReSale from './comp/admin/reSale/ReSale';
@@ -25,6 +25,11 @@ import DataBase from './comp/admin/Find home Data/DataBase';
 import DealDetails from './comp/deals/DealDetails';
 import DeveloperDetails from './comp/home content/Developers/DeveloperDetails';
 import ProjectDe from './comp/home content/Developers/ProjectDe';
+import NewLaunches from './comp/New Launches/NewLaunches';
+import FindHomeDetails from './comp/Find a Home/FindHomeDetails';
+import SellDetails from './comp/admin/SellDetails';
+import FindDetails from './comp/Find a Home/FindDetails';
+import NewLaunchesForm from './comp/admin/newLaunchesform/NewLaunchesForm';
 function App() {
   const [loading, setLoading] = useState(false);
   const [mode, setMode] = useState(localStorage.getItem('mtTheme') === null ? 'light' : localStorage.getItem('mtTheme'));
@@ -53,10 +58,10 @@ function App() {
   },[])
   return (
     <ThemeProvider theme={darkTheme}>
-      <Box className='App'>
+      <Stack sx={{ minHeight: 'calc( 100vh + 265px)', justifyContent: 'space-between' }}>
       {
         loading?
-        <div style={{display:'flex' , justifyContent:'center',alignItems:'center',height:'100%'} }>
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
           <HashLoader
           color={'#0d4d8f'}
           loading={loading}
@@ -67,10 +72,17 @@ function App() {
       <>      
       <Navs />
         <Routes>
-                <Route path="/dashboard" element={<Dashboard />}>
-                  <Route path='/dashboard' element={<SaleData />} />
-                  <Route path='/dashboard/resale' element={<ReSale />} />
-                  <Route path='/dashboard/database' element={<DataBase />} />
+
+                <Route path='dashboard' element={<Dashboard />}>
+                  <Route index element={<SaleData />} />
+                  <Route path='resale' element={<ReSale />} />
+                  <Route path='database' element={<DataBase />} />
+                  <Route path='details/:id' element={<SellDetails />} />
+                  <Route path='newlaunchesform' element={<NewLaunchesForm />} />
+                </Route>
+
+                <Route path='findhome' element={<FindHomeDetails />} >
+                  <Route path=':districtid' element={<FindDetails />} />
                 </Route>
                 <Route path='/' element={<Home />} />
                 <Route path='/maverickdeals' element={<MaverickDeals />} />
@@ -82,13 +94,12 @@ function App() {
                 <Route path='/developers' element={<Developers />} />
                 <Route path='/developers/:devId' element={<DeveloperDetails />} />
                 <Route path='/developers/:devId/:projId' element={<ProjectDe />} />
-                <Route path='/:id' element={<About />} />
                 <Route path="product/:productId" element={<Details />} />
         </Routes>
       <Footer />
       </>
       }
-      </Box>
+      </Stack>
     </ThemeProvider>
   );
 }

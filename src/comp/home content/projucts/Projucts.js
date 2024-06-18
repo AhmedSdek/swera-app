@@ -6,11 +6,11 @@ import './projucts.css';
 
 function Projucts(){
     return(
-        <>
+
         <section className="projucts-section">
-            <Container style={{height:'100%'}}>
+            <Container >
                 <h2 className="projucts-title">ReSale</h2>
-                <Row style={{height:'100%'}}>
+                <Row style={{ height: '550px' }}>
                     <Col className="photo-div" >
                         <div className="first-photo-div" style={{width:'100%',height:'100%'}}>
                             <img style={{width:'100%',height:'100%',borderRadius:' 30px 0 0 30px '}} src={pic3} alt=""></img>
@@ -96,7 +96,7 @@ function Projucts(){
                 </Row>
             </Container>
         </section>
-        </>
+
     )
 }
 export default Projucts;

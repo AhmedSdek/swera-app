@@ -1,8 +1,8 @@
 .projucts-section{
-    padding: 40px 0;
+    padding: 40px 0 0 0;
     color: white;
     text-align: center;
-    height: 710px;
+    min-height: 710px;
 }
 .projucts-title{
     text-align: center;
@@ -25,7 +25,7 @@
     cursor: pointer;
     position: relative;
     padding: 0 !important;
-    margin: 40px 7.5px 40px 7.5px !important;
+    margin: 40px 7.5px 0px 7.5px !important;
     transition: 0.5s;
 }
 
