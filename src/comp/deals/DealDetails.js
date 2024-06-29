@@ -17,6 +17,7 @@ import './styles.css';
 
 // import required modules
 import { EffectCoverflow, Pagination } from 'swiper/modules';
+import ContactUsBtn from "../Contact Us/ContactUsBtn";
 
 
 function DealDetails() {
@@ -40,14 +41,14 @@ function DealDetails() {
                             slidesPerView={'auto'}
                             coverflowEffect={{
                                 rotate: 50,
-                                stretch: 0,
+                                stretch: 0,  
                                 depth: 100,
                                 modifier: 1,
                                 slideShadows: true,
                             }}
                             
                             modules={[EffectCoverflow, Pagination]}
-                            className="mySwiper"
+                            className="mySwiper2"
                         >
                             {value.data().img.map((el, index) => {
                                 return (
@@ -58,16 +59,26 @@ function DealDetails() {
                             })}
                         </Swiper>
                         <Col>
-                            <div style={{ lineHeight: '1',margin:'10px 0 40px' }}>
-                                <Typography component='h2' variant="h5" sx={{ color: 'rgb(30, 65, 100)', lineHeight: '1',fontWeight:'bold' }}>
-                                    {` ${value.data().imgtext}`}
-                                </Typography>
+                            <div style={{ lineHeight: '1', margin: '10px 0 40px', position: 'relative' }}>
+                                <Stack sx={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                                    <Typography component='h2' variant="h5" sx={{ color: 'rgb(30, 65, 100)', lineHeight: '1', fontWeight: 'bold' }}>
+                                        {` ${value.data().imgtext}`}
+                                    </Typography>
+                                    <Box sx={{ backgroundColor: ' rgb(255, 58, 0)', color: 'white', borderRadius: '8px', padding: '3px 8px', lineHeight: '1', textAlign: 'center' }}>
+                                        <p style={{ padding: ' 8px' }}>
+                                            Maverick Deals
+                                        </p>
+                                    </Box>
+                                </Stack>
                                 <Typography variant="caption" sx={{ lineHeight: '1' }}>
                                     {` ${value.data().Location}`}
                                 </Typography>
-                                <Typography sx={{ fontWeight: 'bold', margin: '10px 0 !important',color:'black' }}>
-                                {value.data().price} EGP
-                                </Typography>
+                                <Stack sx={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                                    <Typography sx={{ fontWeight: 'bold', margin: '10px 0 !important', color: 'black' }}>
+                                        {value.data().price} EGP
+                                    </Typography>
+                                    <ContactUsBtn />
+                                </Stack>
                             </div>
                             <Typography component='h3' variant="h5" sx={{ color: 'rgb(30, 65, 100)',fontWeight:'bold' }}>
                                 About

@@ -534,7 +534,7 @@ export const data = [
     {
         "id": 72,
         "image": "https://cdn-real-estate-egypt.coldwellbanker-eg.com/logos/4-1-2023/rekaz-400xauto.png",
-        'name': 'Nakheel Developments',
+        'name': 'Rekaz Developments',
         "des1": "  launched in 2016, a dynamic real estate development company, established to offer sustainable real estate projects with a unique harmony between premium quality, exceptional customer service, and innovative yet environment-friendly buildings that enable their clients to enjoy the experience of living and working in a smart, secured, and comfortable atmosphere.",
         "des2": "",
         'des3': "",

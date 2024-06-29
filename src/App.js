@@ -30,6 +30,9 @@ import FindHomeDetails from './comp/Find a Home/FindHomeDetails';
 import SellDetails from './comp/admin/SellDetails';
 import FindDetails from './comp/Find a Home/FindDetails';
 import NewLaunchesForm from './comp/admin/newLaunchesform/NewLaunchesForm';
+import NewLaunchespage from './comp/New Launches/NewLaunchespage';
+import FindCompDetails from './comp/Find a Home/FindCompDetails';
+import NewLaunchDetails from './comp/New Launches/NewLaunchDetails';
 function App() {
   const [loading, setLoading] = useState(false);
   const [mode, setMode] = useState(localStorage.getItem('mtTheme') === null ? 'light' : localStorage.getItem('mtTheme'));
@@ -50,12 +53,12 @@ function App() {
       ),
     },
   });
-  useEffect(() =>{
-    setLoading(true)
-    setTimeout(() => {
-      setLoading(false)
-    },2000)
-  },[])
+  // useEffect(() =>{
+  //   setLoading(true)
+  //   setTimeout(() => {
+  //     setLoading(false)
+  //   },2000)
+  // },[])
   return (
     <ThemeProvider theme={darkTheme}>
       <Stack sx={{ minHeight: 'calc( 100vh + 265px)', justifyContent: 'space-between' }}>
@@ -83,15 +86,22 @@ function App() {
 
                 <Route path='findhome' element={<FindHomeDetails />} >
                   <Route path=':districtid' element={<FindDetails />} />
+                  <Route path=':districtid/:findprojId' element={<FindCompDetails />} />
                 </Route>
+                <Route path='newlaunches' element={<NewLaunchespage />} />
+
+                <Route path='newlaunches/:launchId' element={<NewLaunchDetails />} />
+
                 <Route path='/' element={<Home />} />
+                <Route path='/about' element={<About />} />
+
                 <Route path='/maverickdeals' element={<MaverickDeals />} />
                 <Route path='/maverickdeals/:dealId' element={<DealDetails />} />
                 <Route path='/*' element={<Err />} />
                 <Route path="/sell" element={<Sell />} />
                 <Route path="/signin" element={<Signin />} />
                 <Route path="/signup" element={<Regester />} />
-                <Route path='/developers' element={<Developers />} />
+                {/* <Route path='/developers' element={<Developers />} /> */}
                 <Route path='/developers/:devId' element={<DeveloperDetails />} />
                 <Route path='/developers/:devId/:projId' element={<ProjectDe />} />
                 <Route path="product/:productId" element={<Details />} />

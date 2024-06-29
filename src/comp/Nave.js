@@ -1,22 +1,33 @@
 import { Container, Nav, NavDropdown, Navbar} from "react-bootstrap";
 import './min.css';
-import logoPhoto from './maverick logo M.png';
+import logoPhoto from './maverick logo M.webp';
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "../firebase/config";
+import { auth, db } from "../firebase/config";
 import { Button } from "@mui/material";
 import { getAuth, signOut } from "firebase/auth";
-
+import { useCollection } from "react-firebase-hooks/firestore";
+import { collection } from "firebase/firestore";
+import { useState } from "react";
 function Navs(){
   const [user] = useAuthState(auth);
   const adminData = ['arB4bTAtCiaMCBprrnOTRz6YbmT2', 'YZia9oRhhzdNFG1JOXteZOpcdw83']
   const nav = useNavigate();
+  const [value, loading, error] = useCollection(collection(db, 'admin'));
+  var arr = [];
     return(
         <>
-        <Navbar id="navs" collapseOnSelect fixed="top" expand="lg" >
+        {
+          value && value.docs.map((e) => e.data().dev.map((it) => {
+            if (!arr.includes(it.district)) {
+              arr.push(it.district)
+            }
+          }))
+        }
+        <Navbar style={{ padding: '12px 0' }} id="navs" collapseOnSelect fixed="top" expand="lg" >
           <Container>
-            <Link to="/" style={{ width: '150px' }}>
-              <img style={{ width: '100%' }} src={logoPhoto} alt="" />
+            <Link aria-label="Home" to="/" style={{ width: '150px' }}>
+              <img style={{ width: '150px', height: '42px' }} src={logoPhoto} alt="" />
             </Link>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
@@ -24,13 +35,21 @@ function Navs(){
                 <Link className="nav-link" to="/">Home</Link>
 
                 <NavDropdown title="Find a Home" id="basic-nav-dropdown">
-                  <Link className="dropdown-item" to="/findhome/6 October">6 October</Link>
-                  <Link className="dropdown-item" to="/findhome/New Cairo">New Cairo</Link>
+                  {arr.map((link, index) => {
+                    // console.log(link)
+                    return (
+                      <Link key={index} className="dropdown-item" to={`findhome/${link}`}>{link}</Link>
+                    )
+                  })}
                 </NavDropdown>
                 {/* <Link className="nav-link" to="/developers">Developers</Link> */}
+                {/* <Link className="nav-link" to="/sell">Sell-Rent</Link> */}
+                <Link className="nav-link" to="/newlaunches">New Launches</Link>
+
                 <Nav.Link href="#contact">Contact Us</Nav.Link>
-                <Link className="nav-link" to="/sell">Sell-Rent</Link>
-                <Link className="nav-link" to="/maverickdeals">Maverick Deals</Link>
+                <Link className="nav-link" to="/about">About</Link>
+
+                {/* <Link className="nav-link" to="/maverickdeals">Maverick Deals</Link> */}
                 {!user ?
                   <>
                     <Link className="nav-link" to="/signup">Register</Link>

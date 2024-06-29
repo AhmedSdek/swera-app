@@ -1,9 +1,88 @@
+import { Container, Stack, Typography } from '@mui/material'
 import React from 'react'
+import { Link } from 'react-router-dom'
+import { Swiper, SwiperSlide } from 'swiper/react';
 
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/free-mode';
+import 'swiper/css/pagination';
+
+import './styles.css';
+
+// import required modules
+import { FreeMode, Pagination, Autoplay } from 'swiper/modules';
+import { useCollection } from 'react-firebase-hooks/firestore';
+import { collection } from 'firebase/firestore';
+import { db } from '../../firebase/config';
 function NewLaunches() {
-    return (
-        <div>NewLaunches</div>
-    )
+    const [value, loading, error] = useCollection(collection(db, 'newlaunch'));
+    if (value) {
+        return (
+            <>
+                <section style={{ marginTop: '15px' }}>
+                    <Container>
+                        <Stack sx={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <Typography sx={{ fontWeight: 'bold' }}>
+                                New Launches
+                            </Typography>
+                            <Link to='/newlaunches'>
+                                <Typography sx={{ fontWeight: 'bold' }}>
+                                    Show All
+                                </Typography>
+                            </Link>
+                        </Stack >
+                        <Stack >
+                            <Swiper
+                                spaceBetween={10}
+                                autoplay={{
+                                    delay: 2500,
+                                    disableOnInteraction: false,
+                                }}
+                                breakpoints={{
+                                    640: {
+                                        slidesPerView: 2,
+                                        spaceBetween: 10,
+                                    },
+                                    768: {
+                                        slidesPerView: 3,
+                                        spaceBetween: 10,
+                                    },
+                                    1024: {
+                                        slidesPerView: 3,
+                                        spaceBetween: 10,
+                                    },
+                                }}
+                                freeMode={true}
+                                loop={true}
+                                modules={[FreeMode, Pagination, Autoplay]}
+                                className="myLaunchSwiper"
+                            >
+                                {value.docs.map((item) => {
+                                    return (
+                                        <div key={item}>
+                                            {
+                                                item.data().img.map((img) => {
+                                                    return (
+                                                        <SwiperSlide key={img} style={{ height: '100%' }}>
+                                                            <Link aria-label={item.data().launchName} style={{ width: '393px', height: '225px', }} to={`/newlaunches/${item.data().id}`} >
+                                                                <img className='swiperImg' style={{ borderRadius: '10px', width: '380px', height: '225px', }} src={img} alt='' />
+                                                            </Link>
+                                                        </SwiperSlide>
+
+                                                    )
+                                                })
+                                            }
+                                        </div>
+                                    )
+                                })}
+                            </Swiper>
+                        </Stack>
+                    </Container>
+                </section>
+            </>
+        )
+    }
 }
 
 export default NewLaunches

@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import { HashLoader } from 'react-spinners';
 import { db } from '../../firebase/config';
 import './styles.css'
+import ContactUsIcon from '../Contact Us/ContactUsIcon';
 function MaverickDeals() {
     const [value, loading, error] = useCollection(collection(db, 'Resell'));
     if (value) {
@@ -48,7 +49,7 @@ function MaverickDeals() {
                     <Row style={{ justifyContent: 'space-between' }}>
                         {value.docs.map((item, index) => {
                             return (
-                                <Col className=" col-sm-6 col-12" style={{ marginBottom: '15px' }} key={index}>
+                                <Col className=" col-sm-6 col-12" style={{ marginBottom: '15px', position: 'relative' }} key={index}>
                                     <Link to={`/maverickdeals/${item.data().id}`} style={{ textDecoration: 'none' }}>
                                         <Card sx={{ position: 'relative' }}>
                                             <Box sx={{ height: '216px' }}>
@@ -98,7 +99,7 @@ function MaverickDeals() {
                                                 </Stack >
                                                 <Box sx={{ position: 'absolute', top: '16px', backgroundColor: ' rgb(255, 58, 0)', color: 'white', borderRadius: '18px', padding: '3px 8px', lineHeight: '1' }}>
                                                     <p style={{ padding: '0 8px' }}>
-                                                        {item.data().Sale}
+                                                        Maverick Deals
                                                     </p>
                                                 </Box>
 
@@ -108,6 +109,7 @@ function MaverickDeals() {
                                             </CardContent>
                                         </Card>
                                     </Link >
+                                    <ContactUsIcon />
                                 </Col>
                             )
                         })}

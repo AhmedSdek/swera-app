@@ -5,6 +5,7 @@ import { db } from '../../firebase/config';
 import { Box, Card, CardContent, Container, Divider, Stack, Typography } from '@mui/material';
 import { Col, Row } from 'react-bootstrap';
 import { useState } from 'react';
+import ContactUsIcon from '../Contact Us/ContactUsIcon';
 
 function FindDetails() {
     const { districtid } = useParams();
@@ -30,19 +31,18 @@ function FindDetails() {
                         <span className="text-2" data-test="entity-type">Area</span>
                     </Stack>
                     <Divider />
-                    <Typography sx={{ padding: '10px 0', fontWeight: 'bold', color: '#1e4164 ' }} >
+                    {/* <Typography sx={{ padding: '10px 0', fontWeight: 'bold', color: '#1e4164 ' }} >
                         {`About ${districtid}`}
-                    </Typography>
+                    </Typography> */}
                     <Typography sx={{ padding: '10px 0', fontWeight: 'bold', color: '#1e4164 ' }} >
                         {`Compounds In ${districtid}`}
                     </Typography>
-                    <Box sx={{ padding: '50px 0 0 0' }}>
+                    <Box sx={{ padding: '50px 0 0 0' }}> 
                         <Row>
                             {arr.map((card, index) => {
-                                console.log(card)
                                 return (
                                     <Col key={index} className="col-md-6 col-12 col-lg-4" style={{ marginBottom: '15px' }} >
-                                        <Link to={`/developers/${''}/${'project.proj'}`} style={{ textDecoration: 'none' }}>
+                                        <Link to={`/findhome/${card.district}/${card.proj}`} style={{ textDecoration: 'none' }}>
                                             <Card sx={{ position: 'relative' }}>
                                                 <Box sx={{ height: '216px' }}>
                                                     <img style={{ height: '100%', width: '100%', objectFit: 'cover' }} src={card.projImgs[0]} alt='' />
@@ -59,6 +59,7 @@ function FindDetails() {
                                                     <Typography sx={{ fontWeight: 'bold' }}>
                                                         {`${card.price} EGP`}
                                                     </Typography>
+                                                    <ContactUsIcon />
                                                 </CardContent>
                                             </Card>
                                         </Link >

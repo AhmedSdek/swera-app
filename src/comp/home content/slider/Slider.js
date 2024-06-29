@@ -12,10 +12,10 @@ import "./slider.css";
 
 // import required modules
 import { useCollection } from 'react-firebase-hooks/firestore';
-import { Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { collection } from 'firebase/firestore';
 import { db } from '../../../firebase/config';
+import { Container } from '@mui/material';
 
 export default function Slider() {
   const [value, loading, error] = useCollection(collection(db, 'admin'));
@@ -29,7 +29,7 @@ export default function Slider() {
           <h2 className='section-title' style={{ textAlign: 'center' }}>Choose From 400 Real Estate Projects In Egypt</h2>
           <Swiper
             slidesPerView={7}
-            spaceBetween={30}
+            // spaceBetween={30}
             freeMode={true}
             pagination={{
               clickable: true,
@@ -39,9 +39,10 @@ export default function Slider() {
               delay: 2500,
               disableOnInteraction: false,
             }}
+            loop={true}
             navigation={true}
             modules={[Autoplay, Pagination, Navigation, FreeMode]}
-            className="mySwiper"
+            className="mySwiper1"
             breakpoints={{
               200: {
                 slidesPerView: 3,
@@ -73,16 +74,14 @@ export default function Slider() {
           >
 
             {value.docs.map((item, index) => {
-              // console.log(item.data())
               return (
-                <SwiperSlide key={index} style={{ borderRadius: '50%' }} >
-                  <Link to={`/developers/${item.data().devName}`} >
-                    <img className='sm-shadow w-shadow mx-auto img-fluid bg-white rounded-circle p-md-2 p-1 img-fluid  ' style={{ borderRadius: '50%', cursor: 'pointer' }} src={item.data().devIcon} alt=''></img>
+                <SwiperSlide className='swiper-slide1' key={index} style={{ borderRadius: '50%' }} >
+                  <Link aria-label={item.data().devName} to={`/developers/${item.data().devName}`} >
+                    <img className='slidImg sm-shadow w-shadow mx-auto img-fluid bg-white rounded-circle p-md-2 p-1 img-fluid  ' style={{ borderRadius: '50%', cursor: 'pointer' }} src={item.data().devIcon} alt=''></img>
                   </Link>
                 </SwiperSlide>
               )
             })}
-
           </Swiper>
         </Container>
     </section>

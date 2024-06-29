@@ -279,8 +279,7 @@ function Sell() {
                                     <MenuItem value="Clinic">Clinic</MenuItem>
                                     <MenuItem value="Office">Office</MenuItem>
                                     <MenuItem value="Retail">Retail</MenuItem>
-
-
+                                    <MenuItem value="Retail">Villa</MenuItem>
                                 </Select>
                             </FormControl>
                         </Stack>
