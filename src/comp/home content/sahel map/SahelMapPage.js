@@ -1,8 +1,34 @@
 import React from 'react'
-
+import img from './map maverick new.webp'
+import { Container, Stack, Typography } from '@mui/material'
+import ContactUsBtn from '../../Contact Us/ContactUsBtn'
 function SahelMapPage() {
     return (
-        <div>SahelMapPage</div>
+        <Container>
+            <Stack sx={{ padding: '100px 0 0 0', alignItems: 'center', gap: 4 }}>
+                <Stack sx={{ flexDirection: { xs: 'column', sm: 'column', md: 'row' }, justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+                    <Stack>
+                        <Typography variant='h2' sx={{ fontWeight: 'bold', fontFamily: 'materialBold' }}>
+
+                            SAHEL MAP
+                        </Typography>
+                        <Typography sx={{ paddingLeft: '5px' }}>
+                            Explore All Projects In North Coast
+                        </Typography>
+                    </Stack>
+                    <Stack sx={{ textAlign: 'center', gap: 1 }}>
+                        <Typography variant='h6' sx={{ fontWeight: 'bold' }}>
+                            Contact Us
+                        </Typography>
+                        <ContactUsBtn />
+                    </Stack>
+                </Stack>
+                <hr style={{ width: '100%', margin: '0' }} />
+                <Stack sx={{ width: '50%' }}>
+                    <img width='100%' height='100%' src={img} alt='' />
+                </Stack>
+            </Stack>
+        </Container>
     )
 }
 

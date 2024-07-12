@@ -12,7 +12,7 @@ function FindDetails() {
     const [value, loading, error] = useCollection(collection(db, 'admin'));
     let arr = [];
     if (value) {
-        value.docs.map((it, index) => {
+        value.docs.map((it) => {
             it.data().dev.filter(person => person.district === districtid).map(async (item) => {
                 arr.push(item)
             })

@@ -11,7 +11,7 @@ function ContactUsIcon() {
                 </IconButton>
             </a>
             <a href='https://wa.me/+201008582515'>
-                <IconButton variant='contained' sx={{ backgroundColor: 'rgb(76, 217, 100)', color: 'rgb(30, 65, 100)', fontWeight: 'bold' }}>
+                <IconButton className='whatsbtn' variant='contained' sx={{ backgroundColor: 'rgb(76, 217, 100)', color: 'white', fontWeight: 'bold', transition: '0.3s' }}>
                     <WhatsApp />
                 </IconButton>
             </a>

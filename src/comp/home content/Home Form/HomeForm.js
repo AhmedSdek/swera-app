@@ -23,7 +23,7 @@ function HomeForm() {
     return (
         <Container >
             <Box style={{ width: '100%', display: 'flex', height: 'calc(100vh - 64px)', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-                <Card sx={{ width: { xs: '90%', sm: '80%', md: '50%' }, display: 'flex', alignItems: 'center', flexDirection: 'column', padding: '20px', height: '100%', backgroundColor: 'rgb(228, 235, 242)' }}>
+                <Card sx={{ width: { xs: '90%', sm: '80%', md: '50%' }, display: 'flex', alignItems: 'center', flexDirection: 'column', padding: '20px', height: '100%', backgroundColor: 'white' }}>
                     <svg
                         width="66" height="49" viewBox="0 0 66 49" fill="none"
                         xmlns="http://www.w3.org/2000/svg">
@@ -63,6 +63,7 @@ function HomeForm() {
                                 onChange={(e) => {
                                     setName(e.target.value);
                                 }}
+                            required
                             id="name" label=" Name" variant="outlined" type="text" value={name} />
 
                         <Box sx={{ width: { xs: '100%', md: '100%' }, padding: '5px' }}>
@@ -88,7 +89,7 @@ function HomeForm() {
                                     setMessage(e.target.value);
                                 }}
                             />
-                            <Button variant="contained" type="submit" style={{ width: '50%' }}
+                        <Button variant="contained" type="submit" sx={{ width: '50%', backgroundColor: 'rgb(255, 110, 25)' }}
                                 onClick={() => {
                                     setBtn(true);
                                 }

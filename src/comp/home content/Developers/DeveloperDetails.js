@@ -9,18 +9,28 @@ import ContactUsIcon from '../../Contact Us/ContactUsIcon';
 
 export default function DeveloperDetails() {
     const { devId } = useParams()
+    console.log(devId)
     const [value, loading, error] = useDocument(doc(db, 'admin', devId));
-    let list = []
+    let disfiter = [];
+    let list = [];
     if (value) {
-        const ul = value.data().devDis6.split('-')
-        for (let i = 1; i < ul.length; i++) {
-            list = [...list, ul[i]]
+        console.log(value.data())
+        if (value.data()) {
+            const disdata = value.data().devDis.split('$')
+            for (let i = 0; i < disdata.length; i++) {
+                disfiter = [...disfiter, disdata[i]]
+            }
+            const ul = value.data().devDis6.split('-')
+            for (let i = 1; i < ul.length; i++) {
+                list = [...list, ul[i]]
+            }
         }
-        return (
 
+        return (
             <Box sx={{ padding: '80px 0 0 0' }}>
+                {value.data() ?
                 <Container  >
-                    <Stack sx={{ flexDirection: { xs: 'column', sm: 'row' }, alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
+                        <Stack sx={{ flexDirection: { xs: 'column', sm: 'row' }, alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px', gap: 3 }}>
                         <Stack sx={{ flexDirection: 'row', alignItems: 'center', gap: 3 }}>
                             <img style={{ width: '70px', boxShadow: '0 -1px 15px -3px rgba(0, 0, 0, 0.2)', borderRadius: '50%' }} src={value.data().devIcon} alt='' />
                             <Typography sx={{ fontWeight: 'bold', color: '#1e4164 ' }} variant='h5' component='h2'>
@@ -34,21 +44,16 @@ export default function DeveloperDetails() {
                         <Typography sx={{ fontWeight: 'bold', color: '#1e4164 ', padding: '10px 0' }} >
                             {`About ${value.data().devName}`}
                         </Typography>
-                        <Typography>
-                            {value.data().devDis}
-                        </Typography>
-                        <Typography>
+                            {disfiter.map((p, index) => {
+                                return (
+                                    <Typography key={index}>
+                                        {p}
+                                    </Typography>
+                                )
+                            })}
+                            <Typography sx={{ fontWeight: 'bold', color: '#1e4164 ', padding: '10px 0' }}>
                             {value.data().devDis2}
-                        </Typography>
-                        <Typography>
-                            {value.data().devDis3}
-                        </Typography>
-                        <Typography>
-                            {value.data().devDis4}
-                        </Typography>
-                        <Typography>
-                            {value.data().devDis5}
-                        </Typography>
+                            </Typography>
                         <ul>
                             {list.map((li) => {
                                 return (
@@ -95,6 +100,11 @@ export default function DeveloperDetails() {
                     </Box>
 
                 </Container>
+                    :
+                    <Typography>
+                        data not found
+                    </Typography>
+                }
             </Box>
         )
     }

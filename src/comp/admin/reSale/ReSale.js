@@ -7,6 +7,7 @@ import 'react-phone-input-2/lib/style.css'
 import { AddPhotoAlternate, Info } from '@mui/icons-material';
 import { doc, setDoc } from "firebase/firestore";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { data } from '../../Data';
 
 function ReSale() {
     const [messege, setMessege] = React.useState(false);
@@ -24,8 +25,16 @@ function ReSale() {
     });
     const [btn, setBtn] = useState(false);
     const [imgText, setImgText] = React.useState('');
-    const [price, setPrice] = React.useState(0);
-    const [refNum, setRefNum] = React.useState(0);
+
+    const [compoundName, setCompoundName] = React.useState('');
+
+    const [price, setPrice] = React.useState('');
+    const [downPayment, setDownPayment] = React.useState('');
+    const [remaining, setRemaining] = React.useState('');
+    const [month, setMonth] = React.useState('');
+    const [rental, setRental] = React.useState('');
+
+    const [refNum, setRefNum] = React.useState('');
     const [delivery, setDelivery] = React.useState('');
     const [type, setType] = React.useState('');
     const [area, setArea] = React.useState('');
@@ -43,12 +52,28 @@ function ReSale() {
     const [url, setUrl] = useState([]);
     const [url2, setUrl2] = useState([]);
     const [url3, setUrl3] = useState([]);
-
+    const [icon, setIcon] = useState('')
+    console.log(icon)
     const handleimgTextChange = (event) => {
         setImgText(event.target.value);
     };
+    const handleCompoundNameChange = (event) => {
+        setCompoundName(event.target.value);
+    };
     const handlePriceChange = (event) => {
         setPrice(event.target.value);
+    };
+    const handledownPaymentChange = (event) => {
+        setDownPayment(event.target.value);
+    };
+    const handleremainingChange = (event) => {
+        setRemaining(event.target.value);
+    };
+    const handleMonthChange = (event) => {
+        setMonth(event.target.value);
+    };
+    const handleRentalChange = (event) => {
+        setRental(event.target.value);
     };
     const handleDeliveryChange = (event) => {
         setDelivery(event.target.value);
@@ -260,12 +285,18 @@ function ReSale() {
                 delivery: delivery,
                 Type: type,
                 Area: area,
+                compoundName: compoundName,
+                icon: icon,
                 Bed: bed,
                 Bath: bath,
                 Finsh: finsh,
                 Location: location,
                 Sale: sale,
                 Dis: dis,
+                rental: rental,
+                month: month,
+                downPayment: downPayment,
+                remaining: remaining,
                 dis2: dis2,
                 dis3: dis3,
                 img: url,
@@ -275,15 +306,7 @@ function ReSale() {
         } catch (er) {
         }
         setBtn(false)
-        setArea('')
-        setBath('')
-        setBed('')
-        setType('')
-        setDis('')
-        setFinsh('')
-        // setLevel('')
-        setSale('')
-        setLocation('')
+
     }
     return (
         <>
@@ -314,29 +337,105 @@ function ReSale() {
                         <TextField
                             sx={{ margin: '10px', padding: '5px', width: { xs: '100%', md: '50%' } }}
                             value={imgText}
-                            required
-                            id="imgText" label="imgText"
+                            id="imgText" label="Title"
                             variant="outlined" type="text"
                             onChange={(e) => {
                                 handleimgTextChange(e)
                             }}
                         />
+                        {/* 
+                        <TextField
+                            id="TitleDescription-multiline-static"
+                            label="TitleDescription"
+                            // edite
+                            multiline
+                            value={dis2}
+                            rows={2}
+                            sx={{ margin: '10px', padding: '5px', width: { xs: '100%', md: '50%' } }}
+                            onChange={(e) => {
+                                handleDis2Change(e)
+                            }}
+                        /> */}
+                        <TextField
+                            sx={{ margin: '10px', padding: '5px', width: { xs: '100%', md: '50%' } }}
+                            value={compoundName}
+                            id="imgText" label="Compound Name"
+                            variant="outlined" type="text"
+                            onChange={(e) => {
+                                handleCompoundNameChange(e)
+                            }}
+                        />
+
+                        <Stack sx={{ flexDirection: 'row', width: { xs: '100%', md: '50%' }, padding: '5px' }}>
+                            <FormControl sx={{ width: '100%' }}>
+                                <InputLabel id="demo-simple-select-label">DevIcon</InputLabel>
+                                <Select
+                                    required
+                                    sx={{ minWidth: 'fit-content' }}
+                                    labelId="demo-simple-select-label"
+                                    id="demo-simple-select"
+                                    value={icon}
+                                    label="DevIcon"
+                                    onChange={(e) => { setIcon(e.target.value) }}
+                                >
+                                    {data.map((devName) => {
+                                        return (
+                                            <MenuItem key={devName.id} value={devName.image}>{devName.name}</MenuItem>
+                                        )
+                                    })}
+                                </Select>
+                            </FormControl>
+                        </Stack>
                         <TextField
                             sx={{ margin: '10px', padding: '5px', width: { xs: '100%', md: '50%' } }}
                             value={price}
-                            required
-                            id="Price" label="Price"
-                            variant="outlined" type="number"
+                            id="Price" label="Total Price"
+                            variant="outlined" type="text"
                             onChange={(e) => {
                                 handlePriceChange(e)
                             }}
                         />
                         <TextField
                             sx={{ margin: '10px', padding: '5px', width: { xs: '100%', md: '50%' } }}
-                            value={refNum}
-                            required
-                            id="RefNum" label="RefNum"
+                            value={downPayment}
+                            id="downPayment" label="down Payment"
+                            variant="outlined" type="text"
+                            onChange={(e) => {
+                                handledownPaymentChange(e)
+                            }}
+                        />
+                        <TextField
+                            sx={{ margin: '10px', padding: '5px', width: { xs: '100%', md: '50%' } }}
+                            value={remaining}
+                            id="remaining" label="remaining"
+                            variant="outlined" type="text"
+                            onChange={(e) => {
+                                handleremainingChange(e)
+                            }}
+                        />
+                        <TextField
+                            sx={{ margin: '10px', padding: '5px', width: { xs: '100%', md: '50%' } }}
+                            value={month}
+                            id="month" label="Month"
                             variant="outlined" type="number"
+                            onChange={(e) => {
+                                handleMonthChange(e)
+                            }}
+                        />
+                        <TextField
+                            sx={{ margin: '10px', padding: '5px', width: { xs: '100%', md: '50%' } }}
+                            value={rental}
+                            id="month" label="Minimum rental period"
+                            variant="outlined" type="number"
+                            onChange={(e) => {
+                                handleRentalChange(e)
+                            }}
+                        />
+                        <TextField
+                            sx={{ margin: '10px', padding: '5px', width: { xs: '100%', md: '50%' } }}
+                            value={refNum}
+                            id="RefNum" label="RefNum"
+                            variant="outlined" type="text"
                             onChange={(e) => {
                                 handleRefNumChange(e)
                             }}
@@ -346,7 +445,6 @@ function ReSale() {
                             <FormControl sx={{ width: '100%' }}>
                                 <InputLabel id="demo-simple-select-label">Delivery</InputLabel>
                                 <Select
-                                    required
                                     sx={{ minWidth: 'fit-content' }}
                                     labelId="Delivery"
                                     id="Delivery-select"
@@ -355,8 +453,16 @@ function ReSale() {
                                     onChange={handleDeliveryChange}
                                 >
                                     <MenuItem value='Delivered'>Delivered</MenuItem>
-                                    <MenuItem value="no">no</MenuItem>
-
+                                    <MenuItem value="Rtm">Rtm</MenuItem>
+                                    <MenuItem value="2024">2024</MenuItem>
+                                    <MenuItem value="2025">2025</MenuItem>
+                                    <MenuItem value="2026">2026</MenuItem>
+                                    <MenuItem value="2027">2027</MenuItem>
+                                    <MenuItem value="2028">2028</MenuItem>
+                                    <MenuItem value="2029">2029</MenuItem>
+                                    <MenuItem value="2030">2030</MenuItem>
+                                    <MenuItem value="2031">2031</MenuItem>
+                                    <MenuItem value="2032">2032</MenuItem>
                                 </Select>
                             </FormControl>
                         </Stack>
@@ -365,7 +471,6 @@ function ReSale() {
                             <FormControl sx={{ width: '100%' }}>
                                 <InputLabel id="demo-simple-select-label">Type</InputLabel>
                                 <Select
-                                    required
                                     sx={{ minWidth: 'fit-content' }}
                                     labelId="demo-simple-select-label"
                                     id="demo-simple-select"
@@ -395,7 +500,6 @@ function ReSale() {
                         <TextField
                             sx={{ margin: '10px', padding: '5px', width: { xs: '100%', md: '50%' } }}
                             id="arya" label="Area(m)" variant="outlined" type="number"
-                            required
                             value={area}
                             onChange={(e) => {
                                 handleAreaChange(e)
@@ -406,7 +510,6 @@ function ReSale() {
                             <FormControl sx={{ width: '100%' }}>
                                 <InputLabel id="Bedrooms">Bedrooms</InputLabel>
                                 <Select
-                                    required
                                     sx={{ minWidth: 'fit-content' }}
                                     labelId="demo-simple-select-label"
                                     id="Bedroom"
@@ -433,7 +536,6 @@ function ReSale() {
                             <FormControl sx={{ width: '100%' }}>
                                 <InputLabel id="Bathrooms">Bathrooms</InputLabel>
                                 <Select
-                                    required
                                     sx={{ minWidth: 'fit-content' }}
                                     labelId="demo-simple-select-label"
                                     id="Bathroom"
@@ -528,7 +630,6 @@ function ReSale() {
                             sx={{ margin: '10px', padding: '5px', width: { xs: '100%', md: '50%' } }}
                             id="Location" label="Location" variant="outlined" type="text"
                             value={location}
-                            required
                             onChange={(e) => {
                                 handlelocationChange(e)
                             }}
@@ -537,7 +638,6 @@ function ReSale() {
                         <FormControl required sx={{ width: { xs: '100%', md: '50%' }, padding: '5px' }}>
                             <RadioGroup
                                 row
-
                                 aria-labelledby="demo-row-radio-buttons-group-label"
                                 name="row-radio-buttons-group"
                                 value={sale}
@@ -545,7 +645,7 @@ function ReSale() {
                                     handleSaleChange(e)
                                 }}
                             >
-                                <FormControlLabel value="Sale" control={<Radio />} label="Sale" />
+                                <FormControlLabel value="ReSale" control={<Radio />} label="Resale" />
                                 <FormControlLabel value="Rent" control={<Radio />} label="Rent" />
                             </RadioGroup>
                         </FormControl>
@@ -555,7 +655,6 @@ function ReSale() {
                             id="outlined-multiline-static"
                             label="Description"
                             multiline
-                            required
                             value={dis}
                             rows={4}
                             sx={{ margin: '10px', padding: '5px', width: { xs: '100%', md: '50%' } }}
@@ -564,25 +663,11 @@ function ReSale() {
                             }}
                         />
 
-                        <TextField
-                            id="TitleDescription-multiline-static"
-                            label="TitleDescription"
-                            // edite
-                            multiline
-                            required
-                            value={dis2}
-                            rows={2}
-                            sx={{ margin: '10px', padding: '5px', width: { xs: '100%', md: '50%' } }}
-                            onChange={(e) => {
-                                handleDis2Change(e)
-                            }}
-                        />
 
                         <TextField
                             id="About-multiline-static"
                             label="About"
                             multiline
-                            required
                             value={dis3}
                             rows={4}
                             sx={{ margin: '10px', padding: '5px', width: { xs: '100%', md: '50%' } }}

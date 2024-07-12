@@ -26,38 +26,38 @@ export default function Slider() {
 
       <section className='slider-section'>
         <Container>
-          <h2 className='section-title' style={{ textAlign: 'center' }}>Choose From 400 Real Estate Projects In Egypt</h2>
+          <h2 className='section-title' style={{ textAlign: 'center' }}>Explore Most Developers In Egypt</h2>
           <Swiper
             slidesPerView={7}
             // spaceBetween={30}
             freeMode={true}
-            pagination={{
-              clickable: true,
-              dynamicBullets: true
-            }}
+            // pagination={{
+            //   clickable: true,
+            //   dynamicBullets: true
+            // }}
+            style={{ margin: '20px 0' }}
             autoplay={{
               delay: 2500,
               disableOnInteraction: false,
             }}
             loop={true}
-            navigation={true}
+
             modules={[Autoplay, Pagination, Navigation, FreeMode]}
             className="mySwiper1"
             breakpoints={{
               200: {
-                slidesPerView: 3,
+                slidesPerView: 2,
                 slidesPerGroup: 1,
                 spaceBetween: 20,
               },
               // when window width is >= 480px
               767: {
-                slidesPerView: 4,
+                slidesPerView: 5,
                 slidesPerGroup: 1,
-                spaceBetween: 10,
-
+                spaceBetween: 20,
               },
               992: {
-                slidesPerView: 8,
+                slidesPerView: 6,
                 slidesPerGroup: 1,
                 spaceBetween: 20
               },
@@ -74,10 +74,11 @@ export default function Slider() {
           >
 
             {value.docs.map((item, index) => {
+              // console.log((item.data().devName).toUpperCase())
               return (
                 <SwiperSlide className='swiper-slide1' key={index} style={{ borderRadius: '50%' }} >
-                  <Link aria-label={item.data().devName} to={`/developers/${item.data().devName}`} >
-                    <img className='slidImg sm-shadow w-shadow mx-auto img-fluid bg-white rounded-circle p-md-2 p-1 img-fluid  ' style={{ borderRadius: '50%', cursor: 'pointer' }} src={item.data().devIcon} alt=''></img>
+                  <Link style={{ width: '126px', height: '126px ' }} aria-label={item.data().devName} to={`/developers/${item.data().devName}`} >
+                    <img className='slidImg sm-shadow w-shadow mx-auto img-fluid bg-white rounded-circle p-md-2 p-1 img-fluid  ' style={{ borderRadius: '50%' }} src={item.data().devIcon} alt=''></img>
                   </Link>
                 </SwiperSlide>
               )

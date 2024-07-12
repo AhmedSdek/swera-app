@@ -1,5 +1,5 @@
-import { Button, Col, Container, Row } from 'react-bootstrap';
-import video from './Coldwell Banker _ Preferred Real Estate Consultants in Egypt.mp4';
+// import { Button, Col, Container, Row } from 'react-bootstrap';
+// import video from './Coldwell Banker _ Preferred Real Estate Consultants in Egypt.mp4';
 // import img from './egyptheader.webp'
 import Slider from './slider/Slider';
 // import Projucts from './projucts/Projucts';
@@ -8,9 +8,17 @@ import './home.css';
 import NewLaunches from '../New Launches/NewLaunches';
 import HomeForm from './Home Form/HomeForm';
 import SahelMap from './sahel map/SahelMap';
-
-function Home(){
-
+import Calc from './Calc/Calc';
+import HomeDeals from '../deals/HomeDeals';
+import { Button, Stack, TextField } from '@mui/material';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+function Home() {
+    const [serch, setSerch] = useState('')
+    function cap(string) {
+        return string.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
+    }
+    const nav = useNavigate()
     return(
         <>
             <header style={{ position: 'relative', backgroundColor: 'white' }} className='home-header'>
@@ -26,24 +34,24 @@ function Home(){
                     <h2 className='hed3' style={{ textAlign: 'end', fontWeight: 'bold', color: 'white', margin: '5px 0  0 0', fontSize: '40px' }}>
                         The Move
                     </h2>
+                    <Stack component='form' sx={{ flexDirection: 'row' }} onSubmit={(e) => {
+                        e.preventDefault();
+                        nav(`/developers/${cap(serch)}`)
+                    }}>
+                        <TextField sx={{ backgroundColor: 'white' }} id="outlined-search" placeholder='Dev' type="search" onChange={(e) => setSerch(e.target.value)} />
+                        <Button type='submit' variant='contained'>
+                            Search
+                        </Button>
+                    </Stack>
                 </div>
             </header>
             <SahelMap />
             <NewLaunches />
             <Slider />
             {/* <Projucts /> */}
-
+            <HomeDeals />
             <HomeForm />
-
-            {/* </Fade> */}
-            {/* <details>
-                <summary>
-                    move
-                </summary>
-                <p>
-                    loremffffffffffffffffffffffffffff
-                </p>
-            </details> */}
+            <Calc />
         </> 
     )
 }

@@ -53,6 +53,10 @@ function DataBase() {
     const [projDis4, setProjDis4] = React.useState('');
     const [projDis5, setProjDis5] = React.useState('');
     const [projDis6, setProjDis6] = React.useState('');
+    const [offerText1, setOfferText1] = React.useState('');
+    const [offerText2, setOfferText2] = React.useState('');
+    const [offerText3, setOfferText3] = React.useState('');
+    const [offerText4, setOfferText4] = React.useState('');
 
     const [btn, setBtn] = useState(false);
     // const [startPrice, setStartPrice] = React.useState('');
@@ -195,6 +199,18 @@ function DataBase() {
     const handleYear4Change = (event) => {
         setYear4(event.target.value);
     };
+    const handleOfferText1Change = (event) => {
+        setOfferText1(event.target.value);
+    };
+    const handleOfferText2Change = (event) => {
+        setOfferText2(event.target.value);
+    };
+    const handleOfferText3Change = (event) => {
+        setOfferText3(event.target.value);
+    };
+    const handleOfferText4Change = (event) => {
+        setOfferText4(event.target.value);
+    };
     const handleMasterplanImgChange = async (event) => {
         for (let i = 0; i < event.target.files.length; i++) {
             // console.log(i)
@@ -260,9 +276,9 @@ function DataBase() {
                     devIcon: icon,
                     devDis: devDis,
                     devDis2: devDis2,
-                    devDis3: devDis3,
-                    devDis4: devDis4,
-                    devDis5: devDis5,
+                    // devDis3: devDis3,
+                    // devDis4: devDis4,
+                    // devDis5: devDis5,
                     devDis6: devDis6,
                     dev:
                         [
@@ -274,9 +290,9 @@ function DataBase() {
                                 projDes: projDis,
                                 projDes2: projDis2,
                                 projDes3: projDis3,
-                                projDes4: projDis4,
-                                projDes5: projDis5,
-                                projDes6: projDis6,
+                                // projDes4: projDis4,
+                                // projDes5: projDis5,
+                                // projDes6: projDis6,
                                 masterplanImg: masterplan,
                                 id: id,
                                 Location: location,
@@ -284,6 +300,10 @@ function DataBase() {
                                 type: arrCheckType,
                                 pers1: pers1,
                                 year1: year1,
+                                offer1: offerText1,
+                                offer2: offerText2,
+                                offer3: offerText3,
+                                offer4: offerText4,
                                 pers2: pers2,
                                 year2: year2,
                                 pers3: pers3,
@@ -303,9 +323,9 @@ function DataBase() {
                         projDes: projDis,
                         projDes2: projDis2,
                         projDes3: projDis3,
-                        projDes4: projDis4,
-                        projDes5: projDis5,
-                        projDes6: projDis6,
+                        // projDes4: projDis4,
+                        // projDes5: projDis5,
+                        // projDes6: projDis6,
                         masterplanImg: masterplan,
                         id: id,
                         Location: location,
@@ -319,6 +339,10 @@ function DataBase() {
                         year3: year3,
                         pers4: pers4,
                         year4: year4,
+                        offer1: offerText1,
+                        offer2: offerText2,
+                        offer3: offerText3,
+                        offer4: offerText4,
                     })
                 })
             }
@@ -356,7 +380,6 @@ function DataBase() {
                             <FormControl sx={{ width: '100%' }}>
                                 <InputLabel id="demo-simple-select-label">Dev</InputLabel>
                                 <Select
-                                    required
                                     sx={{ minWidth: 'fit-content' }}
                                     labelId="demo-simple-select-label"
                                     id="demo-simple-select"
@@ -376,7 +399,6 @@ function DataBase() {
                             <FormControl sx={{ width: '100%' }}>
                                 <InputLabel id="demo-simple-select-label">DevIcon</InputLabel>
                                 <Select
-                                    required
                                     sx={{ minWidth: 'fit-content' }}
                                     labelId="demo-simple-select-label"
                                     id="demo-simple-select"
@@ -395,9 +417,8 @@ function DataBase() {
                         <TextField
                             id="outlined-multiline-static"
                             label=" Description"
-                            multiline
-                            required
                             value={devDis}
+                            multiline
                             rows={4}
                             sx={{ margin: '10px', padding: '5px', width: { xs: '100%', md: '50%' } }}
                             onChange={(e) => { 
@@ -406,9 +427,7 @@ function DataBase() {
                         />
                         <TextField
                             id="outlined-multiline-static"
-                            label=" Description2"
-                            multiline
-                            required
+                            label=" Description bold"
                             value={devDis2}
                             rows={4}
                             sx={{ margin: '10px', padding: '5px', width: { xs: '100%', md: '50%' } }}
@@ -416,19 +435,19 @@ function DataBase() {
                                 handleDevDis2Change(e)
                             }}
                         />
-                        <TextField
+                        {/* <TextField
                             id="outlined-multiline-static"
                             label="Dev Description3"
                             multiline
-                            required
+
                             value={devDis3}
                             rows={4}
                             sx={{ margin: '10px', padding: '5px', width: { xs: '100%', md: '50%' } }}
                             onChange={(e) => {
                                 handleDevDis3Change(e)
                             }}
-                        />
-                        <TextField
+                        /> */}
+                        {/* <TextField
                             id="outlined-multiline-static"
                             label="Dev Description4"
                             multiline
@@ -438,7 +457,7 @@ function DataBase() {
                             onChange={(e) => {
                                 handleDevDis4Change(e)
                             }}
-                        />
+                        /> */}
                         <FormGroup sx={{ flexDirection: 'row' }}>
                             <FormControlLabel control={<Checkbox value='Clubhouse' onClick={(e) => {
                                 if (e.target.checked === true) {
@@ -534,7 +553,7 @@ function DataBase() {
                                 // console.log(e.target.checked)
                             }} value="Infrastructure" />} label="Infrastructure" />
                         </FormGroup>
-                        <TextField
+                        {/* <TextField
                             id="outlined-multiline-static"
                             label=" Description5"
                             multiline
@@ -544,7 +563,7 @@ function DataBase() {
                             onChange={(e) => {
                                 handleDevDis5Change(e)
                             }}
-                        />
+                        /> */}
                         <TextField
                             id="outlined-multiline-static"
                             label="Dev Description list"
@@ -559,7 +578,6 @@ function DataBase() {
                         <TextField
                             sx={{ margin: '10px', padding: '5px', width: { xs: '100%', md: '50%' } }}
                             value={proj}
-                            required
                             id="project" label="projectName"
                             variant="outlined" type="text"
                             onChange={handleProjChange}
@@ -585,7 +603,6 @@ function DataBase() {
                         <TextField
                             sx={{ margin: '10px', padding: '5px', width: { xs: '100%', md: '50%' } }}
                             value={district}
-                            required
                             id="District" label="District"
                             variant="outlined" type="text"
                             onChange={handleDistrictChange}
@@ -593,7 +610,6 @@ function DataBase() {
                         <TextField
                             sx={{ margin: '10px', padding: '5px', width: { xs: '100%', md: '50%' } }}
                             value={price}
-                            required
                             id="price" label="Price"
                             variant="outlined" type="text"
                             onChange={(e) => {
@@ -614,6 +630,17 @@ function DataBase() {
                             value={year1}
                             onChange={(e) => {
                                 handleYear1Change(e)
+                            }}
+                        />
+                        <TextField
+                            id="offer text"
+                            label=" offer text"
+                            multiline
+                            value={offerText1}
+                            rows={4}
+                            sx={{ margin: '10px', padding: '5px', width: { xs: '100%', md: '50%' } }}
+                            onChange={(e) => {
+                                handleOfferText1Change(e)
                             }}
                         />
                         <FormGroup sx={{ flexDirection: 'row' }}>
@@ -751,6 +778,17 @@ function DataBase() {
                                 handleYear2Change(e)
                             }}
                         />
+                        <TextField
+                            id="offer text2"
+                            label=" offer text2"
+                            multiline
+                            value={offerText2}
+                            rows={4}
+                            sx={{ margin: '10px', padding: '5px', width: { xs: '100%', md: '50%' } }}
+                            onChange={(e) => {
+                                handleOfferText2Change(e)
+                            }}
+                        />
 
                         <TextField
                             sx={{ margin: '10px', padding: '5px', width: { xs: '100%', md: '50%' } }}
@@ -769,6 +807,17 @@ function DataBase() {
                             }}
                         />
                         <TextField
+                            id="offer-text3"
+                            label=" offer text3"
+                            multiline
+                            value={offerText3}
+                            rows={4}
+                            sx={{ margin: '10px', padding: '5px', width: { xs: '100%', md: '50%' } }}
+                            onChange={(e) => {
+                                handleOfferText3Change(e)
+                            }}
+                        />
+                        <TextField
                             sx={{ margin: '10px', padding: '5px', width: { xs: '100%', md: '50%' } }}
                             id="4%" label="%4" variant="outlined" type="number"
                             value={pers4}
@@ -784,12 +833,21 @@ function DataBase() {
                                 handleYear4Change(e)
                             }}
                         />
-
+                        <TextField
+                            id="offer-text4"
+                            label=" offer text4"
+                            multiline
+                            value={offerText4}
+                            rows={4}
+                            sx={{ margin: '10px', padding: '5px', width: { xs: '100%', md: '50%' } }}
+                            onChange={(e) => {
+                                handleOfferText4Change(e)
+                            }}
+                        />
                         <TextField
                             id="outlined-multiline-static"
                             label="Project Description"
                             multiline
-                            required
                             value={projDis}
                             rows={4}
                             sx={{ margin: '10px', padding: '5px', width: { xs: '100%', md: '50%' } }}
@@ -799,8 +857,7 @@ function DataBase() {
                         />
                         <TextField
                             id="Project Description2"
-                            label="Project Description2"
-                            multiline
+                            label="Project Description bold"
                             value={projDis2}
                             rows={4}
                             sx={{ margin: '10px', padding: '5px', width: { xs: '100%', md: '50%' } }}
@@ -819,7 +876,7 @@ function DataBase() {
                                 handleProjDis3Change(e)
                             }}
                         />
-                        <TextField
+                        {/* <TextField
                             id="Project Description4"
                             label="Project Description4"
                             multiline
@@ -829,10 +886,10 @@ function DataBase() {
                             onChange={(e) => {
                                 handleProjDis4Change(e)
                             }}
-                        />
-                        <TextField
+                        /> */}
+                        {/* <TextField
                             id="Project Description5"
-                            label="Project Description5"
+                            label="Project Description5 bold"
                             multiline
                             value={projDis5}
                             rows={4}
@@ -840,8 +897,8 @@ function DataBase() {
                             onChange={(e) => {
                                 handleProjDis5Change(e)
                             }}
-                        />
-                        <TextField
+                        /> */}
+                        {/* <TextField
                             id="Project Description6"
                             label="Project Description6"
                             multiline
@@ -851,7 +908,7 @@ function DataBase() {
                             onChange={(e) => {
                                 handleProjDis6Change(e)
                             }}
-                        />
+                        /> */}
                         <Box sx={{ width: { xs: '100%', md: '50%' }, padding: '5px' }}>
                             <Typography variant='body2'>
                                 Master plan Images ...
@@ -874,7 +931,6 @@ function DataBase() {
                             sx={{ margin: '10px', padding: '5px', width: { xs: '100%', md: '50%' } }}
                             id="Location" label="Location" variant="outlined" type="text"
                             value={location}
-                            required
                             onChange={(e) => {
                                 handlelocationChange(e)
                             }}

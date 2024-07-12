@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useCollection } from "react-firebase-hooks/firestore";
-import { collection } from "firebase/firestore";
-import { Box, Card, CardContent, Container, Stack, Typography } from '@mui/material';
+import { collection, query, where } from "firebase/firestore";
+import { Box, Card, CardContent, Container, FormControl, InputLabel, MenuItem, Select, Stack, Typography } from '@mui/material';
 import { Col, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { HashLoader } from 'react-spinners';
@@ -9,12 +9,19 @@ import { db } from '../../firebase/config';
 import './styles.css'
 import ContactUsIcon from '../Contact Us/ContactUsIcon';
 function MaverickDeals() {
-    const [value, loading, error] = useCollection(collection(db, 'Resell'));
+
+    const [dataHandel, setDataHandel] = useState(
+        query(collection(db, 'Resell'))
+    );
+    const [value, loading, error] = useCollection(
+        dataHandel
+    );
+    const [type, setType] = React.useState('All');
     if (value) {
         return (
             <Box sx={{ padding: '70px 0 0' }}>
                 <Container>
-                    <div className="mav-header">
+                    {/* <div className="mav-header">
                         <h4 style={{ fontWeight: 'bold' }}>Choose maverick deals Enjoy within days!</h4>
                         <p>The “Move Now Pay Later” service is a financing option offered by Nawy that not only allows you to choose your perfect home but move in immediately while setting up a flexible payment plan that suits you. Nawy has your back from the beginning of the buying process to the end and provides the hassle-free service of managing all paperwork. Here is how to better understand how this service works:</p>
                     </div>
@@ -40,25 +47,71 @@ function MaverickDeals() {
                             </div>
                             <p>As soon as you have your optimum payment plan in place, Nawy will proceed to handle all paperwork and logistics to obtain and provide your property for you. In under 45 days, your new home will be available for you to move in.</p>
                         </div>
+                    </div> */}
+
+
+                    <div style={{ margin: '20px 0' }}>
+                        <h4 style={{
+                            letterSpacing: '0px',
+                            fontFamily: 'materialBold',
+                            fontSize: '29px',
+                            color: 'rgb(30, 65, 100)',
+                            textTransform: 'uppercase',
+                            letterSpacing: '4.14px',
+                            fontWeight: 'bold'
+                        }}>
+                            Maverick deals
+                        </h4>
+                        <Typography sx={{
+                            fontFamily: 'materialBold',
+                            color: '',
+                            fontSize: '20px',
+                            verticalAlign: 'middle',
+                            letterSpacing: '0px'
+                        }}>
+                            Choose the unit that suits your needs
+                        </Typography>
                     </div>
-
-
-                    <h4 style={{ fontWeight: 'bold' }}>
-                        Maverick deals
-                    </h4>
-                    <Row style={{ justifyContent: 'space-between' }}>
+                    <Stack sx={{ padding: '0 0 20px 0' }}>
+                        <FormControl sx={{ width: '200px' }}>
+                            <InputLabel id="demo-simple-select-label">Choose</InputLabel>
+                            <Select
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                value={type}
+                                label="Choose"
+                                onChange={(event) => {
+                                    if (event.target.value === 'All') {
+                                        setDataHandel(query(collection(db, 'Resell')));
+                                        setType('All')
+                                    } else if (event.target.value === 'Resale') {
+                                        setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Resale')));
+                                        setType('Resale')
+                                    } else if (event.target.value === 'Rent') {
+                                        setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent')));
+                                        setType('Rent')
+                                    }
+                                }}
+                            >
+                                <MenuItem value='All'>All</MenuItem>
+                                <MenuItem value='Resale'>Resale</MenuItem>
+                                <MenuItem value='Rent'>Rent</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </Stack>
+                    <Row style={{}}>
                         {value.docs.map((item, index) => {
                             return (
-                                <Col className=" col-sm-6 col-12" style={{ marginBottom: '15px', position: 'relative' }} key={index}>
+                                <Col className=" col-sm-6 col-12 col-lg-4 col-md-6" style={{ marginBottom: '15px', position: 'relative', maxHeight: '100%' }} key={index}>
                                     <Link to={`/maverickdeals/${item.data().id}`} style={{ textDecoration: 'none' }}>
-                                        <Card sx={{ position: 'relative' }}>
+                                        <Card sx={{ position: 'relative', height: '100%' }}>
                                             <Box sx={{ height: '216px' }}>
                                                 <img style={{ height: '100%', width: '100%', objectFit: 'cover' }} src={item.data().img[0]} alt='' />
                                             </Box>
                                             <CardContent>
                                                 <Stack>
                                                     <Typography sx={{ lineHeight: '1.3', fontWeight: 'bold' }} variant="h6">
-                                                        {item.data().Type}
+                                                        {`${item.data().imgtext} ${item.data().compoundName}`}
                                                     </Typography>
                                                     <Typography variant="caption" sx={{ color: " rgb(100, 100, 100) ", lineHeight: '1', padding: '0 0 0 5px' }}>
                                                         {item.data().Location}
@@ -97,9 +150,9 @@ function MaverickDeals() {
                                                             &nbsp;m²</p>
                                                     </div>
                                                 </Stack >
-                                                <Box sx={{ position: 'absolute', top: '16px', backgroundColor: ' rgb(255, 58, 0)', color: 'white', borderRadius: '18px', padding: '3px 8px', lineHeight: '1' }}>
-                                                    <p style={{ padding: '0 8px' }}>
-                                                        Maverick Deals
+                                                <Box sx={{ position: 'absolute', top: '16px', backgroundColor: 'rgb(255 145 77)', color: 'white', borderRadius: '50%', width: '50px', height: '50px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                                    <p style={{ fontWeight: 'bold', color: '#1e4164' }}>
+                                                        {`${item.data().Sale}`}
                                                     </p>
                                                 </Box>
 
@@ -113,7 +166,7 @@ function MaverickDeals() {
                                 </Col>
                             )
                         })}
-                    </Row>
+                    </Row> 
                 </Container>
             </Box>
         )

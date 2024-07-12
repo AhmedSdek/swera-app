@@ -26,6 +26,7 @@ width:fit-content ;
     background: #fff;
     /* width: 20% !important; */
     display: flex;
+
     justify-content: center;
     align-items: center;
   }

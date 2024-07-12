@@ -1,12 +1,11 @@
 import { faFacebook, faInstagram, faTiktok } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Col, Container, Row } from "react-bootstrap";
-import footerlog from '../comp/maverick logo M.webp'
-import { IconButton, Stack } from "@mui/material";
+import footerlog from './log.webp'
+import { IconButton, Stack, Typography } from "@mui/material";
 function Footer(){
     return (
-        <footer id="contact" style={{ padding: '40px 0 ', }}>
-            <hr />
+        <footer id="contact" style={{ margin: '40px 0 0 0 ', backgroundColor: '#1e4164' }}>
             <Container>
                 {/* <h2 className="footer-title">
                 Contact
@@ -16,8 +15,8 @@ function Footer(){
                     <Col style={{
                         display: 'flex', flexDirection: 'column',
                     }} >
-                        <img style={{ width: '200px', height: '55.5px' }} src={footerlog} alt="" />
-                        <p style={{ display: 'block', width: 'fit-content', paddingLeft: '20px', paddingTop: '0', fontSize: '18px' }}>
+                        <img style={{ width: '200px', height: '50px' }} src={footerlog} alt="" />
+                        <p style={{ display: 'block', width: 'fit-content', paddingLeft: '25px', paddingTop: '0', fontSize: '16px', color: 'white' }}>
                             Real Estate Company
                         </p>
                     </Col>
@@ -103,8 +102,16 @@ function Footer(){
 
                     </Col>
                 </Stack>
-
             </Container>
+            <Stack sx={{ backgroundColor: 'black' }}>
+                <Container>
+                    <Stack>
+                        <Typography variant="caption" sx={{ padding: '3px', color: 'white' }}>
+                            &copy; Copyright 2024 - Maverick
+                        </Typography>
+                    </Stack>
+                </Container>
+            </Stack>
         </footer>
 
     )

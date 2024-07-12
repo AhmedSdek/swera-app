@@ -103,7 +103,7 @@ function NewLaunchesForm() {
                         // Add a new document in collection "cities"
                     });
                 }
-            );
+            ); 
         }
     };
 
@@ -302,12 +302,12 @@ function NewLaunchesForm() {
                 Dis: dis,
                 dis2: dis2,
                 dis3: dis3,
-                dis4: dis4,
-                dis5: dis5,
-                dis6: dis6,
-                dis7: dis7,
-                dis8: dis8,
-                details: details,
+                // dis4: dis4,
+                // dis5: dis5,
+                // dis6: dis6,
+                // dis7: dis7,
+                // dis8: dis8,
+                // details: details,
                 img: url,
                 video: video,
                 Layoutimg: masterplan,
@@ -439,7 +439,7 @@ function NewLaunchesForm() {
                                 handleDisChange(e)
                             }}
                         />
-                        <TextField
+                        {/* <TextField
                             id="outlined-multiline-static"
                             label="Launch Details2"
                             multiline
@@ -449,8 +449,8 @@ function NewLaunchesForm() {
                             onChange={(e) => {
                                 handleDis6Change(e)
                             }}
-                        />
-                        <TextField
+                        /> */}
+                        {/* <TextField
                             id="outlined-multiline-static"
                             label="Launch Details3"
                             multiline
@@ -461,8 +461,8 @@ function NewLaunchesForm() {
                             onChange={(e) => {
                                 handleDis7Change(e)
                             }}
-                        />
-                        <TextField
+                        /> */}
+                        {/* <TextField
                             id="outlined-multiline-static"
                             label="Launch Details4"
                             multiline
@@ -472,12 +472,10 @@ function NewLaunchesForm() {
                             onChange={(e) => {
                                 handleDis8Change(e)
                             }}
-                        />
+                        /> */}
                         <TextField
                             id="outlined2-multiline-static"
-                            label="Launch Description1"
-                            multiline
-
+                            label="Launch Description2"
                             value={dis2}
                             rows={4}
                             sx={{ margin: '10px', padding: '5px', width: { xs: '100%', md: '50%' } }}
@@ -487,9 +485,8 @@ function NewLaunchesForm() {
                         />
                         <TextField
                             id="outlined3-multiline-static"
-                            label="Launch Description2"
+                            label="Launch Description3"
                             multiline
-
                             value={dis3}
                             rows={4}
                             sx={{ margin: '10px', padding: '5px', width: { xs: '100%', md: '50%' } }}
@@ -497,7 +494,7 @@ function NewLaunchesForm() {
                                 handleDis3Change(e)
                             }}
                         />
-                        <TextField
+                        {/* <TextField
                             id="outlined4-multiline-static"
                             label="Launch Description3"
                             multiline
@@ -508,8 +505,8 @@ function NewLaunchesForm() {
                             onChange={(e) => {
                                 handleDis4Change(e)
                             }}
-                        />
-                        <TextField
+                        /> */}
+                        {/* <TextField
                             id="Details-multiline-static"
                             label="Launch Description4"
                             multiline
@@ -519,7 +516,7 @@ function NewLaunchesForm() {
                             onChange={(e) => {
                                 handleDetailsChange(e)
                             }}
-                        />
+                        /> */}
                         <Stack sx={{ flexDirection: 'row', width: { xs: '100%', md: '50%' }, padding: '5px' }}>
                             <FormControl sx={{ width: '100%' }}>
                                 <InputLabel id="demo-simple-select-label">DevIcon</InputLabel>

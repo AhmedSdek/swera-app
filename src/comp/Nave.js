@@ -1,6 +1,6 @@
-import { Container, Nav, NavDropdown, Navbar} from "react-bootstrap";
+import { Container, Nav, NavDropdown, Navbar, Offcanvas } from "react-bootstrap";
 import './min.css';
-import logoPhoto from './maverick logo M.webp';
+import logoPhoto from './log.webp';
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "../firebase/config";
@@ -13,43 +13,47 @@ function Navs(){
   const [user] = useAuthState(auth);
   const adminData = ['arB4bTAtCiaMCBprrnOTRz6YbmT2', 'YZia9oRhhzdNFG1JOXteZOpcdw83']
   const nav = useNavigate();
+  const [close, setClose] = useState('')
   const [value, loading, error] = useCollection(collection(db, 'admin'));
   var arr = [];
-    return(
-        <>
-        {
-          value && value.docs.map((e) => e.data().dev.map((it) => {
-            if (!arr.includes(it.district)) {
-              arr.push(it.district)
-            }
-          }))
-        }
-        <Navbar style={{ padding: '12px 0' }} id="navs" collapseOnSelect fixed="top" expand="lg" >
+  value && value.docs.map((e) => e.data().dev.map((it) => {
+    if (!arr.includes(it.district)) {
+      arr.push(it.district)
+    }
+  }))
+  return (
+    <>
+      <Navbar collapseOnSelect fixed="top" expand="lg" data-bs-theme="dark" id="navs">
           <Container>
             <Link aria-label="Home" to="/" style={{ width: '150px' }}>
-              <img style={{ width: '150px', height: '42px' }} src={logoPhoto} alt="" />
-            </Link>
-            <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-            <Navbar.Collapse id="responsive-navbar-nav">
-              <Nav className="mx-auto">
-                <Link className="nav-link" to="/">Home</Link>
+            <img style={{ height: '42px', width: '150px' }} src={logoPhoto} alt="" />
+          </Link>
 
-                <NavDropdown title="Find a Home" id="basic-nav-dropdown">
-                  {arr.map((link, index) => {
-                    // console.log(link)
+          <Navbar.Toggle id="navbar-toggler" aria-controls="navbarScroll" />
+          <Navbar.Collapse id="navbarScroll" style={{ justifyContent: 'center' }} >
+            <Nav
+            // className="me-auto my-2 my-lg-0"
+            // style={{ maxHeight: '200px' }}
+            // navbarScroll
+            // className="mx-auto"
+            >
+              <Link className="nav-link" to="/" >Home</Link>
+              <NavDropdown title="Districts" id="navbarScrollingDropdown">
+                {arr.map((link, index) => {
                     return (
                       <Link key={index} className="dropdown-item" to={`findhome/${link}`}>{link}</Link>
                     )
                   })}
                 </NavDropdown>
-                {/* <Link className="nav-link" to="/developers">Developers</Link> */}
-                {/* <Link className="nav-link" to="/sell">Sell-Rent</Link> */}
-                <Link className="nav-link" to="/newlaunches">New Launches</Link>
 
-                <Nav.Link href="#contact">Contact Us</Nav.Link>
-                <Link className="nav-link" to="/about">About</Link>
 
-                {/* <Link className="nav-link" to="/maverickdeals">Maverick Deals</Link> */}
+
+              {/* <Link className="nav-link" to="/developers">Developers</Link> */}
+              <Link className="nav-link" to="/sell">Sell-Rent</Link>
+              <Link className="nav-link" to="/newlaunches">New Launches</Link>
+              <Nav.Link href="#contact">Contact Us</Nav.Link>
+              <Link className="nav-link" to="/about">About</Link>
+              <Link className="nav-link" to="/maverickdeals">Maverick Deals</Link>
                 {!user ?
                   <>
                     <Link className="nav-link" to="/signup">Register</Link>
@@ -74,11 +78,8 @@ function Navs(){
                     <Link className="nav-link" to='/dashboard'>dash</Link>
                   }
                   </>
-                }
-              </Nav>
-              {/* <Nav className="ms-auto">
-            <Nav.Link href="https://bit.ly/3pvjCS2">Request a Call ... <i className="fa-solid fa-phone"></i></Nav.Link>
-          </Nav> */}
+              }
+            </Nav>
         </Navbar.Collapse>
       </Container>
     </Navbar>

@@ -8,6 +8,9 @@ import ContactUsBtn from '../Contact Us/ContactUsBtn';
 
 function NewLaunchDetails() {
     const { launchId } = useParams()
+    let disfiter = [];
+    let dis3fiter = [];
+
     const [value, loading, error] = useDocument(doc(db, 'newlaunch', launchId));
     if (error) {
         return (
@@ -29,6 +32,15 @@ function NewLaunchDetails() {
     }
 
     if (value) {
+        console.log(value.data())
+        const disdata = value.data().Dis.split('$')
+        for (let i = 0; i < disdata.length; i++) {
+            disfiter = [...disfiter, disdata[i]]
+        }
+        const dis3data = value.data().dis3.split('$')
+        for (let i = 0; i < disdata.length; i++) {
+            dis3fiter = [...dis3fiter, dis3data[i]]
+        }
         return (
             <Box sx={{ padding: { xs: '70px 0 0', sm: '70px 0 0', md: '110px 0 0', } }}>
                 <Container>
@@ -80,10 +92,17 @@ function NewLaunchDetails() {
                                 <Typography variant='h5' sx={{ fontWeight: 'bold', padding: '0 0 10px 0' }}>
                                     Launch Details
                                 </Typography>
-                                <Typography>
+                                {disfiter.map((p, index) => {
+                                    return (
+                                        <Typography key={index}>
+                                            {p}
+                                        </Typography>
+                                    )
+                                })}
+                                {/* <Typography>
                                     {value.data().Dis}
-                                </Typography>
-                                <Typography>
+                                </Typography> */}
+                                {/* <Typography>
                                     {value.data().dis6}
                                 </Typography>
                                 <Typography>
@@ -91,19 +110,26 @@ function NewLaunchDetails() {
                                 </Typography>
                                 <Typography>
                                     {value.data().dis8}
-                                </Typography>
-                                <Typography>
+                                </Typography> */}
+                                <Typography variant='h5' sx={{ fontWeight: 'bold', padding: '0 0 10px 0' }}>
                                     {value.data().dis2}
                                 </Typography>
-                                <Typography>
+                                {dis3fiter.map((p, index) => {
+                                    return (
+                                        <Typography key={index}>
+                                            {p}
+                                        </Typography>
+                                    )
+                                })}
+                                {/* <Typography>
                                     {value.data().dis3}
-                                </Typography>
-                                <Typography>
+                                </Typography> */}
+                                {/* <Typography>
                                     {value.data().dis4}
                                 </Typography>
                                 <Typography>
                                     {value.data().details}
-                                </Typography>
+                                </Typography> */}
                             </Stack>
                             :
                             console.log("not")

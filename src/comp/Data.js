@@ -1,3 +1,7 @@
+import makeplace from './make.jpg'
+import mabany from './mabany.jpg'
+import tameer from './tameer.jpg'
+import times from './times.jpg'
 export const data = [
     {
         "id": 1,
@@ -1051,15 +1055,6 @@ export const data = [
         'des4': "",
     },
     {
-        "id": 130,
-        "image": "https://cdn-real-estate-egypt.coldwellbanker-eg.com/new-track-logo/altameer-logo-1-1-400xauto.png",
-        'name': 'Tameer Arabian',
-        "des1": "  ",
-        "des2": "Altameer Arabian is one of the leading companies in the real estate development industry. Our essence is a twisted blend between luxury, authenticity and modernization. Thoroughly, we aim to execute a well approached lifestyle in the Gulf and African countries as well as achieving a very sophisticated, private lifestyle in all our projects, and providing decent investment opportunities.",
-        'des3': "Through its work in Saudi Arabia and the United Arab Emirates, Altameer Arabian came to Egypt with a new vision of creating a fundamental shift in the real estate development field with its projects Rivan, Rivan Square and Rivan Tower.",
-        'des4': "",
-    },
-    {
         "id": 131,
         "image": "https://cdn-real-estate-egypt.coldwellbanker-eg.com/logos/logos-new-27-12-2022/beta-400xauto.png",
         'name': 'Beta Egypt',
@@ -1155,5 +1150,25 @@ export const data = [
         'name': 'Ivory Investment',
         "des1": "Founded in 2017 by one of the biggest names in real estate for the past 20 years, Mrs. Sahar El Agaty, Ivory Investment is focused and committed to building and delivering places that people can connect to. Creating places rather than developments is a lost art, and Ivory Investments would like to bring that “art” back to your business to have a lasting memory in all those that work, live and play within them.",
         "des2": ""
+    },
+    {
+        "id": 142,
+        "image": makeplace,
+        'name': 'MakePlace',
+    },
+    {
+        "id": 143,
+        "image": tameer,
+        'name': 'Tameer',
+    },
+    {
+        "id": 144,
+        "image": times,
+        'name': 'Times',
+    },
+    {
+        "id": 145,
+        "image": mabany,
+        'name': 'Mabany',
     },
 ];

@@ -33,6 +33,7 @@ import NewLaunchesForm from './comp/admin/newLaunchesform/NewLaunchesForm';
 import NewLaunchespage from './comp/New Launches/NewLaunchespage';
 import FindCompDetails from './comp/Find a Home/FindCompDetails';
 import NewLaunchDetails from './comp/New Launches/NewLaunchDetails';
+import SahelMapPage from './comp/home content/sahel map/SahelMapPage';
 function App() {
   const [loading, setLoading] = useState(false);
   const [mode, setMode] = useState(localStorage.getItem('mtTheme') === null ? 'light' : localStorage.getItem('mtTheme'));
@@ -94,7 +95,7 @@ function App() {
 
                 <Route path='/' element={<Home />} />
                 <Route path='/about' element={<About />} />
-
+                <Route path='/sahelmap' element={<SahelMapPage />} />
                 <Route path='/maverickdeals' element={<MaverickDeals />} />
                 <Route path='/maverickdeals/:dealId' element={<DealDetails />} />
                 <Route path='/*' element={<Err />} />
