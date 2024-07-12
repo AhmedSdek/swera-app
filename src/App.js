@@ -102,7 +102,7 @@ function App() {
                 <Route path="/sell" element={<Sell />} />
                 <Route path="/signin" element={<Signin />} />
                 <Route path="/signup" element={<Regester />} />
-                {/* <Route path='/developers' element={<Developers />} /> */}
+                <Route path='/developers' element={<Developers />} />
                 <Route path='/developers/:devId' element={<DeveloperDetails />} />
                 <Route path='/developers/:devId/:projId' element={<ProjectDe />} />
                 <Route path="product/:productId" element={<Details />} />

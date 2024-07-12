@@ -1,9 +1,4 @@
-// import { Button, Col, Container, Row } from 'react-bootstrap';
-// import video from './Coldwell Banker _ Preferred Real Estate Consultants in Egypt.mp4';
-// import img from './egyptheader.webp'
 import Slider from './slider/Slider';
-// import Projucts from './projucts/Projucts';
-// import { Fade } from 'react-awesome-reveal';
 import './home.css';
 import NewLaunches from '../New Launches/NewLaunches';
 import HomeForm from './Home Form/HomeForm';
@@ -22,9 +17,9 @@ function Home() {
     return(
         <>
             <header style={{ position: 'relative', backgroundColor: 'white' }} className='home-header'>
-                <div className='header-main' style={{ textAlign: 'start', width: '40%', margin: '0 auto ' }}>
+                <div className='header-main' style={{ textAlign: 'start', width: '40%', margin: '58px auto 0 ' }}>
                     <h1 className='hed1' style={{ color: 'white', lineHeight: '1.8', width: 'fit-content' }}>
-                        <mark style={{ backgroundColor: '#ff6e19', borderRadius: '6px', fontWeight: 'bold', color: '#1e4164', }}>
+                        <mark style={{ backgroundColor: '#ff914d', borderRadius: '6px', fontWeight: 'bold', color: '#1e4164', }}>
                             Let Us
                         </mark>
                         </h1>
@@ -34,12 +29,12 @@ function Home() {
                     <h2 className='hed3' style={{ textAlign: 'end', fontWeight: 'bold', color: 'white', margin: '5px 0  0 0', fontSize: '40px' }}>
                         The Move
                     </h2>
-                    <Stack component='form' sx={{ flexDirection: 'row' }} onSubmit={(e) => {
+                    <Stack component='form' sx={{ flexDirection: 'column', width: '100%', gap: 1, alignItems: 'center', paddingTop: '10px' }} onSubmit={(e) => {
                         e.preventDefault();
                         nav(`/developers/${cap(serch)}`)
                     }}>
-                        <TextField sx={{ backgroundColor: 'white' }} id="outlined-search" placeholder='Dev' type="search" onChange={(e) => setSerch(e.target.value)} />
-                        <Button type='submit' variant='contained'>
+                        <TextField sx={{ backgroundColor: 'white', width: '100%', borderRadius: '10px' }} id="outlined-search" placeholder='Real estate Developer' type="search" onChange={(e) => setSerch(e.target.value)} />
+                        <Button type='submit' variant='contained' sx={{ width: '130px', backgroundColor: '#ff914d' }}>
                             Search
                         </Button>
                     </Stack>

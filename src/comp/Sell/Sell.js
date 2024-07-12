@@ -5,10 +5,10 @@ import { db, storage } from '../../firebase/config';
 import { useNavigate } from 'react-router-dom';
 import { Box, Button, Card, Container, FormControl, FormControlLabel, FormLabel, InputLabel, LinearProgress, MenuItem, Radio, RadioGroup, Select, Stack, TextField, Typography, styled } from '@mui/material';
 import ReactLoading from 'react-loading';
-import img from './house-for-sale-color.svg'
+import img from './for sale-rent.webp'
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css'
-import { AddPhotoAlternate, Info } from '@mui/icons-material';
+import { Info } from '@mui/icons-material';
 import { doc, setDoc } from "firebase/firestore";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
@@ -172,7 +172,7 @@ function Sell() {
         <Container>
             <Box style={{ width: '100%', flexDirection: 'column', display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '70px 0 0' }}>
                 <Stack sx={{ alignItems: 'center', marginBottom: '10px' }}>
-                    <img style={{ width: '100px' }} src={img} alt='' />
+                    <img style={{ width: '250px' }} src={img} alt='' />
                     <Typography variant='h5'>
                         Sell - Rent Your Unit With Maverick
                     </Typography>

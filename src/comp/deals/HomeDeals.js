@@ -16,7 +16,7 @@ function HomeDeals() {
 
     if (value) {
         value.docs.map((item) => arr.push(item.data()))
-        for (let i = 0; i < 2; i++) {
+        for (let i = 0; i < 3; i++) {
             arrfilt.push(arr[i])
         }
         return (
@@ -49,7 +49,7 @@ function HomeDeals() {
                                     spaceBetween: 10,
                                 },
                                 1024: {
-                                    slidesPerView: 2,
+                                    slidesPerView: 3,
                                     spaceBetween: 10,
                                 },
                             }}

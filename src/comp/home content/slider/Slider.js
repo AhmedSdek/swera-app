@@ -1,4 +1,3 @@
-import { data } from '../../Data';
 import React, { useEffect, useState } from "react";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -15,7 +14,7 @@ import { useCollection } from 'react-firebase-hooks/firestore';
 import { Link } from 'react-router-dom';
 import { collection } from 'firebase/firestore';
 import { db } from '../../../firebase/config';
-import { Container } from '@mui/material';
+import { Container, Stack, Typography } from '@mui/material';
 
 export default function Slider() {
   const [value, loading, error] = useCollection(collection(db, 'admin'));
@@ -26,7 +25,17 @@ export default function Slider() {
 
       <section className='slider-section'>
         <Container>
-          <h2 className='section-title' style={{ textAlign: 'center' }}>Explore Most Developers In Egypt</h2>
+          {/* <h2 className='section-title' style={{ textAlign: 'center' }}>Explore Most Developers In Egypt</h2> */}
+          <Stack sx={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+            <Typography sx={{ fontWeight: 'bold' }}>
+              Developers
+            </Typography>
+            <Link to='/developers'>
+              <Typography sx={{ fontWeight: 'bold' }}>
+                Explore All
+              </Typography>
+            </Link>
+          </Stack >
           <Swiper
             slidesPerView={7}
             // spaceBetween={30}

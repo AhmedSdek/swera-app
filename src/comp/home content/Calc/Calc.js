@@ -36,7 +36,7 @@ function Calc() {
             </Stack>
             {open &&
                 <Stack sx={{ alignItems: 'center', justifyContent: 'center', position: 'fixed', height: '100%', width: '100%', backgroundColor: '#000000d1', zIndex: '200' }}>
-                    <Stack sx={{ width: { xs: '90%', md: '50%' }, backgroundColor: 'white', height: 'fit-content', position: 'relative', margin: '50px 0 0', borderRadius: '12px', gap: 2, padding: '50px 0 0' }}>
+                    <Stack sx={{ width: { xs: '90%', md: '50%' }, backgroundColor: 'white', height: 'fit-content', position: 'relative', margin: '50px 0 0', borderRadius: '12px', gap: 1, padding: '40px 0 0' }}>
                         <h1 style={{
                             fontWeight: 'bold',
                             textAlign: 'center',
@@ -55,16 +55,17 @@ function Calc() {
                             }}>Calculator</span>
                         </h1>
 
-                        <Card sx={{ height: 'fit-content', padding: '10px' }}>
-                            <Stack component='form' sx={{ gap: 2, alignItems: 'center' }} onSubmit={
+                        <Card sx={{ height: 'fit-content', padding: '2px 10px' }}>
+                            <Stack component='form' sx={{ gap: 1, alignItems: 'center' }} onSubmit={
                                 async (e) => {
                                     e.preventDefault()
                                     setAmount(total * downPayment / 100);
                                     setMonth((total - total * downPayment / 100) / (years * 12));
                                 }
                             }>
+                                <Stack sx={{ flexDirection: { xs: 'column', sm: 'row' }, width: '100%', gap: 1 }}>
                                 <TextField
-                                    sx={{ width: '100%' }}
+                                        sx={{ width: '100%' }}
                                     required
                                     id="outlined-required"
                                     label="Total Budget"
@@ -76,7 +77,20 @@ function Calc() {
                                     size="small"
                                     onChange={(e) => setTotal(e.target.value)}
                                 />
-                                <Stack sx={{ flexDirection: { xs: 'column', sm: 'row' }, width: '100%', gap: 2 }}>
+                                    <TextField
+                                        sx={{ width: '100%' }}
+                                        id=""
+                                        label=""
+                                        type='number'
+                                        placeholder='%'
+                                        value={0}
+                                        className='inbutlapel
+                                        '
+                                        size="small"
+                                    // onChange={(e) => setTotal(e.target.value)}
+                                    />
+                                </Stack>
+                                <Stack sx={{ flexDirection: { xs: 'column', sm: 'row' }, width: '100%', gap: 1 }}>
                                     <TextField
                                         sx={{ width: '100%' }}
                                         required
@@ -105,7 +119,7 @@ function Calc() {
 
                                 </Stack>
                                 <Button className='calcbtn' type='submit' variant='contained' sx={{
-                                    width: '50%',
+                                    width: '150px',
                                     backgroundColor: 'rgb(255 110 25)', color: 'rgb(30, 65, 100)', fontWeight: 'bold'
                                 }}>
                                     Calc
@@ -156,7 +170,7 @@ function Calc() {
                             setAmount(0);
                             setMonth(0)
                         }
-                        } sx={{ position: 'absolute', top: '8px', right: '8px' }}>
+                        } sx={{ position: 'absolute', top: '1px', right: '1px' }}>
                             <Close fontSize='large' />
                         </IconButton>
                     </Stack>
