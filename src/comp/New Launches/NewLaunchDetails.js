@@ -5,6 +5,7 @@ import { useDocument } from 'react-firebase-hooks/firestore';
 import { db } from '../../firebase/config';
 import { Link, useParams } from 'react-router-dom';
 import ContactUsBtn from '../Contact Us/ContactUsBtn';
+import MavLoading from '../Loading/MavLoading';
 
 function NewLaunchDetails() {
     const { launchId } = useParams()
@@ -23,16 +24,13 @@ function NewLaunchDetails() {
     }
     if (loading) {
         return (
-            <>
-                <h2>
-                    Loading
-                </h2>
-            </>
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 'calc(100vh - 140px)' }}>
+                <MavLoading />
+            </div>
         )
     }
 
     if (value) {
-        console.log(value.data())
         const disdata = value.data().Dis.split('$')
         for (let i = 0; i < disdata.length; i++) {
             disfiter = [...disfiter, disdata[i]]
@@ -42,7 +40,7 @@ function NewLaunchDetails() {
             dis3fiter = [...dis3fiter, dis3data[i]]
         }
         return (
-            <Box sx={{ padding: { xs: '70px 0 0', sm: '70px 0 0', md: '110px 0 0', } }}>
+            <Box sx={{ minHeight: '100vh', padding: { xs: '70px 0 0', sm: '70px 0 0', md: '110px 0 0', } }}>
                 <Container>
                     <Stack sx={{ height: { md: '400px', sm: '300px' }, borderRadius: '10px', overflow: 'hidden' }}>
                         {!value.data().video ? <img style={{ width: '100%', height: '100%' }} src={value.data().img[0]} alt='' /> :
@@ -99,18 +97,6 @@ function NewLaunchDetails() {
                                         </Typography>
                                     )
                                 })}
-                                {/* <Typography>
-                                    {value.data().Dis}
-                                </Typography> */}
-                                {/* <Typography>
-                                    {value.data().dis6}
-                                </Typography>
-                                <Typography>
-                                    {value.data().dis7}
-                                </Typography>
-                                <Typography>
-                                    {value.data().dis8}
-                                </Typography> */}
                                 <Typography variant='h5' sx={{ fontWeight: 'bold', padding: '0 0 10px 0' }}>
                                     {value.data().dis2}
                                 </Typography>
@@ -121,29 +107,10 @@ function NewLaunchDetails() {
                                         </Typography>
                                     )
                                 })}
-                                {/* <Typography>
-                                    {value.data().dis3}
-                                </Typography> */}
-                                {/* <Typography>
-                                    {value.data().dis4}
-                                </Typography>
-                                <Typography>
-                                    {value.data().details}
-                                </Typography> */}
                             </Stack>
                             :
                             console.log("not")
                         }
-                        {/* { ?
-                            <Stack>
-                                <Typography variant='h5' sx={{ fontWeight: 'bold', padding: '10px 0' }}>
-                                    Launch Description
-                                </Typography>
-
-                            </Stack>
-                            :
-                            console.log("not")
-                        } */}
                     </Stack>
                 </Container>
             </Box>

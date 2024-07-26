@@ -1,15 +1,14 @@
 import React from 'react'
-import img from './map maverick new.webp'
+import img from './map maverickrhehet.webp'
 import { Container, Stack, Typography } from '@mui/material'
 import ContactUsBtn from '../../Contact Us/ContactUsBtn'
 function SahelMapPage() {
     return (
         <Container>
-            <Stack sx={{ padding: '100px 0 0 0', alignItems: 'center', gap: 4 }}>
+            <Stack sx={{ padding: '100px 0 0 0', alignItems: 'center', gap: 4, minHeight: 'calc(100vh - 140px)' }}>
                 <Stack sx={{ flexDirection: { xs: 'column', sm: 'column', md: 'row' }, justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
                     <Stack>
-                        <Typography variant='h2' sx={{ fontWeight: 'bold', fontFamily: 'materialBold' }}>
-
+                        <Typography variant='h2' sx={{ fontWeight: 'bold', fontFamily: 'materialBold', fontSize: { xs: '45px' } }}>
                             SAHEL MAP
                         </Typography>
                         <Typography sx={{ paddingLeft: '5px' }}>

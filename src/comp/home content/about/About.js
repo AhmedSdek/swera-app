@@ -3,7 +3,7 @@ import React from 'react'
 
 function About() {
     return (
-        <Stack sx={{ padding: '80px 0 0 0' }}>
+        <Stack sx={{ padding: '80px 0 0 0', height: '100vh' }}>
             <Container>
                 <Typography variant='h5' component='h2' sx={{ fontWeight: 'bold', paddingBottom: '10px' }}>
                     About Maverick

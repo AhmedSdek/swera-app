@@ -276,9 +276,6 @@ function DataBase() {
                     devIcon: icon,
                     devDis: devDis,
                     devDis2: devDis2,
-                    // devDis3: devDis3,
-                    // devDis4: devDis4,
-                    // devDis5: devDis5,
                     devDis6: devDis6,
                     dev:
                         [
@@ -290,9 +287,6 @@ function DataBase() {
                                 projDes: projDis,
                                 projDes2: projDis2,
                                 projDes3: projDis3,
-                                // projDes4: projDis4,
-                                // projDes5: projDis5,
-                                // projDes6: projDis6,
                                 masterplanImg: masterplan,
                                 id: id,
                                 Location: location,
@@ -323,9 +317,6 @@ function DataBase() {
                         projDes: projDis,
                         projDes2: projDis2,
                         projDes3: projDis3,
-                        // projDes4: projDis4,
-                        // projDes5: projDis5,
-                        // projDes6: projDis6,
                         masterplanImg: masterplan,
                         id: id,
                         Location: location,
@@ -435,29 +426,6 @@ function DataBase() {
                                 handleDevDis2Change(e)
                             }}
                         />
-                        {/* <TextField
-                            id="outlined-multiline-static"
-                            label="Dev Description3"
-                            multiline
-
-                            value={devDis3}
-                            rows={4}
-                            sx={{ margin: '10px', padding: '5px', width: { xs: '100%', md: '50%' } }}
-                            onChange={(e) => {
-                                handleDevDis3Change(e)
-                            }}
-                        /> */}
-                        {/* <TextField
-                            id="outlined-multiline-static"
-                            label="Dev Description4"
-                            multiline
-                            value={devDis4}
-                            rows={4}
-                            sx={{ margin: '10px', padding: '5px', width: { xs: '100%', md: '50%' } }}
-                            onChange={(e) => {
-                                handleDevDis4Change(e)
-                            }}
-                        /> */}
                         <FormGroup sx={{ flexDirection: 'row' }}>
                             <FormControlLabel control={<Checkbox value='Clubhouse' onClick={(e) => {
                                 if (e.target.checked === true) {
@@ -536,14 +504,6 @@ function DataBase() {
                                 }
                                 // console.log(e.target.checked)
                             }} value="Livability" />} label="Livability" />
-                            {/* <FormControlLabel control={<Checkbox onClick={(e) => {
-                                if (e.target.checked === true) {
-                                    setArrCheck((old) => [...old, e.target.value])
-                                } else {
-                                    setArrCheck(arrCheck.filter((it) => it !== e.target.value))
-                                }
-                                // console.log(e.target.checked)
-                            }} value="Outdoor Pools" />} label="Outdoor Pools" /> */}
                             <FormControlLabel control={<Checkbox onClick={(e) => {
                                 if (e.target.checked === true) {
                                     setArrCheck((old) => [...old, e.target.value])
@@ -552,18 +512,71 @@ function DataBase() {
                                 }
                                 // console.log(e.target.checked)
                             }} value="Infrastructure" />} label="Infrastructure" />
+                            <FormControlLabel control={<Checkbox onClick={(e) => {
+                                if (e.target.checked === true) {
+                                    setArrCheck((old) => [...old, e.target.value])
+                                } else {
+                                    setArrCheck(arrCheck.filter((it) => it !== e.target.value))
+                                }
+                                // console.log(e.target.checked)
+                            }} value="mosque" />} label="mosque" />
+                            <FormControlLabel control={<Checkbox onClick={(e) => {
+                                if (e.target.checked === true) {
+                                    setArrCheck((old) => [...old, e.target.value])
+                                } else {
+                                    setArrCheck(arrCheck.filter((it) => it !== e.target.value))
+                                }
+                                // console.log(e.target.checked)
+                            }} value="children area" />} label="children area" />
+                            <FormControlLabel control={<Checkbox onClick={(e) => {
+                                if (e.target.checked === true) {
+                                    setArrCheck((old) => [...old, e.target.value])
+                                } else {
+                                    setArrCheck(arrCheck.filter((it) => it !== e.target.value))
+                                }
+                                // console.log(e.target.checked)
+                            }} value="kids' area" />} label="kids' area" />
+                            <FormControlLabel control={<Checkbox onClick={(e) => {
+                                if (e.target.checked === true) {
+                                    setArrCheck((old) => [...old, e.target.value])
+                                } else {
+                                    setArrCheck(arrCheck.filter((it) => it !== e.target.value))
+                                }
+                                // console.log(e.target.checked)
+                            }} value="gym" />} label="gym" />
+                            <FormControlLabel control={<Checkbox onClick={(e) => {
+                                if (e.target.checked === true) {
+                                    setArrCheck((old) => [...old, e.target.value])
+                                } else {
+                                    setArrCheck(arrCheck.filter((it) => it !== e.target.value))
+                                }
+                                // console.log(e.target.checked)
+                            }} value="spa" />} label="spa" />
+                            <FormControlLabel control={<Checkbox onClick={(e) => {
+                                if (e.target.checked === true) {
+                                    setArrCheck((old) => [...old, e.target.value])
+                                } else {
+                                    setArrCheck(arrCheck.filter((it) => it !== e.target.value))
+                                }
+                                // console.log(e.target.checked)
+                            }} value="Educational hub" />} label="Educational hub" />
+                            <FormControlLabel control={<Checkbox onClick={(e) => {
+                                if (e.target.checked === true) {
+                                    setArrCheck((old) => [...old, e.target.value])
+                                } else {
+                                    setArrCheck(arrCheck.filter((it) => it !== e.target.value))
+                                }
+                                // console.log(e.target.checked)
+                            }} value="Commercial area" />} label="Commercial area" />
+                            <FormControlLabel control={<Checkbox onClick={(e) => {
+                                if (e.target.checked === true) {
+                                    setArrCheck((old) => [...old, e.target.value])
+                                } else {
+                                    setArrCheck(arrCheck.filter((it) => it !== e.target.value))
+                                }
+                                // console.log(e.target.checked)
+                            }} value="Medical centre" />} label="Medical centre" />
                         </FormGroup>
-                        {/* <TextField
-                            id="outlined-multiline-static"
-                            label=" Description5"
-                            multiline
-                            value={devDis5}
-                            rows={4}
-                            sx={{ margin: '10px', padding: '5px', width: { xs: '100%', md: '50%' } }}
-                            onChange={(e) => {
-                                handleDevDis5Change(e)
-                            }}
-                        /> */}
                         <TextField
                             id="outlined-multiline-static"
                             label="Dev Description list"

@@ -25,15 +25,13 @@ function ReSale() {
     });
     const [btn, setBtn] = useState(false);
     const [imgText, setImgText] = React.useState('');
-
-    const [compoundName, setCompoundName] = React.useState('');
-
+    const [sold, setSold] = React.useState('');
+    const [compoundName, setCompoundName] = React.useState('')
     const [price, setPrice] = React.useState('');
     const [downPayment, setDownPayment] = React.useState('');
     const [remaining, setRemaining] = React.useState('');
     const [month, setMonth] = React.useState('');
     const [rental, setRental] = React.useState('');
-
     const [refNum, setRefNum] = React.useState('');
     const [delivery, setDelivery] = React.useState('');
     const [type, setType] = React.useState('');
@@ -53,7 +51,6 @@ function ReSale() {
     const [url2, setUrl2] = useState([]);
     const [url3, setUrl3] = useState([]);
     const [icon, setIcon] = useState('')
-    console.log(icon)
     const handleimgTextChange = (event) => {
         setImgText(event.target.value);
     };
@@ -301,7 +298,8 @@ function ReSale() {
                 dis3: dis3,
                 img: url,
                 Layoutimg: url2,
-                Masterimg: url3
+                Masterimg: url3,
+                sold: sold
             });
         } catch (er) {
         }
@@ -343,19 +341,7 @@ function ReSale() {
                                 handleimgTextChange(e)
                             }}
                         />
-                        {/* 
-                        <TextField
-                            id="TitleDescription-multiline-static"
-                            label="TitleDescription"
-                            // edite
-                            multiline
-                            value={dis2}
-                            rows={2}
-                            sx={{ margin: '10px', padding: '5px', width: { xs: '100%', md: '50%' } }}
-                            onChange={(e) => {
-                                handleDis2Change(e)
-                            }}
-                        /> */}
+
                         <TextField
                             sx={{ margin: '10px', padding: '5px', width: { xs: '100%', md: '50%' } }}
                             value={compoundName}
@@ -440,7 +426,25 @@ function ReSale() {
                                 handleRefNumChange(e)
                             }}
                         />
+                        <Stack sx={{ flexDirection: 'row', width: { xs: '100%', md: '50%' }, padding: '5px' }}>
 
+                            <FormControl sx={{ width: '100%' }}>
+                                <InputLabel id="sold-label">Sold</InputLabel>
+                                <Select
+                                    sx={{ minWidth: 'fit-content' }}
+                                    labelId="soldlap"
+                                    id="demo-sold"
+                                    value={sold}
+                                    label="SOLD OUT"
+                                    onChange={(e) => {
+                                        setSold(e.target.value)
+                                    }}
+                                >
+                                    <MenuItem value={'SOLD OUT'}>SOLD OUT</MenuItem>
+                                    <MenuItem value={'Not'}>Not</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Stack>
                         <Stack sx={{ flexDirection: 'row', width: { xs: '100%', md: '50%' }, padding: '5px' }}>
                             <FormControl sx={{ width: '100%' }}>
                                 <InputLabel id="demo-simple-select-label">Delivery</InputLabel>

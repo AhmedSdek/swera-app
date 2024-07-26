@@ -6,10 +6,10 @@ import { Link, useParams } from 'react-router-dom';
 import { Box, Card, CardContent, Container, Divider, Stack, Typography } from '@mui/material';
 import { Col, Row } from 'react-bootstrap';
 import ContactUsIcon from '../../Contact Us/ContactUsIcon';
+import MavLoading from '../../Loading/MavLoading';
 
 export default function DeveloperDetails() {
     const { devId } = useParams()
-    console.log(devId)
     const [value, loading, error] = useDocument(doc(db, 'admin', devId));
     let disfiter = [];
     let list = [];
@@ -32,7 +32,7 @@ export default function DeveloperDetails() {
                 <Container  >
                         <Stack sx={{ flexDirection: { xs: 'column', sm: 'row' }, alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px', gap: 3 }}>
                         <Stack sx={{ flexDirection: 'row', alignItems: 'center', gap: 3 }}>
-                            <img style={{ width: '70px', boxShadow: '0 -1px 15px -3px rgba(0, 0, 0, 0.2)', borderRadius: '50%' }} src={value.data().devIcon} alt='' />
+                                <img style={{ width: '70px', boxShadow: '0 -1px 15px -3px rgba(0, 0, 0, 0.2)', borderRadius: '50%', height: '70px' }} src={value.data().devIcon} alt='' />
                             <Typography sx={{ fontWeight: 'bold', color: '#1e4164 ' }} variant='h5' component='h2'>
                                 {value.data().devName}
                             </Typography>
@@ -72,12 +72,12 @@ export default function DeveloperDetails() {
                                     return (
                                         <Col key={index} className="col-md-6 col-12 col-lg-4" style={{ marginBottom: '15px', position: 'relative' }} >
                                             <Link to={`/developers/${devId}/${project.proj}`} style={{ textDecoration: 'none' }}>
-                                                <Card sx={{ position: 'relative' }}>
+                                                <Card sx={{ position: 'relative', paddingBottom: '10px' }}>
                                                     <Box sx={{ height: '216px' }}>
                                                         <img style={{ height: '100%', width: '100%', objectFit: 'cover' }} src={project.projImgs[0]} alt='' />
                                                     </Box>
-                                                    <CardContent>
-                                                        <Stack sx={{ marginBottom: '10px' }}>
+                                                    <CardContent style={{ padding: '15px 15px 0 15px' }}>
+                                                        <Stack sx={{}}>
                                                             <Typography sx={{ lineHeight: '1.3', fontWeight: 'bold', color: 'rgb(30, 65, 100)' }} variant="body1">
                                                                 {project.proj}
                                                             </Typography>
@@ -89,9 +89,11 @@ export default function DeveloperDetails() {
                                                             {`${project.price} EGP`}
                                                         </Typography> */}
                                                     </CardContent>
+                                                    <Stack sx={{ paddingRight: '10px' }}>
+                                                        <ContactUsIcon />
+                                                    </Stack>
                                                 </Card>
                                             </Link >
-                                            <ContactUsIcon />
                                         </Col>
                                     )
                                 })}
@@ -101,11 +103,20 @@ export default function DeveloperDetails() {
 
                 </Container>
                     :
-                    <Typography>
-                        data not found
-                    </Typography>
+                    <Stack sx={{ height: 'calc(100vh - 58px)', justifyContent: 'center' }}>
+                        <Typography variant='h4' sx={{ textAlign: 'center', fontWeight: 'bold' }}>
+                            Oops, Data not Found
+                        </Typography>
+                    </Stack>
                 }
             </Box>
+        )
+    }
+    if (loading) {
+        return (
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 'calc(100vh - 140px)' }}>
+                <MavLoading />
+            </div>
         )
     }
 }

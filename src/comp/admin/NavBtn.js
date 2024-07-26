@@ -34,6 +34,18 @@ export default function NavBtn() {
         {
             text: 'New Launches',
             to: 'newlaunchesform'
+        },
+        {
+            text: 'EditDeveloper',
+            to: 'editDeveloper'
+        },
+        {
+            text: 'EditDeals',
+            to: 'editDeals'
+        },
+        {
+            text: 'Editluanches',
+            to: 'editluanches'
         }
     ]
     const DrawerList = (

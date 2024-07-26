@@ -4,7 +4,7 @@ import React from 'react'
 
 function ContactUsIcon() {
     return (
-        <Stack sx={{ flexDirection: 'row', gap: 2, position: 'absolute', bottom: '18px', right: '22px' }}>
+        <Stack sx={{ flexDirection: 'row', gap: 2, justifyContent: 'end' }}>
             <a href="tel:+201008582515">
                 <IconButton variant='contained' sx={{ backgroundColor: 'rgb(228, 235, 242)', color: 'rgb(30, 65, 100)', fontWeight: 'bold' }}>
                     <Call />

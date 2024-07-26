@@ -22,7 +22,6 @@ function FindDetails() {
             <Box sx={{ padding: '80px 0 0 0' }}>
                 <Container >
                     <Stack sx={{ flexDirection: 'row', alignItems: 'center', gap: 3, margin: '15px 0 25px 0' }}>
-                        <img style={{ width: '70px' }} src={'https://prod-images.cooingestate.com/processed/area/image/2/high.webp'} alt='' />
                         <Box>
                             <Typography sx={{ fontWeight: 'bold', color: '#1e4164 ' }} variant='h5' component='h2'>
                                 {districtid}

@@ -15,14 +15,13 @@ import { FreeMode, Pagination, Autoplay } from 'swiper/modules';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import { collection } from 'firebase/firestore';
 import { db } from '../../firebase/config';
+import MavLoading from '../Loading/MavLoading';
 function NewLaunches() {
     const [value, loading, error] = useCollection(collection(db, 'newlaunch'));
-    if (value) {
-        return (
-
-            <section style={{ margin: '25px' }}>
-                <Container>
-                    <Stack sx={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+    return (
+        <section style={{ margin: '25px 0' }}>
+            <Container>
+                <Stack sx={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                         <Typography sx={{ fontWeight: 'bold' }}>
                             Launches Now
                         </Typography>
@@ -32,6 +31,7 @@ function NewLaunches() {
                             </Typography>
                         </Link>
                     </Stack >
+                {value &&
                     <Stack >
                         <Swiper
                             spaceBetween={10}
@@ -79,11 +79,15 @@ function NewLaunches() {
                             })}
                         </Swiper>
                     </Stack>
-                </Container>
-            </section>
-
-        )
-    }
+                }
+                {loading &&
+                    <Stack sx={{ justifyContent: 'center', alignItems: 'center' }}>
+                        <MavLoading />
+                    </Stack>
+                }
+            </Container>
+        </section>
+    )
 }
 
 export default NewLaunches

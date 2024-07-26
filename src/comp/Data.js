@@ -2,6 +2,8 @@ import makeplace from './make.jpg'
 import mabany from './mabany.jpg'
 import tameer from './tameer.jpg'
 import times from './times.jpg'
+import MM from './MM.jpg'
+
 export const data = [
     {
         "id": 1,
@@ -174,9 +176,9 @@ export const data = [
     },
     {
         "id": 22,
-        "image": "https://eu2.contabostorage.com/8dc285ed427646378a15bf7489806b0a:coldwellbanker/logos/4-1-2023/mnhd-400xauto.png",
-        'name': 'MNHD',
-        "des1": ' Founded in 1959 as a public real estate company, Madinet Nasr for Housing & Development (MNHD) is a leading real estate development company in Egypt and has been publicly traded on the Egyptian stock exchange since 1995.',
+        "image": MM,
+        'name': 'MMHD',
+        "des1": ' Founded in 1959 as a public real estate company, Madinet Masr for Housing & Development (MNHD) is a leading real estate development company in Egypt and has been publicly traded on the Egyptian stock exchange since 1995.',
         "des2":' Initially MNHD was established with the primary objective of developing 40ml sqm of land in Nasr City as well as other nearby areas on the outskirts of Cairo. Since then, with a capable team of over 450 professionals, MNHD has developed mega projects and infrastructures across Egypt, serving the needs of thousands of middle-income Egyptians.',
         "des3": ' With its restructuring, MNHD has expanded its target audience to capitalize on potential opportunities in the upper end class of the real estate market. Building on inherent capabilities and strengths of MNHD, the company has launched two new mega mixed use residential projects. To that end it has contracted the services of world renowned architecture companies to develop the master plan to align with their vision of creating a destination with all its facets rather than just another housing development project. Conforming to international standards Taj City is envisioned to be Cairo’s cultural destination and Sarai to be Cairo’s entertainment destination. The master plan of Taj City was developed by DDS & Partners, a renowned Belgian firm while the master plan of Sarai was developed by internationally recognized architectural firm Benoy.',
         "des4": ' As part of MNHD’s commitment to the development of Egypt and its local communities, the company uses its core expertise to support the development of communities in Nasr City. CSR initiatives are a key part of the company’s corporate philosophy.'
@@ -717,7 +719,7 @@ export const data = [
     },
     {
         "id": 92,
-        "image": "https://cdn-real-estate-egypt.coldwellbanker-eg.com/logos/18-1-2023/times-400xauto.png",
+        "image": times,
         'name': 'Times Development',
         "des1": " is one of the largest companies that have swept the Egyptian real estate market since its inception more than 35 years ago. Since then, it deserves to be one of the leading companies and also to be on the throne of the field of construction and real estate investments due to its huge projects specifically launched in Sheikh Zayed City.",
         "des2": "In addition, the company is keen to introduce the best modern methods in its projects so that it is distinguished from the rest of the companies and feel the customers and investors contracted with it. During the time of its presence in the market, the company succeeded in collecting a huge proportion of unprecedented sales, thus holding a large segment of customers with high confidence ratios.",
@@ -1161,14 +1163,5 @@ export const data = [
         "image": tameer,
         'name': 'Tameer',
     },
-    {
-        "id": 144,
-        "image": times,
-        'name': 'Times',
-    },
-    {
-        "id": 145,
-        "image": mabany,
-        'name': 'Mabany',
-    },
+
 ];

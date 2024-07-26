@@ -6,11 +6,11 @@ import { useCollection } from 'react-firebase-hooks/firestore';
 import { collection } from 'firebase/firestore';
 import { db } from '../../firebase/config';
 import { Link } from 'react-router-dom';
+import MavLoading from '../Loading/MavLoading';
 
 function NewLaunchespage() {
     const [value, loading, error] = useCollection(collection(db, 'newlaunch'));
     if (value) {
-
         return (
             <Box sx={{ padding: '70px 0 0' }}>
                 <Container>
@@ -47,7 +47,6 @@ function NewLaunchespage() {
                     <Row>
                         {
                             value.docs.map((itm, index) => {
-                                console.log(itm.data())
                                 return (
                                     <Col key={index} className="col-md-6 col-12 col-lg-4" style={{ marginBottom: '15px', position: 'relative' }} >
                                         <Link to={`/newlaunches/${itm.data().id}`} style={{ textDecoration: 'none' }}>
@@ -131,95 +130,17 @@ function NewLaunchespage() {
                     <Typography sx={{ color: 'black' }}>
                         Here arises the question of where you should consider purchasing a home. In other words, which areas in Egypt are the best to live in?
                     </Typography>
-                    <Typography sx={{ color: 'black', fontWeight: 'bold', padding: '8px 0' }}>
-                        Top Areas in Egypt To Buy Properties
-                    </Typography>
-                    <Typography sx={{ color: 'black' }}>
-                        The best residential compounds in Egypt can be found in the following areas:
-                    </Typography>
-                    <ul style={{ color: 'black' }}>
-                        <li>
-                            New Cairo
-                        </li>
-                        <li>
-                            New Administrative Capital
-                        </li>
-                        <li>
-                            Sheikh Zayed
-                        </li>
-                        <li>
-                            6th of October City
-                        </li>
-                        <li>
-                            New Zayed
-                        </li>
-                        <li>
-                            5th Settlement
-                        </li>
-                        <li>
-                            Ain Sokhna
-                        </li>
-                        <li>
-                            North Coast
-                        </li>
-                        <li>
-                            Mostakbal City
-                        </li>
-                    </ul>
-                    <Typography sx={{ color: 'black' }}>
-                        Choosing a home depends on many factors, but keep in mind that these areas are on a constant rise. This means that prices are drastically increasing and this is a chance for you to hold your money’s value and invest in one of the lowest-risk types of investments.
-                    </Typography>
-                    <Typography sx={{ color: 'black', fontWeight: 'bold', padding: '8px 0' }}>
-                        Who Are the Top Real Estate Developers in Egypt?
-                    </Typography>
-                    <Typography sx={{ color: 'black' }}>
-                        Picking the best real estate developer is a difficult task, as the market is filled with tycoons offering outstanding projects. However, there are a number of companies that can be described as the top real estate developers in Egypt, including but not limited to
-                    </Typography>
-                    <ul style={{ color: 'black' }}>
-                        <li>
-                            Mountain View (DMG)
-                        </li>
-                        <li>
-                            Al Ahly Sabbour
-                        </li>
-                        <li>
-                            Ora Developers Egypt
-                        </li>
-                        <li>
-                            Palm Hills
-                        </li>
-                        <li>
-                            Misr Italia Properties
-                        </li>
-                        <li>
-                            SODIC
-                        </li>
-                        <li>
-                            Orascom Development
-                        </li>
-                        <li>
-                            Tameer Development
-                        </li>
-                        <li>
-                            Tatweer Misr
-                        </li>
-                    </ul>
-                    <Typography sx={{ color: 'black', fontWeight: 'bold', padding: '8px 0' }}>
-                        How to Choose the Right Property?
-                    </Typography>
-                    <Typography sx={{ color: 'black' }}>
-                        Choosing the right property depends on the purpose of the new property you are purchasing. For instance, if you are getting a new home for your family, then you should consider how many bedrooms will be comfortable, what amenities your family needs, and when you want to move.
-                    </Typography>
-                    <Typography sx={{ color: 'black' }}>
-                        However, if you are purchasing a property to start investing in real estate, then you should keep in mind what types of properties sell & rent easier, what are the upcoming areas, and which features are the most popular.
-                    </Typography>
-                    <Typography sx={{ color: 'black' }}>
-                        To be more precise, research shows that the highest-demanded properties have 3 bedrooms and built-up areas ranging between 150 sqm and 180 sqm.
-                    </Typography>
                 </Container>
             </Box>
         )
 
+    }
+    if (loading) {
+        return (
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 'calc(100vh - 140px)' }}>
+                <MavLoading />
+            </div>
+        )
     }
 }
 

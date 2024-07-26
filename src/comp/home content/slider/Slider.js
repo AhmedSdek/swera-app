@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode, Pagination, Autoplay, Navigation } from 'swiper/modules';
@@ -18,14 +18,12 @@ import { Container, Stack, Typography } from '@mui/material';
 
 export default function Slider() {
   const [value, loading, error] = useCollection(collection(db, 'admin'));
-  // const [data, setData] = useState([])
   if (value) {
 
     return (
 
       <section className='slider-section'>
         <Container>
-          {/* <h2 className='section-title' style={{ textAlign: 'center' }}>Explore Most Developers In Egypt</h2> */}
           <Stack sx={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
             <Typography sx={{ fontWeight: 'bold' }}>
               Developers
@@ -83,7 +81,6 @@ export default function Slider() {
           >
 
             {value.docs.map((item, index) => {
-              // console.log((item.data().devName).toUpperCase())
               return (
                 <SwiperSlide className='swiper-slide1' key={index} style={{ borderRadius: '50%' }} >
                   <Link style={{ width: '126px', height: '126px ' }} aria-label={item.data().devName} to={`/developers/${item.data().devName}`} >
@@ -92,83 +89,9 @@ export default function Slider() {
                 </SwiperSlide>
               )
             })}
-          </Swiper>
+          </Swiper> 
         </Container>
     </section>
     )
-
-    // console.log(value.docs)
-    // return (
-    //   <>
-    //     <section className='slider-section'>
-    //       <Container>
-    //         <h2 className='section-title' style={{ textAlign: 'center' }}>Choose From 400 Real Estate Projects In Egypt</h2>
-    //         <Swiper
-    //           slidesPerView={7}
-    //           spaceBetween={30}
-    //           freeMode={true}
-    //           pagination={{
-    //             clickable: true,
-    //             dynamicBullets: true
-    //           }}
-    //           autoplay={{
-    //             delay: 2500,
-    //             disableOnInteraction: false,
-    //           }}
-    //           navigation={true}
-    //           modules={[Autoplay, Pagination, Navigation, FreeMode]}
-    //           className="mySwiper"
-    //           breakpoints={{
-    //             200: {
-    //               slidesPerView: 3,
-    //               slidesPerGroup: 1,
-    //               spaceBetween: 20,
-    //             },
-    //             // when window width is >= 480px
-    //             767: {
-    //               slidesPerView: 4,
-    //               slidesPerGroup: 1,
-    //               spaceBetween: 10,
-
-    //             },
-    //             992: {
-    //               slidesPerView: 8,
-    //               slidesPerGroup: 1,
-    //               spaceBetween: 20
-    //             },
-    //             1200: {
-    //               slidesPerView: 8,
-    //               slidesPerGroup: 1,
-    //               spaceBetween: 20
-    //             },
-    //             1400: {
-    //               slidesPerView: 8,
-    //               spaceBetween: 20
-    //             }
-    //           }}
-    //         >
-    //           {/* {value.docs.map((e, index) => {
-    //             // console.log(e.data())
-    //             // هعمل اللوب الاول في ستيت واخدز واعمل عليه لوب تاني تحت
-    //             return (
-    //               <div key={index}>
-    //                 {e.data().dev.map((item, inde) => {
-    //                   return (
-
-    //                     <SwiperSlide style={{ borderRadius: '50%' }} key={inde}>
-    //                       <Link to={`/developers/${item.devName}`} >
-    //                         <img className='sm-shadow w-shadow mx-auto img-fluid bg-white rounded-circle p-md-2 p-1 img-fluid  ' style={{ borderRadius: '50%', cursor: 'pointer' }} src={item.devIcon} alt=''></img>
-    //                       </Link>
-    //                     </SwiperSlide>
-    //                   )
-    //                 })}
-    //               </div>
-    //             )
-    //           })} */}
-    //         </Swiper>
-    //       </Container>
-    //     </section>
-    //   </>
-    // );
   }
 }

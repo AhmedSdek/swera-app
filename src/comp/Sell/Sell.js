@@ -171,9 +171,41 @@ function Sell() {
     return (
         <Container>
             <Box style={{ width: '100%', flexDirection: 'column', display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '70px 0 0' }}>
+                <Stack sx={{ flexDirection: { xs: 'column', sm: 'column', md: 'column', lg: 'row' }, paddingTop: '10px' }} className="steps-card-container">
+                    <div className=" stepDev">
+                        <div className="step-number">
+                            <span>1</span>
+                            <p>Step</p>
+                        </div>
+                        <div className="step-text">
+                            <span className="step-title">List Your Property Details</span
+                            ><p>Add all the information related to your property</p>
+                        </div>
+                    </div>
+                    <div className=" stepDev">
+                        <div className="step-number">
+                            <span>2</span>
+                            <p>Step</p>
+                        </div>
+                        <div className="step-text">
+                            <span className="step-title">One Of Our Agents Will Call You</span>
+                            <p>We will help you find the best buyer</p>
+                        </div>
+                    </div>
+                    <div className=" stepDev">
+                        <div className="step-number">
+                            <span>3</span>
+                            <p>Step</p>
+                        </div>
+                        <div className="step-text">
+                            <span className="step-title">Meet With Serious Buyers</span>
+                            <p>Final step to sell your property</p>
+                        </div>
+                    </div>
+                </Stack>
                 <Stack sx={{ alignItems: 'center', marginBottom: '10px' }}>
                     <img style={{ width: '250px' }} src={img} alt='' />
-                    <Typography variant='h5'>
+                    <Typography variant='h5' sx={{ textAlign: 'center' }}>
                         Sell - Rent Your Unit With Maverick
                     </Typography>
                 </Stack>
@@ -181,7 +213,7 @@ function Sell() {
                     <Typography variant='h5' sx={{ fontWeight: 'bold' }}>
                         Complete The Form
                     </Typography>
-                    <Typography variant='caption'>
+                    <Typography sx={{ textAlign: 'center' }} variant='caption'>
                         Your privacy is important to us. We won't publish or share your information with anyone
                     </Typography>
                     <Box component='form'
@@ -428,38 +460,6 @@ function Sell() {
                         </Button>
                     </Box>
                 </Card>
-                <div className="steps-card-container">
-                    <div className=" stepDev">
-                        <div className="step-number">
-                            <span>1</span>
-                            <p>Step</p>
-                        </div>
-                        <div className="step-text">
-                            <span className="step-title">List Your Property Details</span
-                            ><p>Add all the information related to your property</p>
-                        </div>
-                    </div>
-                    <div className=" stepDev">
-                        <div className="step-number">
-                            <span>2</span>
-                            <p>Step</p>
-                        </div>
-                        <div className="step-text">
-                            <span className="step-title">One Of Our Agents Will Call You</span>
-                            <p>We will help you find the best buyer</p>
-                        </div>
-                    </div>
-                    <div className=" stepDev">
-                        <div className="step-number">
-                            <span>3</span>
-                            <p>Step</p>
-                        </div>
-                        <div className="step-text">
-                            <span className="step-title">Meet With Serious Buyers</span>
-                            <p>Final step to sell your property</p>
-                        </div>
-                    </div>
-                </div>
             </Box>
             <p style={{ zIndex: '10', backgroundColor: 'whitesmoke', display: 'flex', alignItems: 'center', color: 'black', padding: '10px', borderRadius: '6px', boxShadow: 'rgb(255 255 255 / 25%) 0px 5px 30px 0px', position: 'fixed', top: '100px', right: messege ? '20px' : '-230px', transition: '0.8s', scale: messege ? "1" : '0' }}>Data has been sent successfully <Info style={{ margin: '3px 0 0 10px', fontSize: '20px', color: 'teal' }} /></p>
         </Container>

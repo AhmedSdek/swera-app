@@ -15,12 +15,12 @@ function HomeDeals() {
     let arrfilt = [];
 
     if (value) {
-        value.docs.map((item) => arr.push(item.data()))
-        for (let i = 0; i < 3; i++) {
-            arrfilt.push(arr[i])
-        }
+        // value.docs.map((item) => arr.push(item.data()))
+        // for (let i = 0; i < 3; i++) {
+        //     arrfilt.push(arr[i])
+        // }
         return (
-            <section style={{ margin: '25px' }}>
+            <section style={{ margin: '25px 0' }}>
                 <Container>
                     <Stack sx={{ gap: 2 }}>
                         <Stack sx={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -33,12 +33,12 @@ function HomeDeals() {
                                 </Typography>
                             </Link>
                         </Stack >
-
                         <Swiper
-                            autoplay={{
-                                delay: 2500,
-                                disableOnInteraction: false,
-                            }}
+                            // autoplay={{
+                            //     delay: 2500,
+                            //     disableOnInteraction: false,
+                            // }}
+                            spaceBetween={10}
                             breakpoints={{
                                 640: {
                                     slidesPerView: 1,
@@ -60,30 +60,33 @@ function HomeDeals() {
                             className="mydealSwiper"
                         >
                             {
-                                arrfilt.map((col, index) => {
-
+                                value.docs.map((col, index) => {
                                     return (
-                                        <SwiperSlide key={index} style={{ marginBottom: '15px', position: 'relative', height: '405px' }}>
-                                            <Col key={index} style={{ position: 'relative', height: '405px' }} >
+                                        <SwiperSlide key={index} style={{ marginBottom: '15px', position: 'relative' }}>
+                                            <Col key={index} style={{ position: 'relative', height: '460px' }} >
                                                 {col &&
                                                     <>
-                                                        <Link to={`/maverickdeals/${col.id}`} style={{ textDecoration: 'none' }}>
-                                                            <Card sx={{ position: 'relative', height: '100%' }}>
-                                                                <Box sx={{ height: '216px' }}>
-                                                                    <img style={{ height: '100%', width: '100%', objectFit: 'cover' }} src={col.img[0]} alt='' />
+                                                    <Link to={`/maverickdeals/${col.data().id}`} style={{ textDecoration: 'none' }}>
+                                                        <Card sx={{ position: 'relative', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                                                            <Stack>
+                                                                <Box sx={{ height: '215px' }}>
+                                                                    <img style={{ height: '100%', width: '100%', objectFit: 'cover' }} src={col.data().img[0]} alt='' />
                                                                 </Box>
-                                                                <CardContent style={{ textAlign: 'start' }}>
+                                                                <CardContent style={{ textAlign: 'start', padding: '15px 15px 0 15px' }}>
                                                                     <Stack>
-                                                                        <Typography sx={{ lineHeight: '1.3', fontWeight: 'bold' }} variant="h6">
-                                                                            {`${col.imgtext} ${col.compoundName}`}
+                                                                        <Typography component='h2' sx={{ lineHeight: '1.3', fontWeight: 'bold' }} variant="h6">
+                                                                            {`${col.data().imgtext}`}
+                                                                        </Typography>
+                                                                        <Typography component='h2' sx={{ lineHeight: '1.3', fontWeight: 'bold' }} variant="h6">
+                                                                            {col.data().compoundName}
                                                                         </Typography>
                                                                         <Typography variant="caption" sx={{ color: " rgb(100, 100, 100) ", lineHeight: '1', padding: '0 0 0 5px' }}>
-                                                                            {col.Location}
+                                                                            {col.data().Location}
                                                                         </Typography>
                                                                     </Stack>
                                                                     <Stack sx={{ flexDirection: 'row', margin: '16px 0', gap: '0px 8px' }}>
                                                                         <div className='svgicon'>
-                                                                            <p style={{ fontWeight: 'bold' }}>{col.Bed}</p>
+                                                                            <p style={{ fontWeight: 'bold' }}>{col.data().Bed}</p>
                                                                             <svg width="23" height="16" viewBox="0 0 23 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                                                 <path fill="#666666" stroke="#666666" strokeWidth="0.25"
                                                                                     d="M20.5811 14.1659C20.5691 14.3825 20.545 14.563 20.545 14.7435C20.5209 15.5617 20.3525 15.7542 19.6305 15.7783C18.5476 15.8144 18.355 15.6941 18.2949 14.8037C18.2708 14.3705 18.1144 14.2261 17.6812 14.2261C13.5058 14.2381 9.34251 14.2381 5.16714 14.2261C4.69786 14.2261 4.5294 14.3584 4.54144 14.8398C4.55347 15.5497 4.31281 15.7542 3.60288 15.7783C3.44646 15.7783 3.278 15.7783 3.12157 15.7783C2.30334 15.7663 2.11082 15.5738 2.09879 14.7315C2.09879 14.575 2.08675 14.4186 2.07472 14.2261C1.94236 14.202 1.83407 14.1659 1.72577 14.1659C0.727052 14.1298 0.570627 13.9854 0.570627 13.0108C0.570627 11.988 0.522495 10.9652 0.618758 9.94242C0.84738 7.6562 2.4357 6.40479 4.70989 6.65748C4.81819 6.66951 4.93852 6.65748 4.98665 6.65748C4.98665 5.06916 4.98665 3.541 4.98665 2.0008C4.98665 1.90454 4.96258 1.79625 4.95055 1.69998C4.86632 0.845659 5.01071 0.76143 5.86504 0.773463C8.35582 0.809561 10.8346 0.809561 13.3133 0.773463C14.1436 0.76143 14.312 0.89379 14.1797 1.73608C14.1195 2.1091 14.0834 2.47008 14.0232 2.86716C14.9498 2.86716 15.8041 2.91529 16.6584 2.85513C17.5007 2.79497 17.6331 2.89123 17.5127 3.70946C17.4887 3.86588 17.4646 4.02231 17.4646 4.19077C17.4646 4.9729 17.4646 5.74299 17.4646 6.60935C17.8015 6.60935 18.1024 6.62138 18.3911 6.60935C20.2682 6.50106 21.7603 7.99312 21.9167 9.68974C22.025 10.9171 22.001 12.1685 21.9889 13.4079C21.9889 13.8651 21.7122 14.1539 21.2188 14.1539C21.0143 14.1659 20.8218 14.1659 20.5811 14.1659ZM20.0517 12.6739C20.0517 11.988 20.0276 11.3142 20.0637 10.6283C20.0878 10.171 19.8832 10.0507 19.4621 10.0507C14.0353 10.0628 8.60851 10.0628 3.18173 10.0507C2.74856 10.0507 2.56806 10.1831 2.56806 10.6283C2.5801 11.988 2.59213 13.3597 2.56806 14.7194C2.55603 15.2609 2.84482 15.309 3.25393 15.2729C3.62695 15.2489 4.07216 15.4294 4.07216 14.7435C4.07216 13.8892 4.26468 13.7327 5.11901 13.7327C9.29438 13.7327 13.4577 13.7327 17.6331 13.7327C18.5837 13.7327 18.7281 13.841 18.7642 14.7796C18.7882 15.3211 19.1131 15.2609 19.45 15.2729C19.823 15.285 20.0757 15.2368 20.0517 14.7676C20.0276 14.0817 20.0517 13.3838 20.0517 12.6739ZM21.5798 13.6605C21.4956 12.1685 21.5437 10.7005 21.291 9.28062C21.0504 7.92092 19.823 7.05456 18.5355 7.04253C17.3443 7.0305 16.153 7.0305 14.9618 7.04253C12.459 7.06659 9.96821 7.11473 7.4654 7.12676C6.57497 7.12676 5.67251 7.00643 4.78209 7.06659C3.99996 7.12676 3.15767 7.22302 2.48383 7.57197C1.54528 8.05328 1.13617 9.02793 1.076 10.0868C1.02787 11.0013 1.05194 11.9278 1.05194 12.8544C1.05194 13.7688 1.076 13.7929 2.07472 13.6244C2.07472 12.6618 2.07472 11.6872 2.07472 10.7125C2.07472 9.79803 2.26725 9.61754 3.15767 9.61754C5.25137 9.61754 7.34507 9.61754 9.4508 9.61754C12.7718 9.61754 16.0929 9.61754 19.4139 9.61754C20.2923 9.61754 20.5209 9.84616 20.5209 10.7246C20.5209 11.6992 20.5209 12.6859 20.5209 13.6846C20.8819 13.6605 21.1466 13.6605 21.5798 13.6605ZM11.5565 6.63342C11.5565 5.5625 11.5926 4.56378 11.5445 3.5771C11.5084 2.96342 11.5926 2.807 12.2063 2.8431C12.6395 2.86716 13.0606 2.91529 13.4938 2.95139C13.578 2.34975 13.6623 1.84438 13.7345 1.31494C10.9669 1.31494 8.22346 1.31494 5.50406 1.31494C5.50406 3.05969 5.50406 4.8285 5.50406 6.63342C7.57369 6.63342 9.5591 6.63342 11.5565 6.63342ZM16.9833 6.58528C16.9833 5.45421 16.9833 4.40736 16.9833 3.37254C15.3228 3.37254 13.6984 3.37254 12.11 3.37254C12.11 4.45549 12.11 5.50234 12.11 6.58528C13.7465 6.58528 15.3228 6.58528 16.9833 6.58528ZM12.4831 6.8861V6.89814C13.2892 6.89814 14.0954 6.89814 14.9016 6.89814V6.8861C14.0954 6.8861 13.2892 6.8861 12.4831 6.8861Z"
@@ -93,7 +96,7 @@ function HomeDeals() {
                                                                         </div>
                                                                         <div className='svgicon'>
                                                                             <p style={{ fontWeight: 'bold' }}>
-                                                                                {col.Bath}
+                                                                                {col.data().Bath}
                                                                             </p>
 
                                                                             <svg width="22" height="21" viewBox="0 0 22 21" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -112,23 +115,33 @@ function HomeDeals() {
                                                                                 </path>
                                                                                 <rect x="0.682617" y="0.548828" width="15.9014" height="15.9014" rx="2.5" stroke="#313131"></rect>
                                                                             </svg>
-                                                                            <p style={{ margin: '0 0 3px', fontWeight: 'bold' }}>{col.Area}
+                                                                            <p style={{ margin: '0 0 3px', fontWeight: 'bold' }}>{col.data().Area}
                                                                                 &nbsp;m²</p>
                                                                         </div>
                                                                     </Stack >
+
                                                                     <Box sx={{ position: 'absolute', top: '16px', backgroundColor: 'rgb(255 145 77)', color: 'white', borderRadius: '50%', width: '50px', height: '50px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                                                                         <p style={{ fontWeight: 'bold', color: '#1e4164' }}>
-                                                                            {`${col.Sale}`}
+                                                                            {`${col.data().Sale}`}
                                                                         </p>
                                                                     </Box>
-
+                                                                    {col.data().sold === 'SOLD OUT' &&
+                                                                        <Box sx={{ position: 'absolute', top: '20px', right: '5px', backgroundColor: 'white', color: 'red', borderRadius: ' 5px ', border: '2px solid red', width: '100px', height: '30px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                                                            <p style={{ fontWeight: 'bold', color: 'white', backgroundColor: 'red', width: '95%', textAlign: 'center' }}>
+                                                                                {`${col.data().sold}`}
+                                                                            </p>
+                                                                        </Box>
+                                                                    }
                                                                     <Typography sx={{ fontWeight: 'bold' }}>
-                                                                        {col.price} EGP
+                                                                        {col.data().price} EGP
                                                                     </Typography>
                                                                 </CardContent>
+                                                            </Stack>
+                                                            <Stack sx={{ padding: '0 10px 10px 0' }}>
+                                                                <ContactUsIcon />
+                                                            </Stack>
                                                             </Card>
-                                                        </Link >
-                                                        <ContactUsIcon />
+                                                    </Link >
                                                     </>
                                                 }
                                             </Col>

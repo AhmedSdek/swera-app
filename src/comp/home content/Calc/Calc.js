@@ -1,42 +1,52 @@
-import { Calculate, Close } from '@mui/icons-material'
-import { Button, Card, Container, IconButton, Stack, TextField, Tooltip, Typography } from '@mui/material'
+import { Calculate, Close, Save } from '@mui/icons-material'
+import { Box, Button, Card, Container, IconButton, SpeedDial, SpeedDialAction, SpeedDialIcon, Stack, TextField, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import { Col, Row } from 'react-bootstrap';
 
 function Calc() {
-    const [open, setOpen] = useState(false);
+    const [openCalc, setOpenCalc] = useState(false);
     const [total, setTotal] = useState('');
     const [downPayment, setDownPayment] = useState('');
+    const [maintenance, setMaintenance] = useState('');
     const [years, setYears] = useState('');
+    const [maintenanceres, setMaintenanceres] = useState(0);
     const [amount, setAmount] = useState(0);
     const [month, setMonth] = useState(0);
+    const actions = [
+        { icon: <Calculate />, name: 'Calculator' },
+        { icon: <Save />, name: 'Save' },
+    ];
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
 
-
-
+    const [open, setOpen] = React.useState(false);
     return (
         <>
-            <Stack sx={{ position: 'fixed', bottom: '100px', right: '1px', zIndex: '100' }}>
-                <Tooltip title="Calculator" sx={{ color: 'white' }}
-                    placement="left" slotProps={{
-                        popper: {
-                            modifiers: [
-                                {
-                                    name: 'offset',
-                                    options: {
-                                        offset: [0, -15],
-                                    },
-                                },
-                            ],
-                        },
-                    }}>
-                    <IconButton aria-label='Calculator' onClick={() => setOpen(true)}>
-                        <Calculate className='calc' htmlColor='#ff6e19' fontSize='large' />
-                    </IconButton>
-                </Tooltip>
-            </Stack>
-            {open &&
-                <Stack sx={{ alignItems: 'center', justifyContent: 'center', position: 'fixed', height: '100%', width: '100%', backgroundColor: '#000000d1', zIndex: '200' }}>
-                    <Stack sx={{ width: { xs: '90%', md: '50%' }, backgroundColor: 'white', height: 'fit-content', position: 'relative', margin: '50px 0 0', borderRadius: '12px', gap: 1, padding: '40px 0 0' }}>
+            <Box sx={{ height: 320, transform: 'translateZ(0px)', flexGrow: 1, position: 'fixed', bottom: '85px', right: '0', zIndex: '100' }}>
+                <SpeedDial
+                    ariaLabel="SpeedDial controlled open example"
+                    sx={{ position: 'absolute', bottom: 16, right: 1 }}
+                    className='calc-icon'
+                    icon={<SpeedDialIcon />}
+                    onClose={handleClose}
+                    onOpen={handleOpen}
+                    open={open}
+                >
+                    <SpeedDialAction
+                        icon={<Calculate />}
+                        tooltipTitle='Calculator'
+                        onClick={() => setOpenCalc(true)}
+                    />
+                    {/* <SpeedDialAction
+                        icon={<Save />}
+                        tooltipTitle='Save'
+                        onClick={handleClose}
+                    /> */}
+                </SpeedDial>
+            </Box>
+            {openCalc &&
+                <Stack sx={{ alignItems: 'center', justifyContent: 'center', position: 'fixed', height: '100%', width: '100%', backgroundColor: '#000000d1', zIndex: '200', top: '0' }}>
+                    <Stack sx={{ width: { xs: '90%', md: '60%' }, backgroundColor: 'white', height: 'fit-content', position: 'relative', margin: '50px 0 0', borderRadius: '12px', gap: { xs: 0, sm: 0, md: 1, lg: 1 }, padding: '40px 0 0' }}>
                         <h1 style={{
                             fontWeight: 'bold',
                             textAlign: 'center',
@@ -46,6 +56,7 @@ function Calc() {
                             color: 'rgb(30, 65, 100)',
                             textTransform: 'uppercase',
                             letterSpacing: '4.14px',
+                            marginBottom: '0'
                         }}>Budget
                             <span style={{
                                 color: 'rgb(255 110 25)',
@@ -55,12 +66,13 @@ function Calc() {
                             }}>Calculator</span>
                         </h1>
 
-                        <Card sx={{ height: 'fit-content', padding: '2px 10px' }}>
+                        <Card sx={{ height: 'fit-content', padding: '6px 10px' }}>
                             <Stack component='form' sx={{ gap: 1, alignItems: 'center' }} onSubmit={
                                 async (e) => {
                                     e.preventDefault()
                                     setAmount(total * downPayment / 100);
                                     setMonth((total - total * downPayment / 100) / (years * 12));
+                                    setMaintenanceres(total * maintenance / 100)
                                 }
                             }>
                                 <Stack sx={{ flexDirection: { xs: 'column', sm: 'row' }, width: '100%', gap: 1 }}>
@@ -79,15 +91,15 @@ function Calc() {
                                 />
                                     <TextField
                                         sx={{ width: '100%' }}
-                                        id=""
-                                        label=""
+                                        id="maintenance"
+                                        label="Maintenance"
                                         type='number'
                                         placeholder='%'
-                                        value={0}
+                                        value={maintenance}
                                         className='inbutlapel
                                         '
                                         size="small"
-                                    // onChange={(e) => setTotal(e.target.value)}
+                                        onChange={(e) => setMaintenance(e.target.value)}
                                     />
                                 </Stack>
                                 <Stack sx={{ flexDirection: { xs: 'column', sm: 'row' }, width: '100%', gap: 1 }}>
@@ -127,8 +139,8 @@ function Calc() {
                             </Stack>
                         </Card>
                         <Container>
-                            <Row >
-                                <Col className='col-lg-6 col-md-6 col-sm-6 col-12' style={{ marginBottom: '10px' }}>
+                            <Row style={{ paddingBottom: '5px' }}>
+                                <Col className='col-lg-6 col-md-6 col-sm-6 col-12' >
                                     <Typography sx={{ fontWeight: 'bold' }}>
                                         Down Paymant Amount
                                         <Typography sx={{ padding: '2px 10px', borderRadius: '10px', backgroundColor: '#0d4d8f2e', color: 'rgb(255 110 25)', fontWeight: 'bold' }}>
@@ -136,7 +148,7 @@ function Calc() {
                                         </Typography>
                                     </Typography>
                                 </Col>
-                                <Col className='col-lg-6 col-md-6 col-sm-6 col-12' style={{ marginBottom: '10px' }}>
+                                <Col className='col-lg-6 col-md-6 col-sm-6 col-12' >
                                     <Typography sx={{ fontWeight: 'bold' }}>
                                         Monthly Paymant
                                         <Typography sx={{ padding: '2px 10px', borderRadius: '10px', backgroundColor: '#0d4d8f2e', color: 'rgb(255 110 25)', fontWeight: 'bold' }}>
@@ -144,7 +156,7 @@ function Calc() {
                                         </Typography>
                                     </Typography>
                                 </Col>
-                                <Col className='col-lg-6 col-md-6 col-sm-6 col-12' style={{ marginBottom: '10px' }}>
+                                <Col className='col-lg-6 col-md-6 col-sm-6 col-12' >
                                     <Typography sx={{ fontWeight: 'bold' }}>
                                         Quarterly payment
                                         <Typography sx={{ padding: '2px 10px', borderRadius: '10px', backgroundColor: '#0d4d8f2e', color: 'rgb(255 110 25)', fontWeight: 'bold' }}>
@@ -152,7 +164,7 @@ function Calc() {
                                         </Typography>
                                     </Typography>
                                 </Col>
-                                <Col className='col-lg-6 col-md-6 col-sm-6 col-12' style={{ marginBottom: '10px' }}>
+                                <Col className='col-lg-6 col-md-6 col-sm-6 col-12' >
                                     <Typography sx={{ fontWeight: 'bold' }}>
                                         Annual payment
                                         <Typography sx={{ padding: '2px 10px', borderRadius: '10px', backgroundColor: '#0d4d8f2e', color: 'rgb(255 110 25)', fontWeight: 'bold' }}>
@@ -160,15 +172,25 @@ function Calc() {
                                         </Typography>
                                     </Typography>
                                 </Col>
+                                <Col className='col-lg-6 col-md-6 col-sm-6 col-12' >
+                                    <Typography sx={{ fontWeight: 'bold' }}>
+                                        Maintenance
+                                        <Typography sx={{ padding: '2px 10px', borderRadius: '10px', backgroundColor: '#0d4d8f2e', color: 'rgb(255 110 25)', fontWeight: 'bold' }}>
+                                            {maintenanceres} EGP
+                                        </Typography>
+                                    </Typography>
+                                </Col>
                             </Row>
                         </Container>
                         <IconButton onClick={() => {
-                            setOpen(false)
+                            setOpenCalc(false)
                             setTotal('');
-                            setDownPayment('');
+                            setDownPayment(''); 
                             setYears('');
+                            setMaintenance('')
                             setAmount(0);
                             setMonth(0)
+                            setMaintenanceres(0)
                         }
                         } sx={{ position: 'absolute', top: '1px', right: '1px' }}>
                             <Close fontSize='large' />

@@ -20,6 +20,7 @@ import { Autoplay, EffectCoverflow, FreeMode, Navigation, Pagination } from 'swi
 import ContactUsBtn from "../Contact Us/ContactUsBtn";
 import { useState } from "react";
 import { Close } from "@mui/icons-material";
+import MavLoading from "../Loading/MavLoading";
 
 
 function DealDetails() {
@@ -27,17 +28,16 @@ function DealDetails() {
     const [openlay, setOpenLay] = useState(false)
     let disfiter = [];
     let dis3fiter = [];
-
-
     let { dealId } = useParams();
     const [value, loading, error] = useDocument(doc(db, 'Resell', dealId));
     if (loading) {
         return (
-            <h2>loading</h2>
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+                <MavLoading />
+            </div>
         )
     }
     if (value) {
-        console.log(value.data())
         const disdata = value.data().Dis.split('$')
         for (let i = 0; i < disdata.length; i++) {
             disfiter = [...disfiter, disdata[i]]
@@ -322,22 +322,3 @@ function DealDetails() {
 }
 
 export default DealDetails
-
-
-// export default function DealDetails() {
-//     return (
-//         <>
-//             <Swiper
-             
-//             >
-//                 {value.data().img.map((el, index) => {
-//                     return (
-//                         <SwiperSlide key={index}>
-//                             <img src={el} alt="" />
-//                         </SwiperSlide>
-//                     )
-//                 })}
-//             </Swiper>
-//         </>
-//     );
-// }

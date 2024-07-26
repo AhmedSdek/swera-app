@@ -2,15 +2,18 @@ import { faFacebook, faInstagram, faTiktok } from "@fortawesome/free-brands-svg-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Col, Container, Row } from "react-bootstrap";
 import footerlog from './log.webp'
-import { IconButton, Stack, Typography } from "@mui/material";
+import { Button, IconButton, Stack, Typography } from "@mui/material";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../firebase/config";
+import { getAuth, signOut } from "firebase/auth";
 function Footer(){
+    const [user] = useAuthState(auth);
+    const nav = useNavigate();
+    const adminData = ['arB4bTAtCiaMCBprrnOTRz6YbmT2', 'YZia9oRhhzdNFG1JOXteZOpcdw83']
     return (
-        <footer id="contact" style={{ margin: '40px 0 0 0 ', backgroundColor: '#1e4164' }}>
+        <footer id="contact" style={{ backgroundColor: '#1e4164' }}>
             <Container>
-                {/* <h2 className="footer-title">
-                Contact
-                </h2> */}
-
                 <Stack sx={{ justifyContent: 'space-between', alignItems: 'center', gap: '20px', flexDirection: { xs: 'column', sm: 'row', md: 'row' } }}>
                     <Col style={{
                         display: 'flex', flexDirection: 'column',
@@ -102,13 +105,43 @@ function Footer(){
 
                     </Col>
                 </Stack>
+
             </Container>
             <Stack sx={{ backgroundColor: 'black' }}>
                 <Container>
-                    <Stack>
-                        <Typography variant="caption" sx={{ padding: '3px', color: 'white' }}>
-                            &copy; Copyright 2024 - Maverick
-                        </Typography>
+                    <Stack sx={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <Stack>
+                            <Typography variant="caption" sx={{ padding: '3px', color: 'white' }}>
+                                &copy; Copyright 2024 - Maverick
+                            </Typography>
+                        </Stack>
+                        <Stack sx={{ flexDirection: 'row', gap: 3, justifyContent: { xs: 'center', sm: 'end' } }}>
+                            {!user ?
+                                <>
+                                    <Link className="nav-link" to="/signup">Register</Link>
+                                    <Link className="nav-link" to="/signin">Log in</Link>
+                                </>
+                                :
+                                <>
+                                    <div className="nav-link" >
+                                        <Button sx={{ lineHeight: '0', padding: '0', fontWeight: 'bold' }} onClick={() => {
+                                            const auth = getAuth();
+                                            signOut(auth).then(() => {
+                                                // Sign-out successful.
+                                            }).catch((error) => {
+                                                // An error happened.
+                                            });
+                                            nav('/')
+                                        }} variant="text" color="error">
+                                            Log Out
+                                        </Button>
+                                    </div>
+                                    {adminData.includes(user.uid) &&
+                                        <Link className="nav-link" to='/dashboard'>dash</Link>
+                                    }
+                                </>
+                            }
+                        </Stack>
                     </Stack>
                 </Container>
             </Stack>

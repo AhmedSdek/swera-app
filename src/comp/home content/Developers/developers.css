@@ -37,3 +37,12 @@
         justify-content: center;
         max-height: 30px;
 }
+.pay{
+    background-image: url(./10\ _.png);
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 150px;
+    height: 180px;
+    position: relative;
+}

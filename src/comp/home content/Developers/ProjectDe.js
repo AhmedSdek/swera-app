@@ -18,6 +18,7 @@ import { Autoplay, EffectCoverflow, FreeMode, Navigation, Pagination } from 'swi
 import ContactUsBtn from '../../Contact Us/ContactUsBtn';
 import { Close } from '@mui/icons-material';
 import { Col, Row } from 'react-bootstrap';
+import MavLoading from '../../Loading/MavLoading';
 function ProjectDe() {
     const { devId } = useParams();
     const { projId } = useParams();
@@ -29,9 +30,9 @@ function ProjectDe() {
 
     if (loading) {
         return (
-            <h1 style={{ margin: '60px 0' }}>
-                loading
-            </h1>
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 'calc(100vh - 140px)' }}>
+                <MavLoading />
+            </div>
         )
     }
     if (error) {
@@ -43,17 +44,15 @@ function ProjectDe() {
     }
 
     if (value) { 
-
-
         return (
-            <div style={{ marginTop: '25px' }}>
+            <div style={{ marginTop: '58px', minHeight: 'calc(100vh - 198px)' }}>
                 {value.data().dev.filter(person => person.proj === projId).map((fil) => {
                     const disdata = fil.projDes.split('$')
                     for (let i = 0; i < disdata.length; i++) {
                         disfiter = [...disfiter, disdata[i]]
                     }
                     const dis3data = fil.projDes3.split('$')
-                    for (let i = 0; i < disdata.length; i++) {
+                    for (let i = 0; i < dis3data.length; i++) {
                         dis3fiter = [...dis3fiter, dis3data[i]]
                     }
                     return (
@@ -149,8 +148,8 @@ function ProjectDe() {
                                 <Divider color='rgb(48 80 112)' />
 
                                 <Stack sx={{ padding: '10px 0' }}>
-                                    <Row >
-                                        <Col >
+                                    <Stack sx={{ flexDirection: 'row', justifyContent: { xs: 'center', sm: 'center', md: 'start' }, flexWrap: 'wrap', gap: 5 }}>
+                                        <Stack >
                                             <Typography variant='h6' sx={{ fontWeight: 'bold' }}>
                                                 Details
                                             </Typography>
@@ -183,8 +182,8 @@ function ProjectDe() {
                                                     <span className="text-2">Master Plan</span>
                                                 </div>
                                             </Button>
-                                        </Col>
-                                        <Col >
+                                        </Stack>
+                                        <Stack >
                                             <Typography variant='h6' sx={{ fontWeight: 'bold' }}>
                                                 Amenities
                                             </Typography>
@@ -198,8 +197,8 @@ function ProjectDe() {
                                                     )
                                                 })}
                                             </ul>
-                                        </Col>
-                                        <Col >
+                                        </Stack>
+                                        <Stack >
                                             <Typography variant='h6' sx={{ fontWeight: 'bold', }}>
                                                 Available Types
                                             </Typography>
@@ -213,247 +212,218 @@ function ProjectDe() {
                                                     )
                                                 })}
                                             </ul>
-                                        </Col>
-                                    </Row >
+                                        </Stack>
+                                    </Stack >
 
                                     {fil.pers1 &&
-                                        <div>
+                                        <Stack>
                                             <Typography variant='h6' sx={{ fontWeight: 'bold' }}>
                                                 Payment Plans
                                             </Typography>
-                                            <Row style={{ flexDirection: 'row', gap: 7 }}>
-
-                                                <Col >
+                                            <Stack sx={{ flexDirection: 'row', gap: 2, flexWrap: 'wrap', justifyContent: { xs: 'center', sm: 'center', md: 'start' } }}>
+                                                <Stack style={{ width: 'fit-content' }}>
                                                     <div style={{
                                                         display: 'flex',
                                                         gap: '16px',
                                                     }}>
-                                                        <div style={{
-                                                            width: '160px',
-                                                            padding: '16px 0',
-                                                            backgroundColor: ' #fbaa50',
-                                                            borderRadius: '8px',
-                                                            display: 'flex',
-                                                            flexDirection: 'column',
-                                                            color: 'white',
-                                                            alignItems: 'center',
-                                                            justifyContent: 'center',
-                                                            gap: 3
-                                                        }}>
-                                                            <h3 style={{
-                                                                display: 'flex',
-                                                                flexDirection: 'column',
-                                                                alignItems: 'center',
-                                                                justifyContent: 'center',
-                                                                gap: '1px',
-                                                                width: '100%'
-                                                            }} >
-                                                                <Stack sx={{ alignItems: 'center', width: '100%' }}
-                                                                >
-                                                                    <Typography variant='h6' style={{
-                                                                        fontFamily: 'materialRegular',
-                                                                        fontSize: '24px', fontWeight: 'bold'
-                                                                    }}>{fil.pers1}% </Typography>
-                                                                    <Typography variant='caption' style={{
-                                                                        fontFamily: 'materialRegular',
-                                                                        fontSize: '15px', textAlign: 'center'
-                                                                    }}>Down Payment </Typography>
-                                                                </Stack>
-
-                                                                <Stack sx={{ alignItems: 'center', width: '100%', flexDirection: 'row', justifyContent: 'center', gap: 1 }}>
-                                                                    <Typography variant='h6' style={{
-                                                                        fontFamily: 'materialRegular',
-                                                                        fontSize: '24px',
-                                                                    }}> {fil.year1} </Typography>
-                                                                    <Typography variant='h6' style={{
-                                                                        fontFamily: 'materialRegular',
-                                                                        fontSize: '20px',
-                                                                    }}> Years </Typography>
-                                                                </Stack>
-                                                            </h3>
-
-                                                            <Typography>
-                                                                {fil.offer1}
-                                                            </Typography>
-                                                        </div>
-                                                    </div>
-                                                </Col>
-
-                                                {fil.pers2 &&
-                                                    <Col >
-                                                        <div style={{
-                                                            display: 'flex',
-                                                            gap: '16px',
-                                                        }}>
-                                                            <div style={{
-                                                                width: '160px',
-                                                                padding: '16px 0',
-                                                                backgroundColor: ' #fbaa50',
-                                                                borderRadius: '8px',
-                                                                display: 'flex',
-                                                                flexDirection: 'column',
-                                                                color: 'white',
-                                                                alignItems: 'center',
-                                                                justifyContent: 'center',
-                                                                gap: 3
-                                                            }}>
+                                                        <div className='pay' >
+                                                            <Box sx={{ position: 'absolute', top: '30px', width: '100%', height: '100%', textAlign: 'center' }}>
                                                                 <h3 style={{
                                                                     display: 'flex',
                                                                     flexDirection: 'column',
                                                                     alignItems: 'center',
                                                                     justifyContent: 'center',
-                                                                    gap: '1px',
-                                                                    width: '100%'
+                                                                    width: '100%', margin: '0'
                                                                 }} >
                                                                     <Stack sx={{ alignItems: 'center', width: '100%' }}
-                                                                >
-                                                                    <Typography variant='h6' style={{
-                                                                        fontFamily: 'materialRegular',
-                                                                            fontSize: '24px', fontWeight: 'bold'
-                                                                        }}>{fil.pers2}% </Typography>
-                                                                    <Typography variant='caption' style={{
-                                                                        fontFamily: 'materialRegular',
-                                                                        fontSize: '15px', textAlign: 'center'
-                                                                    }}>Down Payment </Typography>
-                                                                </Stack>
+                                                                    >
+                                                                        <Typography variant='h6' style={{
+                                                                            fontFamily: 'materialRegular',
+                                                                            fontSize: '24px', fontWeight: 'bold', marginRight: '15px'
+                                                                        }}>{fil.pers1}% </Typography>
+                                                                        <Typography variant='caption' style={{
+                                                                            fontFamily: 'materialRegular',
+                                                                            fontSize: '15px', textAlign: 'center', fontWeight: 'bold'
+                                                                        }}>Down Payment </Typography>
+                                                                    </Stack>
 
-                                                                    <Stack sx={{ alignItems: 'center', width: '100%', flexDirection: 'row', justifyContent: 'center', gap: 1 }}>
-                                                                    <Typography variant='h6' style={{
-                                                                        fontFamily: 'materialRegular',
-                                                                        fontSize: '24px',
-                                                                        }}> {fil.year2} </Typography>
-                                                                    <Typography variant='h6' style={{
-                                                                        fontFamily: 'materialRegular',
-                                                                        fontSize: '20px',
-                                                                    }}> Years </Typography>
-                                                                </Stack>
-                                                            </h3>
-
-                                                                <Typography>
-                                                                    {fil.offer2}
+                                                                    <Stack sx={{ alignItems: 'center', width: '100%', flexDirection: 'row', justifyContent: 'center' }}>
+                                                                        <Typography variant='h6' style={{
+                                                                            fontFamily: 'materialRegular',
+                                                                            fontSize: '18px', fontWeight: 'bold', backgroundColor: '#1e4164', color: 'white', borderRadius: '50%',
+                                                                            height: '23px',
+                                                                            width: '23px',
+                                                                            lineHeight: '1.2',
+                                                                            padding: '2px'
+                                                                        }}> {fil.year1} </Typography>
+                                                                        <Typography variant='h6' style={{
+                                                                            fontFamily: 'materialRegular',
+                                                                            fontSize: '18px', fontWeight: 'bold'
+                                                                        }}> Years </Typography>
+                                                                    </Stack>
+                                                                </h3>
+                                                                <Typography sx={{ color: '#ff914d', fontWeight: 'bold', fontSize: '14px' }}>
+                                                                    {fil.offer1}
                                                                 </Typography>
+                                                            </Box>
+                                                        </div>
+                                                    </div>
+                                                </Stack>
+
+                                                {fil.pers2 &&
+                                                    <Stack >
+                                                        <div style={{
+                                                            display: 'flex',
+                                                            gap: '16px',
+                                                        }}>
+                                                            <div className='pay' >
+                                                                <Box sx={{ position: 'absolute', top: '30px', width: '100%', height: '100%', textAlign: 'center' }}>
+                                                                    <h3 style={{
+                                                                        display: 'flex',
+                                                                        flexDirection: 'column',
+                                                                        alignItems: 'center',
+                                                                        justifyContent: 'center',
+                                                                        width: '100%', margin: '0'
+                                                                    }} >
+                                                                        <Stack sx={{ alignItems: 'center', width: '100%' }}
+                                                                        >
+                                                                            <Typography variant='h6' style={{
+                                                                                fontFamily: 'materialRegular',
+                                                                                fontSize: '24px', fontWeight: 'bold', marginRight: '15px'
+                                                                            }}>{fil.pers2}% </Typography>
+                                                                            <Typography variant='caption' style={{
+                                                                                fontFamily: 'materialRegular',
+                                                                                fontSize: '15px', textAlign: 'center', fontWeight: 'bold'
+                                                                            }}>Down Payment </Typography>
+                                                                        </Stack>
+
+                                                                        <Stack sx={{ alignItems: 'center', width: '100%', flexDirection: 'row', justifyContent: 'center' }}>
+                                                                            <Typography variant='h6' style={{
+                                                                                fontFamily: 'materialRegular',
+                                                                                fontSize: '18px', fontWeight: 'bold', backgroundColor: '#1e4164', color: 'white', borderRadius: '50%',
+                                                                                height: '23px',
+                                                                                width: '23px',
+                                                                                lineHeight: '1.2',
+                                                                                padding: '2px'
+                                                                            }}> {fil.year2} </Typography>
+                                                                            <Typography variant='h6' style={{
+                                                                                fontFamily: 'materialRegular',
+                                                                                fontSize: '18px', fontWeight: 'bold'
+                                                                            }}> Years </Typography>
+                                                                        </Stack>
+                                                                    </h3>
+                                                                    <Typography sx={{ color: '#ff914d', fontWeight: 'bold', fontSize: '14px' }}>
+                                                                        {fil.offer2}
+                                                                    </Typography>
+                                                                </Box>
                                                             </div>
                                                         </div>
-                                                    </Col>
+                                                    </Stack>
                                                 }
 
                                                 {fil.pers3 &&
-                                                    <Col >
+                                                    <Stack >
                                                         <div style={{
                                                             display: 'flex',
                                                             gap: '16px',
                                                         }}>
-                                                            <div style={{
-                                                                width: '160px',
-                                                                padding: '16px 0',
-                                                                backgroundColor: ' #fbaa50',
-                                                                borderRadius: '8px',
-                                                                display: 'flex',
-                                                                flexDirection: 'column',
-                                                                color: 'white',
-                                                                alignItems: 'center',
-                                                                justifyContent: 'center',
-                                                                gap: 3
-                                                            }}>
+                                                            <div className='pay' >
+                                                                <Box sx={{ position: 'absolute', top: '30px', width: '100%', height: '100%', textAlign: 'center' }}>
                                                                 <h3 style={{
                                                                     display: 'flex',
                                                                     flexDirection: 'column',
                                                                     alignItems: 'center',
                                                                     justifyContent: 'center',
-                                                                    gap: '1px',
-                                                                    width: '100%'
+                                                                        width: '100%', margin: '0'
                                                                 }} >
                                                                     <Stack sx={{ alignItems: 'center', width: '100%' }}
-                                                                >
-                                                                    <Typography variant='h6' style={{
-                                                                        fontFamily: 'materialRegular',
-                                                                            fontSize: '24px', fontWeight: 'bold'
+                                                                        >
+                                                                            <Typography variant='h6' style={{
+                                                                                fontFamily: 'materialRegular',
+                                                                                fontSize: '24px', fontWeight: 'bold', marginRight: '15px'
                                                                         }}>{fil.pers3}% </Typography>
-                                                                    <Typography variant='caption' style={{
-                                                                        fontFamily: 'materialRegular',
-                                                                        fontSize: '15px', textAlign: 'center'
-                                                                    }}>Down Payment </Typography>
-                                                                </Stack>
+                                                                            <Typography variant='caption' style={{
+                                                                                fontFamily: 'materialRegular',
+                                                                                fontSize: '15px', textAlign: 'center', fontWeight: 'bold'
+                                                                            }}>Down Payment </Typography>
+                                                                        </Stack>
 
-                                                                    <Stack sx={{ alignItems: 'center', width: '100%', flexDirection: 'row', justifyContent: 'center', gap: 1 }}>
-                                                                    <Typography variant='h6' style={{
-                                                                        fontFamily: 'materialRegular',
-                                                                        fontSize: '24px',
+                                                                        <Stack sx={{ alignItems: 'center', width: '100%', flexDirection: 'row', justifyContent: 'center' }}>
+                                                                            <Typography variant='h6' style={{
+                                                                                fontFamily: 'materialRegular',
+                                                                                fontSize: '18px', fontWeight: 'bold', backgroundColor: '#1e4164', color: 'white', borderRadius: '50%',
+                                                                                height: '23px',
+                                                                                width: '23px',
+                                                                                lineHeight: '1.2',
+                                                                                padding: '2px'
                                                                         }}> {fil.year3} </Typography>
-                                                                    <Typography variant='h6' style={{
-                                                                        fontFamily: 'materialRegular',
-                                                                        fontSize: '20px',
-                                                                    }}> Years </Typography>
-                                                                </Stack>
-                                                            </h3>
-
-                                                                <Typography>
+                                                                            <Typography variant='h6' style={{
+                                                                                fontFamily: 'materialRegular',
+                                                                                fontSize: '18px', fontWeight: 'bold'
+                                                                            }}> Years </Typography>
+                                                                        </Stack>
+                                                                    </h3>
+                                                                    <Typography sx={{ color: '#ff914d', fontWeight: 'bold', fontSize: '14px' }}>
                                                                     {fil.offer3}
                                                                 </Typography>
+                                                                </Box>
                                                             </div>
                                                         </div>
-                                                    </Col>
+                                                    </Stack>
                                                 }
 
                                                 {fil.pers4 &&
-                                                    <Col >
+                                                    <Stack >
                                                         <div style={{
                                                             display: 'flex',
                                                             gap: '16px',
                                                         }}>
-                                                            <div style={{
-                                                                width: '160px',
-                                                                padding: '16px 0',
-                                                                backgroundColor: ' #fbaa50',
-                                                                borderRadius: '8px',
-                                                                display: 'flex',
-                                                                flexDirection: 'column',
-                                                                color: 'white',
-                                                                alignItems: 'center',
-                                                                justifyContent: 'center',
-                                                                gap: 3
-                                                            }}>
+                                                            <div className='pay' >
+                                                                <Box sx={{ position: 'absolute', top: '30px', width: '100%', height: '100%', textAlign: 'center' }}>
                                                                 <h3 style={{
                                                                     display: 'flex',
                                                                     flexDirection: 'column',
                                                                     alignItems: 'center',
                                                                     justifyContent: 'center',
-                                                                    gap: '1px',
-                                                                    width: '100%'
+                                                                        width: '100%', margin: '0'
                                                                 }} >
                                                                     <Stack sx={{ alignItems: 'center', width: '100%' }}
-                                                                >
-                                                                    <Typography variant='h6' style={{
-                                                                        fontFamily: 'materialRegular',
-                                                                            fontSize: '24px', fontWeight: 'bold'
-                                                                    }}>{fil.pers4}% </Typography>
-                                                                    <Typography variant='caption' style={{
-                                                                        fontFamily: 'materialRegular',
-                                                                        fontSize: '15px', textAlign: 'center'
-                                                                    }}>Down Payment </Typography>
-                                                                </Stack>
+                                                                        >
+                                                                            <Typography variant='h6' style={{
+                                                                                fontFamily: 'materialRegular',
+                                                                                fontSize: '24px', fontWeight: 'bold', marginRight: '15px'
+                                                                            }}>{fil.pers4}% </Typography>
+                                                                            <Typography variant='caption' style={{
+                                                                                fontFamily: 'materialRegular',
+                                                                                fontSize: '15px', textAlign: 'center', fontWeight: 'bold'
+                                                                            }}>Down Payment </Typography>
+                                                                        </Stack>
 
-                                                                    <Stack sx={{ alignItems: 'center', width: '100%', flexDirection: 'row', justifyContent: 'center', gap: 1 }}>
-                                                                    <Typography variant='h6' style={{
-                                                                        fontFamily: 'materialRegular',
-                                                                        fontSize: '24px',
-                                                                    }}> {fil.year4} </Typography>
-                                                                    <Typography variant='h6' style={{
-                                                                        fontFamily: 'materialRegular',
-                                                                        fontSize: '20px',
-                                                                    }}> Years </Typography>
-                                                                </Stack>
-                                                            </h3>
-
-                                                                <Typography>
-                                                                    {fil.offer4}
+                                                                        <Stack sx={{ alignItems: 'center', width: '100%', flexDirection: 'row', justifyContent: 'center' }}>
+                                                                            <Typography variant='h6' style={{
+                                                                                fontFamily: 'materialRegular',
+                                                                                fontSize: '18px', fontWeight: 'bold', backgroundColor: '#1e4164', color: 'white', borderRadius: '50%',
+                                                                                height: '23px',
+                                                                                width: '23px',
+                                                                                lineHeight: '1.2',
+                                                                                padding: '2px'
+                                                                            }}> {fil.year4} </Typography>
+                                                                            <Typography variant='h6' style={{
+                                                                                fontFamily: 'materialRegular',
+                                                                                fontSize: '18px', fontWeight: 'bold'
+                                                                            }}> Years </Typography>
+                                                                        </Stack>
+                                                                    </h3>
+                                                                    <Typography sx={{ color: '#ff914d', fontWeight: 'bold', fontSize: '14px' }}>
+                                                                        {fil.offer4}
                                                                 </Typography>
+                                                                </Box>
                                                             </div>
                                                         </div>
-                                                    </Col>
+                                                    </Stack>
                                                 }
-                                            </Row>
-                                        </div>
+                                            </Stack>
+                                        </Stack>
                                     }
                                     <Typography sx={{ fontWeight: 'bold', padding: '6px 0' }}>
                                         {`About ${fil.proj}`}
@@ -470,22 +440,13 @@ function ProjectDe() {
                                         {fil.projDes2}
                                     </Typography>
                                     {dis3fiter.map((p, index) => {
+                                        console.log(dis3fiter)
                                         return (
                                             <Typography key={index}>
                                                 {p}
                                             </Typography>
                                         )
                                     })}
-
-                                    { /*             <Typography>
-                                        {fil.projDes4}
-                                    </Typography>
-                                    <Typography sx={{ fontWeight: 'bold', padding: '6px 0' }}>
-                                        {fil.projDes5}
-                                    </Typography>
-                                    <Typography>
-                                        {fil.projDes6}
-                                </Typography>*/}
                                 </Stack>
                             </Container> 
                             <Card sx={{
@@ -495,7 +456,6 @@ function ProjectDe() {
                                 top: '0',
                                 transition: '0.5s',
                                 right: open ? '0' : '-100%',
-                                // display: !open && 'none',
                                 padding: "100px 50px ",
                                 width: { sm: '90%', md: '50%', xs: '100%' }
                             }}>
