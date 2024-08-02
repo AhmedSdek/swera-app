@@ -22,7 +22,7 @@ function Calc() {
     const [open, setOpen] = React.useState(false);
     return (
         <>
-            <Box sx={{ height: 320, transform: 'translateZ(0px)', flexGrow: 1, position: 'fixed', bottom: '85px', right: '0', zIndex: '100' }}>
+            <Box sx={{ height: 320, transform: 'translateZ(0px)', flexGrow: 1, position: 'fixed', bottom: '85px', right: '5px', zIndex: '100' }}>
                 <SpeedDial
                     ariaLabel="SpeedDial controlled open example"
                     sx={{ position: 'absolute', bottom: 16, right: 1 }}

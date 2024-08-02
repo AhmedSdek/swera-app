@@ -1,9 +1,9 @@
-.col a img {
+.colDev a img {
     -webkit-filter: drop-shadow(0 0 10px rgba(0,0,0,.15));
     filter: drop-shadow(0 0 10px rgba(0,0,0,.15));
     transition: 0.5s;
 }
-.col a:hover .img {
+.colDev a:hover .img {
     -webkit-transform: scale(1.1);
     transform: scale(1.1);
 }

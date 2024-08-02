@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useCollection } from "react-firebase-hooks/firestore";
-import { collection, query, where } from "firebase/firestore";
-import { Box, Card, CardContent, Container, FormControl, InputLabel, MenuItem, Select, Stack, Typography } from '@mui/material';
+import { collection, doc, query, updateDoc, where } from "firebase/firestore";
+import { Box, Card, CardContent, Checkbox, Container, FormControl, InputLabel, MenuItem, Select, Stack, Typography } from '@mui/material';
 import { Col, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { HashLoader } from 'react-spinners';
@@ -9,6 +9,7 @@ import { db } from '../../firebase/config';
 import './styles.css'
 import ContactUsIcon from '../Contact Us/ContactUsIcon';
 import MavLoading from '../Loading/MavLoading';
+import { Favorite, FavoriteBorder } from '@mui/icons-material';
 function MaverickDeals() {
 
     const [dataHandel, setDataHandel] = useState(
@@ -877,8 +878,8 @@ function MaverickDeals() {
                         {value.docs.map((item, index) => {
                             return (
                                 <Col className=" col-sm-6 col-12 col-lg-4 col-md-6" style={{ marginBottom: '15px', position: 'relative', maxHeight: '100%' }} key={index}>
-                                    <Link to={`/maverickdeals/${item.data().id}`} style={{ textDecoration: 'none' }}>
                                         <Card sx={{ position: 'relative', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                                        <Link to={`/maverickdeals/${item.data().id}`} style={{ textDecoration: 'none' }}>
                                             <Stack>
                                                 <Box sx={{ height: '215px' }}>
                                                     <img style={{ height: '100%', width: '100%', objectFit: 'cover' }} src={item.data().img[0]} alt='' />
@@ -946,11 +947,37 @@ function MaverickDeals() {
                                                     </Typography>
                                                 </CardContent>
                                             </Stack>
-                                            <Box sx={{ padding: '0 10px 10px 0' }}>
+                                        </Link >
+
+                                        <Stack sx={{ padding: '0 10px 10px 0', flexDirection: 'row', justifyContent: 'space-between' }}>
+                                            <Stack sx={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                                                <Checkbox checked={localStorage.getItem(item.data().id) === 'true' ? true : false} aria-label='like' icon={<FavoriteBorder />} checkedIcon={<Favorite sx={{ color: 'red' }} />}
+                                                    onChange={async (e) => {
+                                                        if (e.target.checked) {
+                                                            localStorage.setItem(item.data().id, true);
+                                                            localStorage.setItem(item.data().refNum, item.data().id);
+                                                            try {
+                                                                await updateDoc(doc(db, 'Resell', item.data().id), {
+                                                                    like: item.data().like + 1
+                                                                });
+                                                            } catch (er) {
+                                                                console.log(er)
+                                                            }
+                                                        } else {
+                                                            localStorage.removeItem(item.data().id);
+                                                            localStorage.removeItem(item.data().refNum)
+                                                            await updateDoc(doc(db, 'Resell', item.data().id), {
+                                                                like: item.data().like - 1
+                                                            });
+                                                        }
+                                                    }} />
+                                                <Typography>
+                                                    {item.data().like}
+                                                </Typography>
+                                            </Stack>
                                                 <ContactUsIcon />
-                                            </Box>
-                                        </Card>
-                                    </Link >
+                                        </Stack>
+                                    </Card>
                                 </Col>
                             )
                         })}

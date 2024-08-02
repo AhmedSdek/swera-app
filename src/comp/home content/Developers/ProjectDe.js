@@ -30,7 +30,7 @@ function ProjectDe() {
 
     if (loading) {
         return (
-            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 'calc(100vh - 140px)' }}>
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 'calc(100vh - 100px)' }}>
                 <MavLoading />
             </div>
         )
@@ -45,7 +45,7 @@ function ProjectDe() {
 
     if (value) { 
         return (
-            <div style={{ marginTop: '58px', minHeight: 'calc(100vh - 198px)' }}>
+            <div style={{ marginTop: '58px', minHeight: 'calc(100vh - 100px)' }}>
                 {value.data().dev.filter(person => person.proj === projId).map((fil) => {
                     const disdata = fil.projDes.split('$')
                     for (let i = 0; i < disdata.length; i++) {
@@ -77,8 +77,6 @@ function ProjectDe() {
                                                 slidesPerView: 3,
                                                 // slidesPerGroup: 1,
                                                 // spaceBetween: 300,
-
-
                                             },
                                             992: {
                                                 slidesPerView: 3,
@@ -227,7 +225,7 @@ function ProjectDe() {
                                                         gap: '16px',
                                                     }}>
                                                         <div className='pay' >
-                                                            <Box sx={{ position: 'absolute', top: '30px', width: '100%', height: '100%', textAlign: 'center' }}>
+                                                            <Box sx={{ position: 'absolute', top: '30px', width: '100%', height: '100%', textAlign: 'center', padding: '0 10px' }}>
                                                                 <h3 style={{
                                                                     display: 'flex',
                                                                     flexDirection: 'column',
@@ -277,7 +275,7 @@ function ProjectDe() {
                                                             gap: '16px',
                                                         }}>
                                                             <div className='pay' >
-                                                                <Box sx={{ position: 'absolute', top: '30px', width: '100%', height: '100%', textAlign: 'center' }}>
+                                                                <Box sx={{ position: 'absolute', top: '30px', width: '100%', height: '100%', textAlign: 'center', padding: '0 10px' }}>
                                                                     <h3 style={{
                                                                         display: 'flex',
                                                                         flexDirection: 'column',
@@ -328,7 +326,7 @@ function ProjectDe() {
                                                             gap: '16px',
                                                         }}>
                                                             <div className='pay' >
-                                                                <Box sx={{ position: 'absolute', top: '30px', width: '100%', height: '100%', textAlign: 'center' }}>
+                                                                <Box sx={{ position: 'absolute', top: '30px', width: '100%', height: '100%', textAlign: 'center', padding: '0 10px' }}>
                                                                 <h3 style={{
                                                                     display: 'flex',
                                                                     flexDirection: 'column',
@@ -379,7 +377,7 @@ function ProjectDe() {
                                                             gap: '16px',
                                                         }}>
                                                             <div className='pay' >
-                                                                <Box sx={{ position: 'absolute', top: '30px', width: '100%', height: '100%', textAlign: 'center' }}>
+                                                                <Box sx={{ position: 'absolute', top: '30px', width: '100%', height: '100%', textAlign: 'center', padding: '0 10px' }}>
                                                                 <h3 style={{
                                                                     display: 'flex',
                                                                     flexDirection: 'column',
@@ -440,7 +438,6 @@ function ProjectDe() {
                                         {fil.projDes2}
                                     </Typography>
                                     {dis3fiter.map((p, index) => {
-                                        console.log(dis3fiter)
                                         return (
                                             <Typography key={index}>
                                                 {p}

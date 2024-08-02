@@ -1,9 +1,9 @@
 import { Outlet } from "react-router-dom"
-import Err from "../Err"
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebase/config";
 import { Container, Stack } from "@mui/material";
 import NavBtn from "./NavBtn";
+import Err from "../Err/Err";
 
 
 function Dashboard() {

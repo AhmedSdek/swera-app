@@ -1,5 +1,5 @@
-import { Box, Card, CardContent, Container, Stack, Typography } from '@mui/material'
-import { collection } from 'firebase/firestore';
+import { Box, Card, CardContent, Checkbox, Container, Stack, Typography } from '@mui/material'
+import { collection, doc, updateDoc } from 'firebase/firestore';
 import React from 'react'
 import { useCollection } from 'react-firebase-hooks/firestore';
 import { db } from '../../firebase/config';
@@ -8,12 +8,12 @@ import { Col, Row } from 'react-bootstrap';
 import ContactUsIcon from '../Contact Us/ContactUsIcon';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { FreeMode, Pagination, Autoplay } from 'swiper/modules';
+import { Bookmark, BookmarkBorder, Favorite, FavoriteBorder } from '@mui/icons-material';
 
 function HomeDeals() {
     const [value, loading, error] = useCollection(collection(db, 'Resell'));
     let arr = [];
     let arrfilt = [];
-
     if (value) {
         // value.docs.map((item) => arr.push(item.data()))
         // for (let i = 0; i < 3; i++) {
@@ -34,10 +34,10 @@ function HomeDeals() {
                             </Link>
                         </Stack >
                         <Swiper
-                            // autoplay={{
-                            //     delay: 2500,
-                            //     disableOnInteraction: false,
-                            // }}
+                            autoplay={{
+                                delay: 2500,
+                                disableOnInteraction: false,
+                            }}
                             spaceBetween={10}
                             breakpoints={{
                                 640: {
@@ -66,8 +66,8 @@ function HomeDeals() {
                                             <Col key={index} style={{ position: 'relative', height: '460px' }} >
                                                 {col &&
                                                     <>
-                                                    <Link to={`/maverickdeals/${col.data().id}`} style={{ textDecoration: 'none' }}>
-                                                        <Card sx={{ position: 'relative', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                                                    <Card sx={{ position: 'relative', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                                                        <Link to={`/maverickdeals/${col.data().id}`} style={{ textDecoration: 'none' }}>
                                                             <Stack>
                                                                 <Box sx={{ height: '215px' }}>
                                                                     <img style={{ height: '100%', width: '100%', objectFit: 'cover' }} src={col.data().img[0]} alt='' />
@@ -137,11 +137,36 @@ function HomeDeals() {
                                                                     </Typography>
                                                                 </CardContent>
                                                             </Stack>
-                                                            <Stack sx={{ padding: '0 10px 10px 0' }}>
-                                                                <ContactUsIcon />
+                                                        </Link>
+                                                        <Stack sx={{ padding: '0 10px 10px 0', flexDirection: 'row', justifyContent: 'space-between' }}>
+                                                            <Stack sx={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                                                                <Checkbox checked={localStorage.getItem(col.data().id) === 'true' ? true : false} aria-label='like' icon={<FavoriteBorder />} checkedIcon={<Favorite sx={{ color: 'red' }} />}
+                                                                    onChange={async (e) => {
+                                                                        if (e.target.checked) {
+                                                                            localStorage.setItem(col.data().id, true);
+                                                                            localStorage.setItem(col.data().refNum, col.data().id);
+                                                                            try {
+                                                                                await updateDoc(doc(db, 'Resell', col.data().id), {
+                                                                                    like: col.data().like + 1
+                                                                                });
+                                                                            } catch (er) {
+                                                                                console.log(er)
+                                                                            }
+                                                                        } else {
+                                                                            localStorage.removeItem(col.data().id);
+                                                                            localStorage.removeItem(col.data().refNum)
+                                                                            await updateDoc(doc(db, 'Resell', col.data().id), {
+                                                                                like: col.data().like - 1
+                                                                            });
+                                                                        }
+                                                                    }} />
+                                                                <Typography>
+                                                                    {col.data().like}
+                                                                </Typography>
                                                             </Stack>
-                                                            </Card>
-                                                    </Link >
+                                                            <ContactUsIcon />
+                                                        </Stack>
+                                                    </Card>
                                                     </>
                                                 }
                                             </Col>

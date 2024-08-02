@@ -137,9 +137,10 @@ function Sell() {
         setBtn(true)
 
         try {
-            await setDoc(doc(db, 'data', `${new Date().getTime()}`), {
+            const id = new Date().getTime()
+            await setDoc(doc(db, 'data', `${id}`), {
                 Name: name,
-                id: `${new Date().getTime()}`,
+                id: `${id}`,
                 Phone: phone,
                 Type: type,
                 Area: area,

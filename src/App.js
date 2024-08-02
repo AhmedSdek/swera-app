@@ -14,7 +14,6 @@ import Signin from './Auth/Signin';
 import Regester from './Auth/Regester';
 import { Box, Stack, ThemeProvider, createTheme } from '@mui/material';
 import Sell from './comp/Sell/Sell';
-import Err from './comp/Err';
 import Dashboard from './comp/admin/Dashboard';
 import ReSale from './comp/admin/reSale/ReSale';
 import SaleData from './comp/admin/SaleData';
@@ -39,6 +38,8 @@ import EditDeals from './comp/admin/Edit/Deals/EditDeals';
 import Editluanches from './comp/admin/Edit/Luanches/Editluanches';
 import Editluanchesdetails from './comp/admin/Edit/Luanches/Editluanchesdetails';
 import ContactPage from './comp/ContactPage/ContactPage';
+import FavoriteList from './comp/FavList/FavoriteList';
+import Err from './comp/Err/Err';
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -101,6 +102,7 @@ function App() {
                 <Route path='newlaunches/:launchId' element={<NewLaunchDetails />} />
                 <Route path='/' element={<Home />} />
                 <Route path='/about' element={<About />} />
+                <Route path='/favoriteList' element={<FavoriteList />} />
                 <Route path='/sahelmap' element={<SahelMapPage />} />
                 <Route path='/maverickdeals' element={<MaverickDeals />} />
                 <Route path='/maverickdeals/:dealId' element={<DealDetails />} />

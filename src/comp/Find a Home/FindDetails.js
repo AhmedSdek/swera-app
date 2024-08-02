@@ -6,6 +6,7 @@ import { Box, Card, CardContent, Container, Divider, Stack, Typography } from '@
 import { Col, Row } from 'react-bootstrap';
 import { useState } from 'react';
 import ContactUsIcon from '../Contact Us/ContactUsIcon';
+import MavLoading from '../Loading/MavLoading';
 
 function FindDetails() {
     const { districtid } = useParams();
@@ -72,6 +73,13 @@ function FindDetails() {
             </Box>
         )
 
+    }
+    if (loading) {
+        return (
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 'calc(100vh - 100px)' }}>
+                <MavLoading />
+            </div>
+        )
     }
 }
 

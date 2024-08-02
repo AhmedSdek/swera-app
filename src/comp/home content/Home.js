@@ -11,10 +11,10 @@ import { useNavigate } from 'react-router-dom';
 import { Search } from '@mui/icons-material';
 import HomePup from './HomePup/HomePup';
 function Home() {
-    const [pup, setPup] = useState(0);
-    useEffect(() => {
-        setPup(1)
-    }, []);
+    // const [pup, setPup] = useState(0);
+    // useEffect(() => {
+    //     setPup(1)
+    // }, []);
     const [serch, setSerch] = useState('')
     function cap(string) {
         return string.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
@@ -55,7 +55,7 @@ function Home() {
                 <HomeForm />
             </Stack>
             <Calc />
-            <HomePup pup={pup} setPup={setPup} />
+            {/* <HomePup pup={pup} setPup={setPup} /> */}
         </div> 
     )
 }

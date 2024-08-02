@@ -129,7 +129,7 @@ function Footer(){
                                             signOut(auth).then(() => {
                                                 // Sign-out successful.
                                             }).catch((error) => {
-                                                // An error happened.
+                                                // An error happened. 
                                             });
                                             nav('/')
                                         }} variant="text" color="error">

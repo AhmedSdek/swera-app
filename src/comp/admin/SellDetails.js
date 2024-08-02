@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { Box, Card, Container, Typography } from "@mui/material";
 import { Col, Row } from "react-bootstrap";
 import { db } from "../../firebase/config";
+import MavLoading from "../Loading/MavLoading";
 
 function SellDetails() {
     let { id } = useParams();
@@ -16,8 +17,7 @@ function SellDetails() {
     if (value) {
         // console.log(value.data())
         return (
-            <Box sx={{ marginTop: '56px', padding: '15px 0' }}>
-                hhhhhhhhhhhhhhhhhh
+            <Box sx={{ padding: '70px 0 0', minHeight: 'calc(100vh - 100px)' }}>
                 <Container>
                     <Row >
                         {value.data().img.map((el, index) => {
@@ -78,6 +78,13 @@ function SellDetails() {
                     </Row>
                 </Container>
             </Box>
+        )
+    }
+    if (loading) {
+        return (
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 'calc(100vh - 100px)' }}>
+                <MavLoading />
+            </div>
         )
     }
 }

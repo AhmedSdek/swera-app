@@ -26,10 +26,10 @@ import MavLoading from "../Loading/MavLoading";
 function DealDetails() {
     const [open, setOpen] = useState(false)
     const [openlay, setOpenLay] = useState(false)
-    let disfiter = [];
-    let dis3fiter = [];
     let { dealId } = useParams();
     const [value, loading, error] = useDocument(doc(db, 'Resell', dealId));
+    let disfiter = [];
+    let dis3fiter = [];
     if (loading) {
         return (
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
@@ -54,7 +54,7 @@ function DealDetails() {
                             spaceBetween={10}
                             slidesPerView={4}
                             freeMode={true}
-                            // centeredSlides={true}
+                            centeredSlides={true}
                             loop={true}
                             breakpoints={{
                                 200: {

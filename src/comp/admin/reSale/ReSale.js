@@ -274,13 +274,14 @@ function ReSale() {
     const sendData = async () => {
         setBtn(true)
         try {
-            await setDoc(doc(db, 'Resell', `${new Date().getTime()}`), {
-                id: `${new Date().getTime()}`,
+            const id = new Date().getTime()
+            await setDoc(doc(db, 'Resell', `${id}`), {
+                id: `${id}`,
                 imgtext: imgText,
                 price: price,
                 refNum: refNum,
                 delivery: delivery,
-                Type: type,
+                Type: type, 
                 Area: area,
                 compoundName: compoundName,
                 icon: icon,
@@ -299,7 +300,8 @@ function ReSale() {
                 img: url,
                 Layoutimg: url2,
                 Masterimg: url3,
-                sold: sold
+                sold: sold,
+                like: 0
             });
         } catch (er) {
         }
@@ -531,7 +533,6 @@ function ReSale() {
                                     <MenuItem value={8}>8</MenuItem>
                                     <MenuItem value={9}>9</MenuItem>
                                     <MenuItem value={10}>10</MenuItem>
-
                                 </Select>
                             </FormControl>
                         </Stack>
@@ -649,7 +650,7 @@ function ReSale() {
                                     handleSaleChange(e)
                                 }}
                             >
-                                <FormControlLabel value="ReSale" control={<Radio />} label="Resale" />
+                                <FormControlLabel value="Resale" control={<Radio />} label="Resale" />
                                 <FormControlLabel value="Rent" control={<Radio />} label="Rent" />
                             </RadioGroup>
                         </FormControl>
