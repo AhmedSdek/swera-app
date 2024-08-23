@@ -8,7 +8,7 @@ header{
     align-items: center;
     justify-content: center;
     position: relative;
-    min-height: 450px;
+    min-height: 425px;
 }
 @media (max-width:992px) {
     .header-main{
@@ -87,9 +87,12 @@ header::after{
     }
 }
 .home-header{
-    background-image: url('./egyptheader.webp');
+    /* background-image: url('./im.png'); */
     /* background-size: 100% ; */
     background-repeat: no-repeat;
+    /* background-position: center; */
+    background-size: cover;
+    margin-top: 58px;
 }
 .inbutdiv div{
 background-color: white;

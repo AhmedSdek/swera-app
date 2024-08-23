@@ -79,7 +79,7 @@ function HomeForm() {
                             </Box>
                         <TextField
                                 id="message"
-                                label="messagen"
+                            label="message"
                                 multiline
                             className='inbutdiv'
                                 value={message}

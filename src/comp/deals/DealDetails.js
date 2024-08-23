@@ -1,6 +1,6 @@
 import { doc } from "firebase/firestore";
 import { useDocument } from "react-firebase-hooks/firestore";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Box, Button, Card, Container, Divider, IconButton, Stack, Typography } from "@mui/material";
 import { Col, Row } from "react-bootstrap";
 import { db } from "../../firebase/config";
@@ -16,12 +16,22 @@ import 'swiper/css/pagination';
 import './styles.css'; 
 
 // import required modules
-import { Autoplay, EffectCoverflow, FreeMode, Navigation, Pagination } from 'swiper/modules';
+import { Autoplay, FreeMode, Navigation, Pagination } from 'swiper/modules';
 import ContactUsBtn from "../Contact Us/ContactUsBtn";
 import { useState } from "react";
-import { Close } from "@mui/icons-material";
+import { ArrowCircleLeft, ArrowCircleRight, Close, Payments } from "@mui/icons-material";
 import MavLoading from "../Loading/MavLoading";
-
+import { TransformComponent, TransformWrapper, useControls } from "react-zoom-pan-pinch";
+import { styled } from '@mui/material/styles';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell, { tableCellClasses } from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMoneyBillTransfer, faMoneyCheck, faWallet } from "@fortawesome/free-solid-svg-icons";
 
 function DealDetails() {
     const [open, setOpen] = useState(false)
@@ -30,6 +40,50 @@ function DealDetails() {
     const [value, loading, error] = useDocument(doc(db, 'Resell', dealId));
     let disfiter = [];
     let dis3fiter = [];
+    const [imgsrc, setImgsrc] = useState('');
+    const [imgopen, setImgopen] = useState(false);
+    const StyledTableCell = styled(TableCell)(({ theme }) => ({
+        [`&.${tableCellClasses.head}`]: {
+            backgroundColor: theme.palette.common.black,
+            color: theme.palette.common.white,
+        },
+        [`&.${tableCellClasses.body}`]: {
+            fontSize: 14,
+        },
+    }));
+
+    const StyledTableRow = styled(TableRow)(({ theme }) => ({
+        '&:nth-of-type(odd)': {
+            backgroundColor: theme.palette.action.hover,
+        },
+        // hide last border
+        '&:last-child td, &:last-child th': {
+            border: 0,
+        },
+    }));
+
+    function createData(name, calories, fat, carbs, protein) {
+        return { name, calories, fat, carbs, protein };
+    }
+
+    const rows = [
+        createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
+        createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
+        createData('Eclair', 262, 16.0, 24, 6.0),
+        createData('Cupcake', 305, 3.7, 67, 4.3),
+        createData('Gingerbread', 356, 16.0, 49, 3.9),
+    ];
+    const Controls = () => {
+        const { zoomIn, zoomOut, resetTransform } = useControls();
+
+        return (
+            <Stack sx={{ flexDirection: 'row', gap: 2, position: 'absolute', top: '60px' }} className="tools">
+                <Button variant='contained' sx={{ minWidth: 'initial' }} onClick={() => zoomIn()}>+</Button>
+                <Button variant='contained' sx={{ minWidth: 'initial' }} onClick={() => zoomOut()}>-</Button>
+                <Button variant='contained' sx={{ minWidth: 'initial' }} onClick={() => resetTransform()}>x</Button>
+            </Stack>
+        );
+    };
     if (loading) {
         return (
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
@@ -38,6 +92,7 @@ function DealDetails() {
         )
     }
     if (value) {
+        console.log(value.data())
         const disdata = value.data().Dis.split('$')
         for (let i = 0; i < disdata.length; i++) {
             disfiter = [...disfiter, disdata[i]]
@@ -47,7 +102,7 @@ function DealDetails() {
             dis3fiter = [...dis3fiter, dis3data[i]]
         }
         return (
-            <Box sx={{ marginTop: '40px', padding: '15px 0' }}>
+            <Box sx={{ marginTop: '40px', padding: '15px 0', position: 'relative' }}>
                 <Container>
                     <Stack sx={{ flexDirection: 'row', gap: '10px' }}>
                         <Swiper
@@ -99,12 +154,14 @@ function DealDetails() {
                             {value.data().img.map((el, index) => {
                                 return (
                                     <SwiperSlide key={index}>
-                                        <img src={el} alt="" />
+                                        <img onClick={() => {
+                                            setImgsrc(el);
+                                            setImgopen(true)
+                                        }} style={{ cursor: 'pointer' }} src={el} alt="" />
                                     </SwiperSlide>
                                 )
                             })}
                         </Swiper>
-
                     </Stack>
                 </Container>
                 <Container>
@@ -112,24 +169,26 @@ function DealDetails() {
                         <Col>
                             <Stack sx={{ lineHeight: '1', margin: '10px 0 40px', position: 'relative', flexDirection: { xs: 'column', sm: 'row' }, justifyContent: 'space-between', alignItems: 'center', gap: 2 }}>
                                 <Stack>
-
                                     <img style={{ width: '100px', boxShadow: '0 -1px 15px -3px rgba(0, 0, 0, 0.2)', borderRadius: '50%' }} src={value.data().icon} alt='' />
 
                                 </Stack>
                                 <Stack sx={{ width: '100%' }}>
-                                    <Stack sx={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                                        <Typography component='h2' variant="h5" sx={{ color: 'rgb(30, 65, 100)', lineHeight: '1', fontWeight: 'bold' }}>
+                                    <Stack sx={{ flexDirection: { lg: 'row', md: 'row', sm: 'column', xs: 'column' }, justifyContent: { lg: 'space-between', md: 'space-between', sm: 'center', xs: 'center' }, alignItems: 'center', gap: 2 }}>
+                                        <Stack sx={{ gap: 1 }}>
+                                            <Typography component='h2' variant="h5" sx={{ color: 'rgb(30, 65, 100)', lineHeight: '1', fontWeight: 'bold', textAlign: 'center' }}>
                                             {`${value.data().imgtext} ${value.data().compoundName}`}
                                         </Typography>
-                                        <Box sx={{ backgroundColor: ' rgb(255, 58, 0)', color: 'white', borderRadius: '8px', padding: '3px 8px', lineHeight: '1', textAlign: 'center' }}>
+                                            <Typography variant="caption" sx={{ lineHeight: '1', textAlign: { xs: 'center', sm: 'center', md: 'initial' } }}>
+                                                {` ${value.data().Location}`}
+                                            </Typography>
+                                        </Stack>
+                                        <Box sx={{ backgroundColor: ' rgb(255 145 77)', color: '#1e4164', borderRadius: '8px', padding: '3px 8px', lineHeight: '1', textAlign: 'center' }}>
                                             <p style={{ fontWeight: 'bold', padding: '8px' }}>
                                                 {`${value.data().Sale}`}
                                             </p>
                                         </Box>
                                     </Stack>
-                                    <Typography variant="caption" sx={{ lineHeight: '1' }}>
-                                        {` ${value.data().Location}`}
-                                    </Typography>
+
                                     <Stack sx={{ flexDirection: { xs: 'column', sm: 'row' }, justifyContent: 'space-between', alignItems: 'center' }}>
                                         <Typography sx={{ fontWeight: 'bold', margin: '10px 0 !important', color: 'black' }}>
                                             {`${value.data().price} EGP  `}
@@ -145,54 +204,237 @@ function DealDetails() {
                             </Stack>
                             <hr />
 
-                            <Typography component='h3' variant="h5" sx={{ color: 'rgb(30, 65, 100)', fontWeight: 'bold', paddingBottom: '20px' }}>
-                                {` About ${value.data().Type}`}
-                            </Typography>
-                            <Typography>
-                                {`Reference No.  : ${value.data().refNum}`}
-                            </Typography> 
-                            <Typography>
-                                {`Area : ${value.data().Area} m²`}
-                            </Typography>
 
-                            <Typography>
-                                {`Bedrooms : ${value.data().Bed}`}
-                            </Typography>
-                            <Typography>
-                                {`Bathrooms : ${value.data().Bath}`}
-                            </Typography>
-                            {value.data().delivery && 
-                            <Typography>
-                                    {`Delivery : ${value.data().delivery}`}
-                            </Typography>
 
-                            }
-                            <Typography>
-                                {`Finishing : ${value.data().Finsh}`}
-                            </Typography>
-                            {
-                                value.data().downPayment &&
-                                <Typography>
-                                    {`Down Payment : ${value.data().downPayment}`}
-                                </Typography>
-                            }
-                            {
-                                value.data().remaining &&
-                                <Typography>
-                                    {`Remaining : ${value.data().remaining}`}
-                                </Typography>
-                            }
+
+
+
+
+                            <Stack sx={{ marginBottom: '15px' }}>
+                                <TableContainer sx={{ width: { lg: '60%', md: '100%' } }} component={Paper}>
+                                    <Table aria-label="customized table">
+                                        <TableHead >
+                                            <TableRow>
+                                                <StyledTableCell sx={{ fontWeight: 'bold', backgroundColor: '#1e4164 !important' }} colSpan={2}>{`About ${value.data().Type}`}</StyledTableCell>
+                                            </TableRow>
+                                        </TableHead>
+                                        <TableBody >
+                                            <StyledTableRow sx={{ color: '#1e4164' }}>
+                                                <StyledTableCell component="th" scope="row">
+                                                    Reference N0.
+                                                </StyledTableCell>
+                                                <StyledTableCell align="left">{value.data().refNum}</StyledTableCell>
+                                            </StyledTableRow>
+
+                                            <StyledTableRow >
+                                                <StyledTableCell component="th" scope="row">
+                                                    Compound
+                                                </StyledTableCell>
+                                                <StyledTableCell align="left">{value.data().compoundName}</StyledTableCell>
+                                            </StyledTableRow>
+
+                                            <StyledTableRow >
+                                                <StyledTableCell component="th" scope="row">
+                                                    Developer
+                                                </StyledTableCell>
+                                                <StyledTableCell align="left">
+                                                    <Link to={`/developers/${value.data().devname}`}>
+                                                        {value.data().devname} <ArrowCircleRight sx={{ fontSize: '18px' }} />
+                                                    </Link>
+                                                </StyledTableCell>
+                                            </StyledTableRow>
+
+                                            {
+                                                value.data().floor &&
+                                                <StyledTableRow >
+                                                    <StyledTableCell component="th" scope="row">
+                                                        Floor
+                                                    </StyledTableCell>
+                                                    <StyledTableCell align="left">{value.data().floor}</StyledTableCell>
+                                                </StyledTableRow>
+
+                                            }
+
+                                            {value.data().landArea &&
+                                                <StyledTableRow >
+                                                    <StyledTableCell component="th" scope="row">
+                                                        Land Area
+                                                    </StyledTableCell>
+                                                    <StyledTableCell align="left">{value.data().landArea} m²</StyledTableCell>
+                                                </StyledTableRow>
+                                            }
+
+                                            <StyledTableRow >
+                                                <StyledTableCell component="th" scope="row">
+                                                    Area
+                                                </StyledTableCell>
+                                                <StyledTableCell align="left">{`${value.data().Area} m²`}</StyledTableCell>
+                                            </StyledTableRow>
+
+                                            {value.data().gardenArea &&
+                                                <StyledTableRow >
+                                                    <StyledTableCell component="th" scope="row">
+                                                        Garden Area
+                                                    </StyledTableCell>
+                                                    <StyledTableCell align="left">{value.data().gardenArea} m²</StyledTableCell>
+                                                </StyledTableRow>
+                                            }
+                                            {value.data().RoofArea &&
+                                                <StyledTableRow >
+                                                    <StyledTableCell component="th" scope="row">
+                                                        Roof Area
+                                                    </StyledTableCell>
+                                                    <StyledTableCell align="left">{value.data().RoofArea} m²</StyledTableCell>
+                                                </StyledTableRow>
+                                            }
+
+
+                                            <StyledTableRow >
+                                                <StyledTableCell component="th" scope="row">
+                                                    Bedrooms
+                                                </StyledTableCell>
+                                                <StyledTableCell align="left">{value.data().Bed}</StyledTableCell>
+                                            </StyledTableRow>
+
+                                            <StyledTableRow >
+                                                <StyledTableCell component="th" scope="row">
+                                                    Bathrooms
+                                                </StyledTableCell>
+                                                <StyledTableCell align="left">{value.data().Bath}</StyledTableCell>
+                                            </StyledTableRow>
+
+                                            <StyledTableRow >
+                                                <StyledTableCell component="th" scope="row">
+                                                    Delivery in
+                                                </StyledTableCell>
+                                                <StyledTableCell align="left">{value.data().delivery}</StyledTableCell>
+                                            </StyledTableRow>
+
+
+
+
+                                            {/* <StyledTableRow >
+                                                <StyledTableCell component="th" scope="row">
+                                                    Sale type
+                                                </StyledTableCell>
+                                                <StyledTableCell align="left">{value.data().Sale}</StyledTableCell>
+                                            </StyledTableRow> */}
+
+                                            <StyledTableRow >
+                                                <StyledTableCell component="th" scope="row">
+                                                    Finishing
+                                                </StyledTableCell>
+                                                <StyledTableCell align="left">{value.data().Finsh}</StyledTableCell>
+                                            </StyledTableRow>
+
+                                            {/* {value.data().downPayment &&
+                                                <StyledTableRow >
+                                                    <StyledTableCell component="th" scope="row">
+                                                        Down Payment
+                                                    </StyledTableCell>
+                                                    <StyledTableCell align="left">{value.data().downPayment}</StyledTableCell>
+                                                </StyledTableRow>}
+
+                                            {value.data().remaining &&
+                                                <StyledTableRow >
+                                                    <StyledTableCell component="th" scope="row">
+                                                        Remaining
+                                                    </StyledTableCell>
+                                                    <StyledTableCell align="left">{value.data().remaining}</StyledTableCell>
+
+                                                </StyledTableRow>}
+
+                                            {value.data().rental &&
+                                                <StyledTableRow >
+                                                    <StyledTableCell component="th" scope="row">
+                                                        Minimum rental period
+                                                    </StyledTableCell>
+                                                    <StyledTableCell align="left">{`${value.data().rental} Month`}</StyledTableCell>
+                                                </StyledTableRow>} */}
+                                        </TableBody>
+                                    </Table>
+                                </TableContainer>
+                            </Stack>
+
 
                             {
-                                value.data().rental &&
-                                <Typography>
-                                    {`Minimum rental period : ${value.data().rental} Month`}
-                                </Typography>
+                                value.data().Sale === 'Resale' &&
+                                <Stack sx={{
+                                    justifyContent: 'center', alignItems:
+                                        'center',
+                                    width: { xs: '100%', sm: '70%', md: '60%', lg: '50%' },
+
+                                }}>
+                                    <Typography sx={{ fontWeight: 'bold', textAlign: 'center' }}>
+                                        Payment Plan
+                                    </Typography>
+                                        <Stack sx={{ backgroundColor: '#f8f8f8', margin: '10px 0', borderRadius: '10px', padding: '30px 1px', alignItems: 'center', width: '100%', border: '1px solid black' }}>
+
+                                            <Stack>
+                                                {
+                                                    !value.data().downPayment &&
+                                                    <Stack sx={{ flexDirection: 'row', gap: 2, alignItems: 'center' }}>
+                                                        <FontAwesomeIcon icon={faWallet} style={{ fontSize: '30px' }} />
+                                                        <Typography>
+                                                                {`${value.data().price} EGP  Total Cash`}
+                                                            </Typography>
+                                                        </Stack>
+                                                }
+                                            </Stack>
+
+                                            <Stack sx={{ width: '100%' }}>
+                                                {
+                                                    value.data().downPayment &&
+                                                    <Stack sx={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'baseline', width: '100%', gap: 2 }}>
+
+
+                                                        <Stack sx={{ flexDirection: { xs: 'column', sm: 'row' }, alignItems: 'center', height: '120px', gap: { sm: 2 } }}>
+                                                            <Stack sx={{ height: '45px', width: '45px' }}>
+                                                                <FontAwesomeIcon style={{ fontSize: '35px' }} icon={faMoneyBillTransfer} />
+                                                            </Stack>
+                                                            <Stack>
+                                                                <Typography sx={{ fontWeight: 'bold' }}>
+                                                                    DownPayment
+                                                                </Typography>
+                                                                <Typography>
+                                                                        {`${value.data().downPayment} EGP  `}
+                                                                    </Typography>
+
+                                                                </Stack>
+                                                            </Stack>
+
+
+                                                            <Stack sx={{ flexDirection: { xs: 'column', sm: 'row' }, alignItems: 'center', height: '120px', gap: { sm: 2 } }}>
+                                                                <Stack sx={{ height: '45px', width: '45px' }}>
+                                                                    <FontAwesomeIcon style={{ fontSize: '35px' }} icon={faMoneyCheck} />
+                                                                </Stack>
+                                                                <Stack>
+
+                                                                    <Typography sx={{ fontWeight: 'bold' }}>
+                                                                        Remaining
+                                                                    </Typography>
+                                                                    <Typography>
+                                                                        {value.data().remaining} EGP
+                                                                    </Typography>
+                                                                    <Typography variant="caption" sx={{ marginLeft: '10px' }}>
+                                                                        Over {value.data().month} Month
+                                                                    </Typography>
+                                                                </Stack>
+                                                            </Stack>
+
+
+                                                        </Stack>
+                                                }
+                                        </Stack>
+                                    </Stack>
+                                </Stack>
                             }
+
+
                             <Stack sx={{ flexDirection: 'column', gap: 1 }}>
-                                <Typography variant='h6' sx={{ fontWeight: 'bold' }}>
+                                {/* <Typography variant='h6' sx={{ fontWeight: 'bold' }}>
                                     Details
-                                </Typography>
+                                </Typography> */}
                                 <Stack sx={{ flexDirection: 'row', gap: 2 }}>
                                     <Stack>
                                         <Button onClick={() => {
@@ -236,18 +478,6 @@ function DealDetails() {
                                         </Button>
                                     </Stack>
                                 </Stack >
-                                {/* <div>
-                                    <img style={{ width: '60px', height: '60px' }} src={value.data().Layoutimg} alt="" />
-                                    <p>
-                                        Layoutimg
-                                    </p>
-                                </div>
-                                <div>
-                                    <img style={{ width: '60px', height: '60px' }} src={value.data().Masterimg} alt="" />
-                                    <p>
-                                        Masterimg
-                                    </p>
-                                </div> */}
                             </Stack>
                             <Typography variant='h6' sx={{ fontWeight: 'bold', margin: '10px 0' }}>
                                 Description
@@ -259,9 +489,6 @@ function DealDetails() {
                                     </Typography>
                                 )
                             })}
-                            {/* <Typography>
-                                {`${value.data().Dis}`}
-                            </Typography> */}
 
                             <Typography variant='h6' sx={{ fontWeight: 'bold', margin: '10px 0' }}>
                                 {`About ${value.data().compoundName}`}
@@ -273,9 +500,6 @@ function DealDetails() {
                                     </Typography>
                                 )
                             })}
-                            {/* <Typography>
-                                {value.data().dis3}
-                            </Typography> */}
                         </Col>
                         <Divider />
                     </Row>
@@ -286,7 +510,6 @@ function DealDetails() {
                         top: '0',
                         transition: '0.5s',
                         right: open ? '0' : '-100%',
-
                         padding: "100px 50px ",
                         width: { sm: '90%', md: '50%', xs: '100%' }
                     }}>
@@ -304,7 +527,6 @@ function DealDetails() {
                         top: '0',
                         transition: '0.5s',
                         right: openlay ? '0' : '-100%',
-
                         padding: "100px 50px ",
                         width: { sm: '90%', md: '50%', xs: '100%' }
                     }}>
@@ -312,6 +534,35 @@ function DealDetails() {
                         <IconButton onClick={() => {
                             setOpenLay(false)
                         }} sx={{ position: 'absolute', right: '25px', top: "55px", }}>
+                            <Close sx={{ color: 'red' }} />
+                        </IconButton>
+                    </Card>
+                    <Card sx={{
+                        position: 'fixed',
+                        height: '100vh',
+                        zIndex: 100,
+                        top: '0',
+                        transition: '0.5s',
+                        right: imgopen ? '0' : '-100%',
+                        padding: "100px 10px ",
+                        width: { sm: '90%', md: '70%', xs: '100%' }
+                    }}>
+
+                        <TransformWrapper initialScale={1}
+                        >
+                            {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
+                                <>
+                                    <Controls />
+                                    <TransformComponent>
+                                        <img style={{ width: '100%', height: '100%' }} src={imgsrc} alt="" />
+                                    </TransformComponent>
+                                </>
+                            )}
+                        </TransformWrapper>
+                        <IconButton onClick={() => {
+                            setImgopen(false);
+                            setImgsrc('')
+                        }} sx={{ position: 'absolute', right: '25px', top: "60px" }}>
                             <Close sx={{ color: 'red' }} />
                         </IconButton>
                     </Card>

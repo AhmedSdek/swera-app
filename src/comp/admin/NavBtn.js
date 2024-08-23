@@ -46,6 +46,10 @@ export default function NavBtn() {
         {
             text: 'Editluanches',
             to: 'editluanches'
+        },
+        {
+            text: 'Cityscape',
+            to: 'cityscape'
         }
     ]
     const DrawerList = (

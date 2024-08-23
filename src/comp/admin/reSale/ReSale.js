@@ -26,6 +26,8 @@ function ReSale() {
     const [btn, setBtn] = useState(false);
     const [imgText, setImgText] = React.useState('');
     const [sold, setSold] = React.useState('');
+    const [floor, setFloor] = React.useState('');
+    const [devname, setDevname] = React.useState('');
     const [compoundName, setCompoundName] = React.useState('')
     const [price, setPrice] = React.useState('');
     const [downPayment, setDownPayment] = React.useState('');
@@ -43,6 +45,7 @@ function ReSale() {
     const [sale, setSale] = React.useState('');
     const [dis, setDis] = React.useState('');
     const [dis2, setDis2] = React.useState('');
+    const [gardenArea, setGardenArea] = React.useState('');
     const [dis3, setDis3] = React.useState('');
     const [prog, setProg] = useState(0)
     const [prog2, setProg2] = useState(0)
@@ -51,8 +54,14 @@ function ReSale() {
     const [url2, setUrl2] = useState([]);
     const [url3, setUrl3] = useState([]);
     const [icon, setIcon] = useState('')
+    const [landArea, setLandArea] = useState('')
+    const [roofArea, setRoofArea] = useState('')
+
     const handleimgTextChange = (event) => {
         setImgText(event.target.value);
+    };
+    const handleRoofAreaChange = (event) => {
+        setRoofArea(event.target.value);
     };
     const handleCompoundNameChange = (event) => {
         setCompoundName(event.target.value);
@@ -75,6 +84,9 @@ function ReSale() {
     const handleDeliveryChange = (event) => {
         setDelivery(event.target.value);
     };
+    const handleLandAreaChange = (event) => {
+        setLandArea(event.target.value);
+    };
     const handleTypeChange = (event) => {
         setType(event.target.value);
     };
@@ -89,6 +101,9 @@ function ReSale() {
     };
     const handleRefNumChange = (event) => {
         setRefNum(event.target.value);
+    };
+    const handleGardenareaChange = (event) => {
+        setGardenArea(event.target.value);
     };
     const handleFinshChange = (event) => {
         setFinsh(event.target.value);
@@ -301,7 +316,12 @@ function ReSale() {
                 Layoutimg: url2,
                 Masterimg: url3,
                 sold: sold,
-                like: 0
+                like: 0,
+                devname: devname,
+                floor: floor,
+                gardenArea: gardenArea,
+                RoofArea: roofArea,
+                landArea: landArea
             });
         } catch (er) {
         }
@@ -364,11 +384,35 @@ function ReSale() {
                                     id="demo-simple-select"
                                     value={icon}
                                     label="DevIcon"
-                                    onChange={(e) => { setIcon(e.target.value) }}
+                                    onChange={(e) => {
+                                        setIcon(e.target.value);
+
+                                    }}
                                 >
                                     {data.map((devName) => {
                                         return (
                                             <MenuItem key={devName.id} value={devName.image}>{devName.name}</MenuItem>
+                                        )
+                                    })}
+                                </Select>
+                            </FormControl>
+                        </Stack>
+                        <Stack sx={{ flexDirection: 'row', width: { xs: '100%', md: '50%' }, padding: '5px' }}>
+                            <FormControl sx={{ width: '100%' }}>
+                                <InputLabel id="demo-simple-select-label">DevName</InputLabel>
+                                <Select
+                                    sx={{ minWidth: 'fit-content' }}
+                                    labelId="ddevname"
+                                    id="name"
+                                    value={devname}
+                                    label="DevName"
+                                    onChange={(e) => {
+                                        setDevname(e.target.value);
+                                    }}
+                                >
+                                    {data.map((devName) => {
+                                        return (
+                                            <MenuItem key={devName.id} value={devName.name}>{devName.name}</MenuItem>
                                         )
                                     })}
                                 </Select>
@@ -412,6 +456,24 @@ function ReSale() {
                         />
                         <TextField
                             sx={{ margin: '10px', padding: '5px', width: { xs: '100%', md: '50%' } }}
+                            value={roofArea}
+                            id="RoofArea" label="Roof Area"
+                            variant="outlined" type="text"
+                            onChange={(e) => {
+                                handleRoofAreaChange(e)
+                            }}
+                        />
+                        <TextField
+                            sx={{ margin: '10px', padding: '5px', width: { xs: '100%', md: '50%' } }}
+                            value={landArea}
+                            id="Land-area" label="Land Area"
+                            variant="outlined" type="text"
+                            onChange={(e) => {
+                                handleLandAreaChange(e)
+                            }}
+                        />
+                        <TextField
+                            sx={{ margin: '10px', padding: '5px', width: { xs: '100%', md: '50%' } }}
                             value={rental}
                             id="month" label="Minimum rental period"
                             variant="outlined" type="number"
@@ -428,8 +490,18 @@ function ReSale() {
                                 handleRefNumChange(e)
                             }}
                         />
-                        <Stack sx={{ flexDirection: 'row', width: { xs: '100%', md: '50%' }, padding: '5px' }}>
 
+                        <TextField
+                            sx={{ margin: '10px', padding: '5px', width: { xs: '100%', md: '50%' } }}
+                            value={gardenArea}
+                            id="Garden-area" label="Garden area"
+                            variant="outlined" type="text"
+                            onChange={(e) => {
+                                handleGardenareaChange(e)
+                            }}
+                        />
+
+                        <Stack sx={{ flexDirection: 'row', width: { xs: '100%', md: '50%' }, padding: '5px' }}>
                             <FormControl sx={{ width: '100%' }}>
                                 <InputLabel id="sold-label">Sold</InputLabel>
                                 <Select
@@ -447,6 +519,7 @@ function ReSale() {
                                 </Select>
                             </FormControl>
                         </Stack>
+
                         <Stack sx={{ flexDirection: 'row', width: { xs: '100%', md: '50%' }, padding: '5px' }}>
                             <FormControl sx={{ width: '100%' }}>
                                 <InputLabel id="demo-simple-select-label">Delivery</InputLabel>
@@ -469,6 +542,25 @@ function ReSale() {
                                     <MenuItem value="2030">2030</MenuItem>
                                     <MenuItem value="2031">2031</MenuItem>
                                     <MenuItem value="2032">2032</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Stack>
+
+                        <Stack sx={{ flexDirection: 'row', width: { xs: '100%', md: '50%' }, padding: '5px' }}>
+                            <FormControl sx={{ width: '100%' }}>
+                                <InputLabel id="Floor-label">Floor</InputLabel>
+                                <Select
+                                    sx={{ minWidth: 'fit-content' }}
+                                    labelId="soldlap"
+                                    id="demo-Floor "
+                                    value={floor}
+                                    label="Floor"
+                                    onChange={(e) => {
+                                        setFloor(e.target.value)
+                                    }}
+                                >
+                                    <MenuItem value={'Typical'}>Typical</MenuItem>
+                                    <MenuItem value={'Ground'}>Ground</MenuItem>
                                 </Select>
                             </FormControl>
                         </Stack>

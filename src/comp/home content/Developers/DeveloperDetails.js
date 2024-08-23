@@ -27,7 +27,7 @@ export default function DeveloperDetails() {
         }
 
         return (
-            <Box sx={{ padding: '80px 0 0 0' }}>
+            <Box sx={{ padding: '80px 0 0 0', minHeight: 'calc(100vh - 100px)' }}>
                 {value.data() ?
                 <Container  >
                         <Stack sx={{ flexDirection: { xs: 'column', sm: 'row' }, alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px', gap: 3 }}>
@@ -71,8 +71,8 @@ export default function DeveloperDetails() {
                                 {value.data().dev.map((project, index) => {
                                     return (
                                         <Col key={index} className="col-md-6 col-12 col-lg-4" style={{ marginBottom: '15px', position: 'relative' }} >
-                                            <Link to={`/developers/${devId}/${project.proj}`} style={{ textDecoration: 'none' }}>
-                                                <Card sx={{ position: 'relative', paddingBottom: '10px' }}>
+                                            <Card sx={{ position: 'relative', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                                                <Link to={`/developers/${devId}/${project.proj}`} style={{ textDecoration: 'none' }}>
                                                     <Box sx={{ height: '216px' }}>
                                                         <img style={{ height: '100%', width: '100%', objectFit: 'cover' }} src={project.projImgs[0]} alt='' />
                                                     </Box>
@@ -89,11 +89,11 @@ export default function DeveloperDetails() {
                                                             {`${project.price} EGP`}
                                                         </Typography> */}
                                                     </CardContent>
-                                                    <Stack sx={{ paddingRight: '10px' }}>
+                                                </Link >
+                                                <Stack sx={{ padding: '0 10px 10px 0' }}>
                                                         <ContactUsIcon />
-                                                    </Stack>
-                                                </Card>
-                                            </Link >
+                                                </Stack>
+                                            </Card>
                                         </Col>
                                     )
                                 })}
@@ -103,7 +103,7 @@ export default function DeveloperDetails() {
 
                 </Container>
                     :
-                    <Stack sx={{ height: 'calc(100vh - 58px)', justifyContent: 'center' }}>
+                    <Stack sx={{ height: 'calc(100vh - 100px)', justifyContent: 'center' }}>
                         <Typography variant='h4' sx={{ textAlign: 'center', fontWeight: 'bold' }}>
                             Oops, Data not Found
                         </Typography>
@@ -114,7 +114,7 @@ export default function DeveloperDetails() {
     }
     if (loading) {
         return (
-            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 'calc(100vh - 140px)' }}>
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 'calc(100vh - 100px)' }}>
                 <MavLoading />
             </div>
         )

@@ -42,8 +42,8 @@ function FindDetails() {
                             {arr.map((card, index) => {
                                 return (
                                     <Col key={index} className="col-md-6 col-12 col-lg-4" style={{ marginBottom: '15px' }} >
-                                        <Link to={`/findhome/${card.district}/${card.proj}`} style={{ textDecoration: 'none' }}>
-                                            <Card sx={{ position: 'relative' }}>
+                                        <Card sx={{ position: 'relative', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                                            <Link to={`/findhome/${card.district}/${card.proj}`} style={{ textDecoration: 'none' }}>
                                                 <Box sx={{ height: '216px' }}>
                                                     <img style={{ height: '100%', width: '100%', objectFit: 'cover' }} src={card.projImgs[0]} alt='' />
                                                 </Box>
@@ -59,10 +59,12 @@ function FindDetails() {
                                                     <Typography sx={{ fontWeight: 'bold' }}>
                                                         {`${card.price} EGP`}
                                                     </Typography>
-                                                    <ContactUsIcon />
                                                 </CardContent>
-                                            </Card>
-                                        </Link >
+                                            </Link >
+                                            <Stack sx={{ padding: '0 10px 10px 0' }}>
+                                                <ContactUsIcon />
+                                            </Stack>
+                                        </Card>
                                     </Col>
                                 )
                             })}

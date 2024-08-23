@@ -40,6 +40,7 @@ import Editluanchesdetails from './comp/admin/Edit/Luanches/Editluanchesdetails'
 import ContactPage from './comp/ContactPage/ContactPage';
 import FavoriteList from './comp/FavList/FavoriteList';
 import Err from './comp/Err/Err';
+import Cityscape from './comp/admin/cityscape/Cityscape';
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -92,12 +93,14 @@ function App() {
                   <Route path='editDeals/:editeDealdetailsId' element={<EditDealdetails />} />
                   <Route path='editluanches' element={<Editluanches />} />
                   <Route path='editluanches/:editluanchesdetailsId' element={<Editluanchesdetails />} />
+                  <Route path="cityscape" element={<Cityscape />} />
                 </Route>
 
                 <Route path='findhome' element={<FindHomeDetails />} >
                   <Route path=':districtid' element={<FindDetails />} />
                   <Route path=':districtid/:findprojId' element={<FindCompDetails />} />
                 </Route>
+
                 <Route path='newlaunches' element={<NewLaunchespage />} />
                 <Route path='newlaunches/:launchId' element={<NewLaunchDetails />} />
                 <Route path='/' element={<Home />} />

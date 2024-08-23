@@ -14,11 +14,22 @@ import 'swiper/css/pagination';
 import 'swiper/css/free-mode';
 import 'swiper/css/navigation';
 import '../../deals/styles.css';
-import { Autoplay, EffectCoverflow, FreeMode, Navigation, Pagination } from 'swiper/modules';
+import { Autoplay, FreeMode, Navigation, Pagination } from 'swiper/modules';
 import ContactUsBtn from '../../Contact Us/ContactUsBtn';
 import { Close } from '@mui/icons-material';
-import { Col, Row } from 'react-bootstrap';
 import MavLoading from '../../Loading/MavLoading';
+import { TransformComponent, TransformWrapper, useControls } from 'react-zoom-pan-pinch';
+const Controls = () => {
+    const { zoomIn, zoomOut, resetTransform } = useControls();
+
+    return (
+        <Stack sx={{ flexDirection: 'row', gap: 2 }} className="tools">
+            <Button variant='contained' sx={{ minWidth: 'initial' }} onClick={() => zoomIn()}>+</Button>
+            <Button variant='contained' sx={{ minWidth: 'initial' }} onClick={() => zoomOut()}>-</Button>
+            <Button variant='contained' sx={{ minWidth: 'initial' }} onClick={() => resetTransform()}>x</Button>
+        </Stack>
+    );
+};
 function ProjectDe() {
     const { devId } = useParams();
     const { projId } = useParams();
@@ -26,7 +37,8 @@ function ProjectDe() {
     const [open, setOpen] = useState(false)
     let disfiter = [];
     let dis3fiter = [];
-
+    const [imgsrc, setImgsrc] = useState('');
+    const [imgopen, setImgopen] = useState(false);
 
     if (loading) {
         return (
@@ -106,14 +118,16 @@ function ProjectDe() {
                                     {fil.projImgs.map((img, index) => {
                                         return (
                                             < SwiperSlide key={index}>
-                                                <img src={img} alt='' />
+                                                <img style={{ cursor: 'pointer' }} onClick={() => {
+                                                    setImgsrc(img);
+                                                    setImgopen(true)
+                                                }} src={img} alt='' />
                                             </SwiperSlide>
                                         )
                                     })}
                                     </Swiper>
                                 </Stack>
                             </Container>
-
                             <Container >
                                 <Stack>
                                     <Stack sx={{ flexDirection: { sm: 'column', md: 'row' }, justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px' }}>
@@ -460,6 +474,35 @@ function ProjectDe() {
                                 <IconButton onClick={() => {
                                     setOpen(false)
                                 }} sx={{ position: 'absolute', right: '25px', top: "55px", }}>
+                                    <Close sx={{ color: 'red' }} />
+                                </IconButton>
+                            </Card>
+                            <Card sx={{
+                                position: 'fixed',
+                                height: '100vh',
+                                zIndex: 100,
+                                top: '0',
+                                transition: '0.5s',
+                                right: imgopen ? '0' : '-100%',
+                                padding: "100px 10px ",
+                                width: { sm: '90%', md: '70%', xs: '100%' }
+                            }}>
+
+                                <TransformWrapper initialScale={1}
+                                >
+                                    {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
+                                        <>
+                                            <Controls />
+                                            <TransformComponent>
+                                                <img style={{ width: '100%', height: '100%' }} src={imgsrc} alt="" />
+                                            </TransformComponent>
+                                        </>
+                                    )}
+                                </TransformWrapper>
+                                <IconButton onClick={() => {
+                                    setImgopen(false);
+                                    setImgsrc('')
+                                }} sx={{ position: 'absolute', right: '25px', top: "60px" }}>
                                     <Close sx={{ color: 'red' }} />
                                 </IconButton>
                             </Card>

@@ -60,7 +60,7 @@ function NewLaunchDetails() {
                                 </Typography>
                             </Stack>
                             <Stack sx={{ flexDirection: { sm: 'column', md: 'row' }, justifyContent: 'space-between', alignItems: 'center' }}>
-                                <Stack >
+                                <Stack sx={{ justifyContent: 'center', alignItems: { xs: 'center', md: 'initial' } }}>
                                     <Typography variant='caption' sx={{ fontWeight: 'bold' }}>
                                         {value.data().devname}
                                     </Typography>

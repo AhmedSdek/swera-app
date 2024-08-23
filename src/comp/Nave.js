@@ -1,15 +1,13 @@
-import { Container, Nav, NavDropdown, Navbar, Offcanvas } from "react-bootstrap";
+import { Container, Nav, NavDropdown, Navbar } from "react-bootstrap";
 import './min.css';
 import logoPhoto from './log.webp';
-import { Link, useNavigate } from "react-router-dom";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { auth, db } from "../firebase/config";
-import { Button, Stack } from "@mui/material";
-import { getAuth, signOut } from "firebase/auth";
+import { Link } from "react-router-dom";
+import { db } from "../firebase/config";
+import { Tooltip } from "@mui/material";
 import { useCollection } from "react-firebase-hooks/firestore";
 import { collection } from "firebase/firestore";
-import { useState } from "react";
 import { FavoriteBorder } from "@mui/icons-material";
+import { useState } from "react";
 function Navs() {
   const [value, loading, error] = useCollection(collection(db, 'admin'));
   var arr = [];
@@ -17,38 +15,56 @@ function Navs() {
     if (!arr.includes(it.district) && it.district !== '') {
       arr.push(it.district)
     }
-  }))
+  }));
+  const [ope, setOpe] = useState(false)
   return (
     <>
       <Navbar collapseOnSelect fixed="top" expand="lg" data-bs-theme="dark" id="navs">
           <Container>
-            <Link aria-label="Home" to="/" style={{ width: '150px' }}>
+          <Link aria-label="Home" to="/" style={{ width: '150px' }}>
             <img style={{ height: '42px', width: '150px' }} src={logoPhoto} alt="" />
           </Link>
           <Navbar.Toggle id="navbar-toggler" aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll" style={{ justifyContent: 'center' }} >
             <Nav >
-              <Link className="nav-link" to="/" >Home</Link>
+              <Nav.Link as={Link} to='/' eventKey='0'>
+                Home
+              </Nav.Link>
               <NavDropdown title="Districts" id="navbarScrollingDropdown">
                 {arr.map((link, index) => {
                     return (
-                      <Link key={index} className="dropdown-item" to={`findhome/${link}`}>{link}</Link>
+                      <NavDropdown.Item as={Link} key={index} className="dropdown-item" to={`findhome/${link}`} eventKey='0'>
+                        {link}
+                      </NavDropdown.Item>
+
                     )
                   })}
               </NavDropdown>
-              {/* <Link className="nav-link" to="/developers">Developers</Link> */}
-              <Link className="nav-link" to="/sell">Sell-Rent</Link>
-              <Link className="nav-link" to="/newlaunches">New Launches</Link>
-              <Link className="nav-link" to='/contact'>Contact Us</Link>
-              <Link className="nav-link" to="/about">About</Link>
-              <Link className="nav-link" to="/maverickdeals">Maverick Deals</Link>
+              <Nav.Link as={Link} to='/sell' eventKey='0'>
+                Sell-Rent
+              </Nav.Link>
+              <Nav.Link as={Link} to='/newlaunches' eventKey='0'>
+                New Launches
+              </Nav.Link>
+              <Nav.Link as={Link} to='/contact' eventKey='0'>
+                Contact Us
+              </Nav.Link>
+              <Nav.Link as={Link} to='/about' eventKey='0'>
+                about
+              </Nav.Link>
+              <Nav.Link as={Link} to='/maverickdeals' eventKey='0'>
+                Maverick Deals
+              </Nav.Link>
+
             </Nav>
           </Navbar.Collapse>
           <Navbar.Collapse id="navbarScroll2" style={{ justifyContent: 'end', flexGrow: 0 }} >
             <Nav>
-              <Link className="nav-link" to="/favoriteList">
+              <Nav.Link as={Link} to='/favoriteList' eventKey='0'>
+                <Tooltip title="FavoriteList">
                 <FavoriteBorder />
-              </Link>
+                </Tooltip>
+              </Nav.Link>
             </Nav>
         </Navbar.Collapse>
       </Container>

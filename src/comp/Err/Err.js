@@ -5,7 +5,7 @@ function Err() {
     return (
         <Stack sx={{ padding: '70px 0 0', minHeight: 'calc(100vh - 100px)', justifyContent: 'center', alignItems: 'center' }} >
             <Stack sx={{ width: '100%' }}>
-                <section classNameName="page_404">
+                <section className="page_404">
                     <div className="container">
                         <div className="row">
                             <div className="col-sm-12 ">

@@ -89,7 +89,7 @@ function Footer(){
                             </IconButton>
                         </a >
 
-                        <a style={{ width: 'fit-content' }} href="https://www.linkedin.com/in/maverick-for-realestate-15b430313?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app">
+                        <a style={{ width: 'fit-content' }} href="https://www.linkedin.com/company/maverick-for-realestate">
                             <IconButton className="footerbtn" aria-label="Linked In" sx={{ backgroundColor: 'rgb(30, 65, 100)' }}>
                                 <svg
                                     viewBox="0 0 900 1000"

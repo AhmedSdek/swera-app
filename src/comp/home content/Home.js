@@ -5,11 +5,13 @@ import HomeForm from './Home Form/HomeForm';
 import SahelMap from './sahel map/SahelMap';
 import Calc from './Calc/Calc';
 import HomeDeals from '../deals/HomeDeals';
-import { Button, Stack, TextField } from '@mui/material';
+import { Box, Button, Stack, TextField } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Search } from '@mui/icons-material';
 import HomePup from './HomePup/HomePup';
+import im from './im.png'
+import im2 from './im2.jpg'
 function Home() {
     // const [pup, setPup] = useState(0);
     // useEffect(() => {
@@ -22,10 +24,10 @@ function Home() {
     const nav = useNavigate()
     return(
         <div >
-            <header style={{ position: 'relative', backgroundColor: 'white' }} className='home-header'>
-                <div className='header-main' style={{ textAlign: 'start', width: '40%', margin: '58px auto 0 ' }}>
+            <Box component='header' sx={{ position: 'relative', backgroundColor: 'white', backgroundImage: { xs: `url(${im2})`, md: `url(${im})` } }} className='home-header'>
+                <div className='header-main' style={{ textAlign: 'start', width: '40%', margin: '35px auto 0 ' }}>
                     <h1 className='hed1' style={{ color: 'white', lineHeight: '1.8', width: 'fit-content' }}>
-                        <mark style={{ backgroundColor: '#ff914d', borderRadius: '6px', fontWeight: 'bold', color: '#1e4164', }}>
+                        <mark style={{ backgroundColor: 'rgb(255 145 77 / 87%)', borderRadius: '6px', fontWeight: 'bold', color: '#1e4164', }}>
                             Let us
                         </mark>
                         </h1>
@@ -46,7 +48,7 @@ function Home() {
                         </Button>
                     </Stack> */}
                 </div>
-            </header>
+            </Box>
             <SahelMap />
             <NewLaunches />
             <Slider />

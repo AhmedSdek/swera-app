@@ -5,15 +5,20 @@ import { useDocument } from 'react-firebase-hooks/firestore';
 import { db } from '../../../../firebase/config';
 import { useNavigate, useParams } from 'react-router-dom';
 import ReactLoading from 'react-loading';
+import { data } from '../../../Data';
+import MavLoading from '../../../Loading/MavLoading';
 
 function EditDealdetails() {
     const { editeDealdetailsId } = useParams()
     const [value, loading, error] = useDocument(doc(db, 'Resell', editeDealdetailsId));
     const [sold, setSold] = React.useState('');
     const [sell, setSell] = React.useState('');
+    const [devname, setDevname] = React.useState('');
     const [delivery, setDelivery] = React.useState('');
     const [finsh, setFinsh] = React.useState('');
     const [btn, setBtn] = useState(false);
+
+
     const handleDeliveryChange = (event) => {
         setDelivery(event.target.value);
     };
@@ -21,7 +26,11 @@ function EditDealdetails() {
         setFinsh(event.target.value);
     };
     const nav = useNavigate()
+
     if (value) {
+
+
+
         const sendData = async () => {
             setBtn(true);
             try {
@@ -29,7 +38,8 @@ function EditDealdetails() {
                     sold: sold,
                     Sale: sell,
                     delivery: delivery,
-                    finsh: finsh
+                    Finsh: finsh,
+                    devname: devname
                 });
                 nav('/')
             } catch (er) {
@@ -44,7 +54,9 @@ function EditDealdetails() {
                 <Stack component='form'
                     onSubmit={(e) => {
                         e.preventDefault();
-                        sendData();
+                        if (sold !== '' && sell !== '' && delivery !== '' && finsh !== '' && devname !== '') {
+                            sendData();
+                        }
                     }}>
                     <Stack sx={{ flexDirection: 'row', width: { xs: '100%', md: '50%' }, padding: '5px' }}>
                         <FormControl sx={{ width: '100%' }}>
@@ -56,7 +68,7 @@ function EditDealdetails() {
                                 value={sold}
                                 label="SOLD OUT"
                                 onChange={(e) => {
-                                    setSold(e.target.value)
+                                    setSold(e.target.value);
                                 }}
                             >
                                 <MenuItem value={'SOLD OUT'}>SOLD OUT</MenuItem>
@@ -117,7 +129,7 @@ function EditDealdetails() {
                             name="row-radio-buttons-group"
                             value={finsh}
                             onChange={(e) => {
-                                handleFinshChange(e)
+                                handleFinshChange(e);
                             }}
                         >
                             <FormControlLabel value="Finished" control={<Radio />} label="Finished" />
@@ -126,13 +138,40 @@ function EditDealdetails() {
                             <FormControlLabel value="Furnished" control={<Radio />} label="Furnished" />
                         </RadioGroup>
                     </FormControl>
-
+                    <Stack sx={{ flexDirection: 'row', width: { xs: '100%', md: '50%' }, padding: '5px' }}>
+                        <FormControl sx={{ width: '100%' }}>
+                            <InputLabel id="demo-simple-select-label">DevName</InputLabel>
+                            <Select
+                                sx={{ minWidth: 'fit-content' }}
+                                labelId="ddevname"
+                                id="name"
+                                value={devname}
+                                label="DevName"
+                                onChange={(e) => {
+                                    setDevname(e.target.value);
+                                }}
+                            >
+                                {data.map((devName) => {
+                                    return (
+                                        <MenuItem key={devName.id} value={devName.name}>{devName.name}</MenuItem>
+                                    )
+                                })}
+                            </Select>
+                        </FormControl>
+                    </Stack>
                     <Button disabled={btn} variant="contained" type="submit" style={{ width: '50%' }}
                         className="btn">
                         {btn ? <ReactLoading type={'spin'} height={'20px'} width={'20px'} /> : "Update"}
                     </Button>
                 </Stack>
             </Box>
+        )
+    }
+    if (loading) {
+        return (
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+                <MavLoading />
+            </div>
         )
     }
 }

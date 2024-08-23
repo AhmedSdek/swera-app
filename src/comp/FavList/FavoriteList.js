@@ -6,6 +6,7 @@ import { collection, doc, updateDoc } from 'firebase/firestore';
 import { Link } from 'react-router-dom';
 import { Favorite, FavoriteBorder } from '@mui/icons-material';
 import ContactUsIcon from '../Contact Us/ContactUsIcon';
+import MavLoading from '../Loading/MavLoading';
 
 function FavoriteList() {
     const [value, loading, error] = useCollection(collection(db, 'Resell'));
@@ -13,7 +14,6 @@ function FavoriteList() {
     let localId = [];
     let localFilter = [];
     if (value) {
-
         value.docs.map((it) => projId.push(it.data().refNum));
         projId.map((local) => localId.push(localStorage.getItem(local)));
         localId.filter(item => item !== null).map((e) => localFilter.push(e));
@@ -146,6 +146,13 @@ function FavoriteList() {
                     </Stack>
                 </Container>
             </Stack>
+        )
+    }
+    if (loading) {
+        return (
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 'calc(100vh - 100px)' }}>
+                <MavLoading />
+            </div>
         )
     }
 }

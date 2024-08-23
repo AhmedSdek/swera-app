@@ -160,9 +160,9 @@ function HomeDeals() {
                                                                             });
                                                                         }
                                                                     }} />
-                                                                <Typography>
+                                                                {/* <Typography>
                                                                     {col.data().like}
-                                                                </Typography>
+                                                                </Typography> */}
                                                             </Stack>
                                                             <ContactUsIcon />
                                                         </Stack>
