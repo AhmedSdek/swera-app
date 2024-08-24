@@ -41,6 +41,7 @@ import ContactPage from './comp/ContactPage/ContactPage';
 import FavoriteList from './comp/FavList/FavoriteList';
 import Err from './comp/Err/Err';
 import Cityscape from './comp/admin/cityscape/Cityscape';
+import CityscapeProjects from './comp/home content/cityscape/CityscapeProjects';
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -107,6 +108,7 @@ function App() {
                 <Route path='/about' element={<About />} />
                 <Route path='/favoriteList' element={<FavoriteList />} />
                 <Route path='/sahelmap' element={<SahelMapPage />} />
+                <Route path='/cityscapeprojects' element={<CityscapeProjects />} />
                 <Route path='/maverickdeals' element={<MaverickDeals />} />
                 <Route path='/maverickdeals/:dealId' element={<DealDetails />} />
                 <Route path='/*' element={<Err />} />

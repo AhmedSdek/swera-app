@@ -19,7 +19,7 @@ function Developers(){
                                 return (
                                     <Stack className="colDev" key={product.id} sx={{ width: '120px', height: '120px', borderRadius: '50%' }} >
                                         <Link style={{ width: '120px', height: '120px', padding: '0', borderRadius: '50%' }} className="logo hoveredLogo d-flex align-items-center flex-column  inner" to={`/developers/${product.data().devName}`}>
-                                            <img style={{ height: '100%', width: '100%' }} className="img-fluid img shadow-filter rounded-circle" src={product.data().devIcon} alt="Mountain View"></img>
+                                            <img style={{ height: '100%', width: '100%' }} className="img-fluid img shadow-filter rounded-circle" src={product.data().devIcon} alt=""></img>
                                         </Link>
                                     </Stack>
                                 )

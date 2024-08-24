@@ -25,7 +25,18 @@ function Cityscape() {
     const [btn, setBtn] = useState(false);
     const [devname, setDevname] = React.useState('');
     const [projectName, setProjectName] = React.useState('')
-
+    const [pers1, setPers1] = React.useState('');
+    const [pers2, setPers2] = React.useState('');
+    const [pers3, setPers3] = React.useState('');
+    const [pers4, setPers4] = React.useState('');
+    const [offerText1, setOfferText1] = React.useState('');
+    const [offerText2, setOfferText2] = React.useState('');
+    const [offerText3, setOfferText3] = React.useState('');
+    const [offerText4, setOfferText4] = React.useState('');
+    const [year1, setYear1] = React.useState('');
+    const [year2, setYear2] = React.useState('');
+    const [year3, setYear3] = React.useState('');
+    const [year4, setYear4] = React.useState('');
     const [downPayment, setDownPayment] = React.useState('');
 
     const [years, setYears] = React.useState('');
@@ -37,13 +48,16 @@ function Cityscape() {
     const [url, setUrl] = useState([]);
 
     const [icon, setIcon] = useState('')
+    const [dis, setDis] = React.useState('');
 
     const [cashDiscount, setCashDiscount] = useState('')
 
     const handleCashDiscountChange = (event) => {
         setCashDiscount(event.target.value);
     };
-
+    const handleDisChange = (event) => {
+        setDis(event.target.value);
+    };
     const handledownPaymentChange = (event) => {
         setDownPayment(event.target.value);
     };
@@ -54,7 +68,42 @@ function Cityscape() {
     const handleProjectNameChange = (event) => {
         setProjectName(event.target.value);
     };
-
+    const handlePers1Change = (event) => {
+        setPers1(event.target.value);
+    };
+    const handlePers2Change = (event) => {
+        setPers2(event.target.value);
+    };
+    const handlePers3Change = (event) => {
+        setPers3(event.target.value);
+    };
+    const handlePers4Change = (event) => {
+        setPers4(event.target.value);
+    };
+    const handleYear1Change = (event) => {
+        setYear1(event.target.value);
+    };
+    const handleYear2Change = (event) => {
+        setYear2(event.target.value);
+    };
+    const handleYear3Change = (event) => {
+        setYear3(event.target.value);
+    };
+    const handleYear4Change = (event) => {
+        setYear4(event.target.value);
+    };
+    const handleOfferText1Change = (event) => {
+        setOfferText1(event.target.value);
+    };
+    const handleOfferText2Change = (event) => {
+        setOfferText2(event.target.value);
+    };
+    const handleOfferText3Change = (event) => {
+        setOfferText3(event.target.value);
+    };
+    const handleOfferText4Change = (event) => {
+        setOfferText4(event.target.value);
+    };
 
 
     const handlelocationChange = (event) => {
@@ -130,7 +179,20 @@ function Cityscape() {
                 devname: devname,
                 years: years,
                 CashDiscount: cashDiscount,
-                location: location
+                location: location,
+                dis: dis,
+                pers1: pers1,
+                pers2: pers2,
+                pers3: pers3,
+                pers4: pers4,
+                offer1: offerText1,
+                offer2: offerText2,
+                offer3: offerText3,
+                offer4: offerText4,
+                year1: year1,
+                year2: year2,
+                year3: year3,
+                year4: year4,
 
             });
         } catch (er) {
@@ -222,15 +284,7 @@ function Cityscape() {
                                 handledownPaymentChange(e)
                             }}
                         />
-                        {/* <TextField
-                            sx={{ margin: '10px', padding: '5px', width: { xs: '100%', md: '50%' } }}
-                            value={remaining}
-                            id="remaining" label="remaining"
-                            variant="outlined" type="text"
-                            onChange={(e) => {
-                                handleremainingChange(e)
-                            }}
-                        /> */}
+
                         <TextField
                             sx={{ margin: '10px', padding: '5px', width: { xs: '100%', md: '50%' } }}
                             value={years}
@@ -274,6 +328,128 @@ function Cityscape() {
                             value={location}
                             onChange={(e) => {
                                 handlelocationChange(e)
+                            }}
+                        />
+
+                        <TextField
+                            id="outlined-multiline-static"
+                            label="Description"
+                            multiline
+                            value={dis}
+                            rows={4}
+                            sx={{ margin: '10px', padding: '5px', width: { xs: '100%', md: '50%' } }}
+                            onChange={(e) => {
+                                handleDisChange(e)
+                            }}
+                        />
+                        <TextField
+                            sx={{ margin: '10px', padding: '5px', width: { xs: '100%', md: '50%' } }}
+                            id="1%" label="%1" variant="outlined" type="number"
+                            value={pers1}
+                            onChange={(e) => {
+                                handlePers1Change(e)
+                            }}
+                        />
+                        <TextField
+                            sx={{ margin: '10px', padding: '5px', width: { xs: '100%', md: '50%' } }}
+                            id="year1" label="year1" variant="outlined" type="number"
+                            value={year1}
+                            onChange={(e) => {
+                                handleYear1Change(e)
+                            }}
+                        />
+                        <TextField
+                            id="offer text"
+                            label=" offer text"
+                            multiline
+                            value={offerText1}
+                            rows={4}
+                            sx={{ margin: '10px', padding: '5px', width: { xs: '100%', md: '50%' } }}
+                            onChange={(e) => {
+                                handleOfferText1Change(e)
+                            }}
+                        />
+
+                        <TextField
+                            sx={{ margin: '10px', padding: '5px', width: { xs: '100%', md: '50%' } }}
+                            id="2%" label="%2" variant="outlined" type="number"
+                            value={pers2}
+                            onChange={(e) => {
+                                handlePers2Change(e)
+                            }}
+                        />
+                        <TextField
+                            sx={{ margin: '10px', padding: '5px', width: { xs: '100%', md: '50%' } }}
+                            id="year2" label="year2" variant="outlined" type="number"
+                            value={year2}
+                            onChange={(e) => {
+                                handleYear2Change(e)
+                            }}
+                        />
+                        <TextField
+                            id="offer text2"
+                            label=" offer text2"
+                            multiline
+                            value={offerText2}
+                            rows={4}
+                            sx={{ margin: '10px', padding: '5px', width: { xs: '100%', md: '50%' } }}
+                            onChange={(e) => {
+                                handleOfferText2Change(e)
+                            }}
+                        />
+
+                        <TextField
+                            sx={{ margin: '10px', padding: '5px', width: { xs: '100%', md: '50%' } }}
+                            id="3%" label="%3" variant="outlined" type="number"
+                            value={pers3}
+                            onChange={(e) => {
+                                handlePers3Change(e)
+                            }}
+                        />
+                        <TextField
+                            sx={{ margin: '10px', padding: '5px', width: { xs: '100%', md: '50%' } }}
+                            id="year3" label="year3" variant="outlined" type="number"
+                            value={year3}
+                            onChange={(e) => {
+                                handleYear3Change(e)
+                            }}
+                        />
+                        <TextField
+                            id="offer-text3"
+                            label=" offer text3"
+                            multiline
+                            value={offerText3}
+                            rows={4}
+                            sx={{ margin: '10px', padding: '5px', width: { xs: '100%', md: '50%' } }}
+                            onChange={(e) => {
+                                handleOfferText3Change(e)
+                            }}
+                        />
+                        <TextField
+                            sx={{ margin: '10px', padding: '5px', width: { xs: '100%', md: '50%' } }}
+                            id="4%" label="%4" variant="outlined" type="number"
+                            value={pers4}
+                            onChange={(e) => {
+                                handlePers4Change(e)
+                            }}
+                        />
+                        <TextField
+                            sx={{ margin: '10px', padding: '5px', width: { xs: '100%', md: '50%' } }}
+                            id="year4" label="year4" variant="outlined" type="number"
+                            value={year4}
+                            onChange={(e) => {
+                                handleYear4Change(e)
+                            }}
+                        />
+                        <TextField
+                            id="offer-text4"
+                            label=" offer text4"
+                            multiline
+                            value={offerText4}
+                            rows={4}
+                            sx={{ margin: '10px', padding: '5px', width: { xs: '100%', md: '50%' } }}
+                            onChange={(e) => {
+                                handleOfferText4Change(e)
                             }}
                         />
                         <Button disabled={btn} variant="contained" type="submit" style={{ width: '50%' }}

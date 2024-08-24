@@ -12,6 +12,7 @@ import { Search } from '@mui/icons-material';
 import HomePup from './HomePup/HomePup';
 import im from './im.png'
 import im2 from './im2.jpg'
+import CityscapeHome from './cityscape/CityscapeHome';
 function Home() {
     // const [pup, setPup] = useState(0);
     // useEffect(() => {
@@ -50,6 +51,7 @@ function Home() {
                 </div>
             </Box>
             <SahelMap />
+            <CityscapeHome />
             <NewLaunches />
             <Slider />
             <HomeDeals />
