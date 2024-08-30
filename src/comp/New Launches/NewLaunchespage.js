@@ -38,7 +38,7 @@ function NewLaunchespage() {
                                 fontSize: '18px',
                             }}>Be the first one to Reserve your Unit</h2>
                         </div>
-                        <ContactUsBtn />
+                        <ContactUsBtn sectionName='New-Launch' />
                     </Stack>
                     <hr />
                     <Typography variant='h5' sx={{ fontWeight: 'bold' }}>

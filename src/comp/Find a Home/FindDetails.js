@@ -62,7 +62,7 @@ function FindDetails() {
                                                 </CardContent>
                                             </Link >
                                             <Stack sx={{ padding: '0 10px 10px 0' }}>
-                                                <ContactUsIcon />
+                                                <ContactUsIcon sectionName='Find-Home' sectionData={card} />
                                             </Stack>
                                         </Card>
                                     </Col>

@@ -1,4 +1,4 @@
-import { Box, Card, CardContent, Checkbox, Container, Stack, Typography } from '@mui/material'
+import { Box, Card, CardContent, Checkbox, Container, IconButton, Stack, Typography } from '@mui/material'
 import { collection, doc, updateDoc } from 'firebase/firestore';
 import React from 'react'
 import { useCollection } from 'react-firebase-hooks/firestore';
@@ -8,7 +8,7 @@ import { Col, Row } from 'react-bootstrap';
 import ContactUsIcon from '../Contact Us/ContactUsIcon';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { FreeMode, Pagination, Autoplay } from 'swiper/modules';
-import { Bookmark, BookmarkBorder, Favorite, FavoriteBorder } from '@mui/icons-material';
+import { Bookmark, BookmarkBorder, Call, Favorite, FavoriteBorder, WhatsApp } from '@mui/icons-material';
 
 function HomeDeals() {
     const [value, loading, error] = useCollection(collection(db, 'Resell'));
@@ -61,6 +61,7 @@ function HomeDeals() {
                         >
                             {
                                 value.docs.map((col, index) => {
+                                    console.log(col.data())
                                     return (
                                         <SwiperSlide key={index} style={{ marginBottom: '15px', position: 'relative' }}>
                                             <Col key={index} style={{ position: 'relative', height: '460px' }} >
@@ -164,7 +165,19 @@ function HomeDeals() {
                                                                     {col.data().like}
                                                                 </Typography> */}
                                                             </Stack>
-                                                            <ContactUsIcon />
+                                                            {/* <Stack sx={{ flexDirection: 'row', gap: 2, justifyContent: 'end' }}>
+                                                                <a href="tel:+201008582515">
+                                                                    <IconButton variant='contained' sx={{ backgroundColor: 'rgb(228, 235, 242)', color: 'rgb(30, 65, 100)', fontWeight: 'bold' }}>
+                                                                        <Call />
+                                                                    </IconButton>
+                                                                </a>
+                                                                <a href={`https://wa.me/+201008582515?text=compound%20Name%20:%20${col.data().compoundName}.%0Adeveloper%20Name%20:%20${col.data().devname}.%0AReference%20N0%20:%20${col.data().refNum}`}>
+                                                                    <IconButton className='whatsbtn' variant='contained' sx={{ backgroundColor: 'rgb(76, 217, 100)', color: 'white', fontWeight: 'bold', transition: '0.3s' }}>
+                                                                        <WhatsApp />
+                                                                    </IconButton>
+                                                                </a>
+                                                            </Stack> */}
+                                                            <ContactUsIcon sectionName='Maverick-Deals' sectionData={col.data()} />
                                                         </Stack>
                                                     </Card>
                                                     </>

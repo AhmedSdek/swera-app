@@ -4,7 +4,6 @@ import ReactLoading from 'react-loading';
 import emailjs from "@emailjs/browser";
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css'
-import img from '../5467432.png'
 function HomeForm() {
     const [btn, setBtn] = useState(false);
     const [name, setName] = useState('');

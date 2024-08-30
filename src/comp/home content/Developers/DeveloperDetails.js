@@ -91,7 +91,7 @@ export default function DeveloperDetails() {
                                                     </CardContent>
                                                 </Link >
                                                 <Stack sx={{ padding: '0 10px 10px 0' }}>
-                                                        <ContactUsIcon />
+                                                    <ContactUsIcon sectionName='Developer' sectionData={value.data()} />
                                                 </Stack>
                                             </Card>
                                         </Col>

@@ -198,7 +198,7 @@ function DealDetails() {
                                                 </Typography>
                                             }
                                         </Typography>
-                                        <ContactUsBtn />
+                                        <ContactUsBtn sectionName="Maverick-Deals" sectionData={value.data()} />
                                     </Stack>
                                 </Stack>
                             </Stack>

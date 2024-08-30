@@ -976,7 +976,7 @@ function MaverickDeals() {
                                                     {item.data().like}
                                                 </Typography> */}
                                             </Stack>
-                                                <ContactUsIcon />
+                                            <ContactUsIcon sectionName='Maverick-Deals' sectionData={item.data()} />
                                         </Stack>
                                     </Card>
                                 </Col>

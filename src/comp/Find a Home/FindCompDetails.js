@@ -37,6 +37,7 @@ function FindCompDetails() {
                     return (
                         <div key={index}>
                             {data.map((fil) => { 
+                                console.log(fil)
                                 const disdata = fil.projDes.split('$')
                                 for (let i = 0; i < disdata.length; i++) {
                                     disfiter = [...disfiter, disdata[i]]
@@ -123,13 +124,11 @@ function FindCompDetails() {
                                                                 </Typography>
                                                                 {`${fil.price} EGP`}
                                                             </Typography>
-
-
                                                         </div>
                                                     </Stack>
                                                     <Stack sx={{ gap: 3, alignItems: 'center' }}>
                                                         <span className="text-2" style={{ width: 'fit-content' }} >Compound</span>
-                                                        <ContactUsBtn />
+                                                        <ContactUsBtn sectionName='Find-Home' sectionData={fil} />
                                                     </Stack>
                                                 </Stack>
                                             </Stack>

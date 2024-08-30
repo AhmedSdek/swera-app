@@ -31,6 +31,7 @@ function NewLaunchDetails() {
     }
 
     if (value) {
+        // console.log(value.data())
         const disdata = value.data().Dis.split('$')
         for (let i = 0; i < disdata.length; i++) {
             disfiter = [...disfiter, disdata[i]]
@@ -77,13 +78,12 @@ function NewLaunchDetails() {
                                     }
                                 </Stack>
                                 <Stack>
-                                    <ContactUsBtn />
+                                    <ContactUsBtn sectionName='New-Launch' sectionData={value.data()} />
                                 </Stack>
                             </Stack>
                         </Stack>
                     </Stack>
                     <hr />
-
                     <Stack sx={{ marginTop: '40px' }}>
                         {value.data().Dis || value.data().dis6 || value.data().dis7 || value.data().dis8 || value.data().dis2 || value.data().dis3 || value.data().dis4 || value.data().details ?
                             <Stack>

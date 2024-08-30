@@ -67,6 +67,7 @@ function ProjectDe() {
                     for (let i = 0; i < dis3data.length; i++) {
                         dis3fiter = [...dis3fiter, dis3data[i]]
                     }
+                    console.log(value.data())
                     return (
                         <div key={fil}  >
                             <Container>
@@ -153,7 +154,7 @@ function ProjectDe() {
                                         </Stack>
                                         <Stack sx={{ gap: 3, alignItems: 'center' }}>
                                             <span className="text-2" style={{ width: 'fit-content' }} >Compound</span>
-                                            <ContactUsBtn />
+                                            <ContactUsBtn sectionName='Developer' sectionData={value.data()} />
                                         </Stack>
                                     </Stack>
                                 </Stack>

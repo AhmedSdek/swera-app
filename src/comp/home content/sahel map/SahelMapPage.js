@@ -19,7 +19,7 @@ function SahelMapPage() {
                         <Typography variant='h6' sx={{ fontWeight: 'bold' }}>
                             Contact Us
                         </Typography>
-                        <ContactUsBtn />
+                        <ContactUsBtn sectionName='Sahel-Map' />
                     </Stack>
                 </Stack>
                 <hr style={{ width: '100%', margin: '0' }} />

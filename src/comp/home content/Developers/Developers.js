@@ -15,7 +15,6 @@ function Developers(){
                     <Container>
                         <Stack sx={{ flexDirection: 'row', flexWrap: 'wrap', gap: 3, justifyContent: 'center' }}>
                             {value.docs.map((product) => {
-                                console.log(product.data())
                                 return (
                                     <Stack className="colDev" key={product.id} sx={{ width: '120px', height: '120px', borderRadius: '50%' }} >
                                         <Link style={{ width: '120px', height: '120px', padding: '0', borderRadius: '50%' }} className="logo hoveredLogo d-flex align-items-center flex-column  inner" to={`/developers/${product.data().devName}`}>
