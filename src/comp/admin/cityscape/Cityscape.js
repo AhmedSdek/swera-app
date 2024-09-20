@@ -182,17 +182,17 @@ function Cityscape() {
                 location: location,
                 dis: dis,
                 pers1: pers1,
-                pers2: pers2,
-                pers3: pers3,
-                pers4: pers4,
+                // pers2: pers2,
+                // pers3: pers3,
+                // pers4: pers4,
                 offer1: offerText1,
-                offer2: offerText2,
-                offer3: offerText3,
-                offer4: offerText4,
+                // offer2: offerText2,
+                // offer3: offerText3,
+                // offer4: offerText4,
                 year1: year1,
-                year2: year2,
-                year3: year3,
-                year4: year4,
+                // year2: year2,
+                // year3: year3,
+                // year4: year4,
 
             });
         } catch (er) {
@@ -370,7 +370,7 @@ function Cityscape() {
                             }}
                         />
 
-                        <TextField
+                        {/* <TextField
                             sx={{ margin: '10px', padding: '5px', width: { xs: '100%', md: '50%' } }}
                             id="2%" label="%2" variant="outlined" type="number"
                             value={pers2}
@@ -451,7 +451,7 @@ function Cityscape() {
                             onChange={(e) => {
                                 handleOfferText4Change(e)
                             }}
-                        />
+                        /> */}
                         <Button disabled={btn} variant="contained" type="submit" style={{ width: '50%' }}
 
                             className="btn">

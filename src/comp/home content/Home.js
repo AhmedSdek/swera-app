@@ -14,10 +14,10 @@ import im from './im.png'
 import im2 from './im2.jpg'
 import CityscapeHome from './cityscape/CityscapeHome';
 function Home() {
-    // const [pup, setPup] = useState(0);
-    // useEffect(() => {
-    //     setPup(1)
-    // }, []);
+    const [pup, setPup] = useState(0);
+    useEffect(() => {
+        setPup(1)
+    }, []);
     const [serch, setSerch] = useState('')
     function cap(string) {
         return string.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
@@ -56,10 +56,10 @@ function Home() {
             <Slider />
             <HomeDeals />
             <Stack sx={{ marginBottom: '15px' }}>
-                <HomeForm />
+                <HomeForm hedText='Need Expert Advice ?' text2='Fill out the form and one of our property consultants will contact you.' Alert='Thank you. I will get back to you as soon as possible.' />
             </Stack>
             <Calc />
-            {/* <HomePup pup={pup} setPup={setPup} /> */}
+            <HomePup pup={pup} setPup={setPup} />
         </div> 
     )
 }

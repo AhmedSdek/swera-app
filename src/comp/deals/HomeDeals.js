@@ -61,7 +61,6 @@ function HomeDeals() {
                         >
                             {
                                 value.docs.map((col, index) => {
-                                    console.log(col.data())
                                     return (
                                         <SwiperSlide key={index} style={{ marginBottom: '15px', position: 'relative' }}>
                                             <Col key={index} style={{ position: 'relative', height: '460px' }} >

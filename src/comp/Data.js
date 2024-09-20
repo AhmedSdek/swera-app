@@ -1,8 +1,9 @@
 import makeplace from './make.jpg'
-import mabany from './mabany.jpg'
 import tameer from './tameer.jpg'
 import times from './times.jpg'
 import MM from './MM.jpg'
+import waterway from './high.webp'
+import newJersey from './New Jersey.webp'
 
 export const data = [
     {
@@ -1162,6 +1163,16 @@ export const data = [
         "id": 143,
         "image": tameer,
         'name': 'Tameer',
+    },
+    {
+        "id": 144,
+        "image": waterway,
+        'name': 'Waterway',
+    },
+    {
+        "id": 145,
+        "image": newJersey,
+        'name': 'New Jersey',
     },
 
 ];

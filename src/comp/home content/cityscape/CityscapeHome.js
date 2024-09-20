@@ -1,7 +1,7 @@
 import { Box, Container, Stack, Typography } from '@mui/material'
 import React from 'react'
 import { Link } from 'react-router-dom'
-import img from './img.jpg'
+import img from './cityescape (890 x 120 بيكسل) (690 x 120 بيكسل).png'
 
 function CityscapeHome() {
     return (

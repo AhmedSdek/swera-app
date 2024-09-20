@@ -237,9 +237,8 @@ function NewLaunchesForm() {
     };
     const handleFileChange = async (event) => {
         for (let i = 0; i < event.target.files.length; i++) {
-            console.log(event.target.files.length)
             // console.log(i)
-            const storageRef = ref(storage, event.target.files[i].name);
+            const storageRef = ref(storage, 'newLaunches/' + event.target.files[i].name);
             const uploadTask = uploadBytesResumable(storageRef, event.target.files[i]);
 
             uploadTask.on('state_changed',

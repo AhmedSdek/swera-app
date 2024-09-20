@@ -4,9 +4,10 @@ import ReactLoading from 'react-loading';
 import emailjs from "@emailjs/browser";
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css'
-function HomeForm() {
+function HomeForm({ hedText, text2, mail, Alert }) {
     const [btn, setBtn] = useState(false);
     const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
     const [message, setMessage] = useState('');
     const serviceid = 'service_jlupx0u';
     const templateid = 'template_bhl1gra';
@@ -17,12 +18,13 @@ function HomeForm() {
         from_name: name,
         from_phone: phone,
         to_name: 'Mevrick',
+        from_email: email,
         message: message,
     }
     return (
-        <Container >
-            <Box style={{ width: '100%', display: 'flex', height: 'calc(100vh - 64px)', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-                <Card sx={{ width: { xs: '90%', sm: '80%', md: '50%' }, display: 'flex', alignItems: 'center', flexDirection: 'column', padding: '20px', height: '100%', backgroundColor: 'white' }}>
+
+        <Box sx={{ width: '100%', display: 'flex', height: 'calc(100vh - 64px)', justifyContent: 'center', alignItems: 'center', height: '100%', padding: '10px' }}>
+            <Card sx={{ width: { xs: '100%', sm: '80%', md: '50%' }, display: 'flex', alignItems: 'center', flexDirection: 'column', padding: { md: '20px', xs: '20px 0' }, height: '100%', backgroundColor: 'white' }}>
                     <svg
                         width="66" height="49" viewBox="0 0 66 49" fill="none"
                         xmlns="http://www.w3.org/2000/svg">
@@ -32,9 +34,10 @@ function HomeForm() {
                             </path>
                         </svg>
                     {/* <img style={{ width: '100px', height: '100px' }} src={img} alt='' /> */}
-                    <Typography variant="h5" component='h4' sx={{ fontWeight: 'bold', color: '#305070', padding: '10px' }}>Need Expert Advice ?
+                <Typography variant="h5" component='h4' sx={{ fontWeight: 'bold', color: '#305070', padding: '10px' }}>{hedText}
                         </Typography>
-                        <p className="text-3">Fill out the form and one of our property consultants will contact you.
+                <p className="text-3" style={{ textAlign: 'center' }}>
+                    {text2}
                         </p>
                         <Box component='form'
                             onSubmit={async (e) => {
@@ -46,8 +49,9 @@ function HomeForm() {
                                             setBtn(false)
                                             setPhone('')
                                             setMessage('');
-                                            setName('')
-                                            alert("Thank you. I will get back to you as soon as possible.");
+                                            setName('');
+                                            setEmail('')
+                                            alert(`${Alert}`);
                                         },
                                         (error) => {
                                             console.error(error);
@@ -64,6 +68,17 @@ function HomeForm() {
                                 }}
                             required
                             id="name" label=" Name" variant="outlined" type="text" value={name} />
+                    {mail &&
+                        <TextField
+                            className='inbutdiv'
+                            sx={{ margin: '10px', padding: '5px', width: { xs: '100%', md: '100%' }, }}
+                            onChange={(e) => {
+                                setEmail(e.target.value);
+                            }}
+                            required
+                            id="mail" label="Email" variant="outlined" type="email" value={email} />
+
+                    }
 
                         <Box sx={{ width: { xs: '100%', md: '100%' }, padding: '5px' }}>
                                 <PhoneInput
@@ -100,7 +115,6 @@ function HomeForm() {
                     </Card>
                 </Box>
 
-        </Container>
     )
 }
 

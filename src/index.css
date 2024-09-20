@@ -7,8 +7,22 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: rgb(30, 65, 100) !important
+  color: rgb(30, 65, 100) !important;
+
 }
+/* .card ::-webkit-scrollbar{
+  border-radius: 10px;
+  width: 10px;
+  background-color: #282828;
+} */
+/* ::-webkit-scrollbar-track {
+background-color: #282828;
+} */
+/* .card ::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: #1e4164;
+} */
+
 /* #root{
  min-height: 100vh;
 } */

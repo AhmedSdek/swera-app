@@ -3,8 +3,6 @@ import { Button, Stack } from '@mui/material'
 import React from 'react'
 
 function ContactUsBtn({ sectionName = '', sectionData = '' }) {
-    console.log(sectionData)
-
     return (
         <Stack sx={{ flexDirection: 'row', gap: 2 }}>
             <a href="tel:+201008582515">
