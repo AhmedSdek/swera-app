@@ -132,8 +132,9 @@ function HomeDeals() {
                                                                             </p>
                                                                         </Box>
                                                                     }
+
                                                                     <Typography sx={{ fontWeight: 'bold' }}>
-                                                                        {col.data().price} EGP
+                                                                        {`${col.data().price} ${col.data().monyType === 'dollar' ? "$" : "EGP"}`}
                                                                     </Typography>
                                                                 </CardContent>
                                                             </Stack>

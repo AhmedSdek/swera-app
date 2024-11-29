@@ -66,8 +66,8 @@ function NewLaunches() {
                                                 return (
                                                     <SwiperSlide key={img} style={{ height: '100%' }}>
                                                         <Link aria-label={item.data().launchName} style={{ width: '393px', height: '225px', }} to={`/newlaunches/${item.data().id}`} >
-                                                            <picture>
-                                                                <img src={img} sizes="(min-width: 600px) 50vw, 100vw" alt="Flowers" />
+                                                            <picture >
+                                                                <img style={{ borderRadius: '8px' }} src={img} sizes="(min-width: 600px) 50vw, 100vw" alt="Flowers" />
                                                             </picture>
                                                         </Link>
                                                     </SwiperSlide>

@@ -26,6 +26,7 @@ function ReSale() {
     const [btn, setBtn] = useState(false);
     const [imgText, setImgText] = React.useState('');
     const [sold, setSold] = React.useState('');
+    const [monyType, setMoneyType] = React.useState('');
     const [floor, setFloor] = React.useState('');
     const [devname, setDevname] = React.useState('');
     const [compoundName, setCompoundName] = React.useState('')
@@ -294,6 +295,7 @@ function ReSale() {
                 id: `${id}`,
                 imgtext: imgText,
                 price: price,
+                monyType: monyType,
                 refNum: refNum,
                 delivery: delivery,
                 Type: type, 
@@ -415,6 +417,25 @@ function ReSale() {
                                             <MenuItem key={devName.id} value={devName.name}>{devName.name}</MenuItem>
                                         )
                                     })}
+                                </Select>
+                            </FormControl>
+                        </Stack>
+
+                        <Stack sx={{ flexDirection: 'row', width: { xs: '100%', md: '50%' }, padding: '5px' }}>
+                            <FormControl sx={{ width: '100%' }}>
+                                <InputLabel id="mony-type-label">Money Type</InputLabel>
+                                <Select
+                                    sx={{ minWidth: 'fit-content' }}
+                                    labelId="soldlap"
+                                    id="demo-sold"
+                                    value={monyType}
+                                    label="Money Type"
+                                    onChange={(e) => {
+                                        setMoneyType(e.target.value)
+                                    }}
+                                >
+                                    <MenuItem value={'dollar'}>Dollar</MenuItem>
+                                    <MenuItem value={'pound'}>Pound</MenuItem>
                                 </Select>
                             </FormControl>
                         </Stack>

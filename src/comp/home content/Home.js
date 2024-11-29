@@ -18,12 +18,12 @@ function Home() {
     useEffect(() => {
         setPup(1)
     }, []);
-    const [serch, setSerch] = useState('')
-    function cap(string) {
-        return string.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
-    }
+    // const [serch, setSerch] = useState('')
+    // function cap(string) {
+    //     return string.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
+    // }
     const nav = useNavigate()
-    return(
+    return (
         <div >
             <Box component='header' sx={{ position: 'relative', backgroundColor: 'white', backgroundImage: { xs: `url(${im2})`, md: `url(${im})` } }} className='home-header'>
                 <div className='header-main' style={{ textAlign: 'start', width: '40%', margin: '35px auto 0 ' }}>
@@ -31,7 +31,7 @@ function Home() {
                         <mark style={{ backgroundColor: 'rgb(255 145 77 / 87%)', borderRadius: '6px', fontWeight: 'bold', color: '#1e4164', }}>
                             Let us
                         </mark>
-                        </h1>
+                    </h1>
                     <h2 className='hed2' style={{ color: 'white', fontWeight: 'bold', margin: '0', fontSize: '40px' }}>
                         Help You To Make
                     </h2>
@@ -59,8 +59,8 @@ function Home() {
                 <HomeForm hedText='Need Expert Advice ?' text2='Fill out the form and one of our property consultants will contact you.' Alert='Thank you. I will get back to you as soon as possible.' />
             </Stack>
             <Calc />
-            <HomePup pup={pup} setPup={setPup} />
-        </div> 
+            {/* <HomePup pup={pup} setPup={setPup} /> */}
+        </div>
     )
 }
 export default Home;

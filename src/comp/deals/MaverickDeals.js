@@ -944,7 +944,7 @@ function MaverickDeals() {
 
                                                     }
                                                     <Typography sx={{ fontWeight: 'bold' }}>
-                                                        {item.data().price} EGP
+                                                        {`${item.data().price} ${item.data().monyType === 'dollar' ? "$" : "EGP"}`}
                                                     </Typography>
                                                 </CardContent>
                                             </Stack>

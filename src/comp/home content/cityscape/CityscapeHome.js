@@ -1,7 +1,7 @@
 import { Box, Container, Stack, Typography } from '@mui/material'
 import React from 'react'
 import { Link } from 'react-router-dom'
-import img from './cityescape (890 x 120 بيكسل) (690 x 120 بيكسل).png'
+import img from './cityescape (890 x 120 بيكسل) (690 x 120 بيكسل).webp'
 
 function CityscapeHome() {
     return (
@@ -9,7 +9,7 @@ function CityscapeHome() {
             <div style={{ marginTop: '15px' }}>
                 <Stack sx={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: '5px' }}>
                     <Typography sx={{ fontWeight: 'bold' }}>
-                        Cityscape
+                        Market offers
                     </Typography>
                 </Stack >
                 <Link aria-label="sahel-map" to='/cityscapeprojects' className='saheldev' style={{ display: 'inline-block', height: 'fit-content', width: '100%' }} >

@@ -1,5 +1,3 @@
-import { faFacebook, faInstagram, faTiktok } from "@fortawesome/free-brands-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Col, Container, Row } from "react-bootstrap";
 import footerlog from './log.webp'
 import { Button, IconButton, Stack, Typography } from "@mui/material";
@@ -7,10 +5,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase/config";
 import { getAuth, signOut } from "firebase/auth";
-function Footer(){
-    const [user] = useAuthState(auth);
-    const nav = useNavigate();
-    const adminData = ['arB4bTAtCiaMCBprrnOTRz6YbmT2', 'YZia9oRhhzdNFG1JOXteZOpcdw83']
+function Footer() {
+
     return (
         <footer id="contact" style={{ backgroundColor: '#1e4164' }}>
             <Container>
@@ -115,38 +111,11 @@ function Footer(){
                                 &copy; Copyright 2024 - Maverick
                             </Typography>
                         </Stack>
-                        <Stack sx={{ flexDirection: 'row', gap: 3, justifyContent: { xs: 'center', sm: 'end' } }}>
-                            {!user ?
-                                <>
-                                    <Link className="nav-link" to="/signup">Register</Link>
-                                    <Link className="nav-link" to="/signin">Log in</Link>
-                                </>
-                                :
-                                <>
-                                    <div className="nav-link" >
-                                        <Button sx={{ lineHeight: '0', padding: '0', fontWeight: 'bold' }} onClick={() => {
-                                            const auth = getAuth();
-                                            signOut(auth).then(() => {
-                                                // Sign-out successful.
-                                            }).catch((error) => {
-                                                // An error happened. 
-                                            });
-                                            nav('/')
-                                        }} variant="text" color="error">
-                                            Log Out
-                                        </Button>
-                                    </div>
-                                    {adminData.includes(user.uid) &&
-                                        <Link className="nav-link" to='/dashboard'>dash</Link>
-                                    }
-                                </>
-                            }
-                        </Stack>
+
                     </Stack>
                 </Container>
             </Stack>
         </footer>
-
     )
 }
 export default Footer;

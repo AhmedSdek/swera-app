@@ -28,7 +28,7 @@ function CityscapeProjects() {
             <Stack sx={{ minHeight: '100vh ', position: 'relative', marginTop: '58px' }}>
                 <Container>
                     <Stack >
-                        <Stack sx={{ flexDirection: { lg: 'row', md: 'row', sm: 'column' }, gap: 2, marginBottom: '15px', justifyContent: 'center', alignItems: 'center' }}>
+                        {/* <Stack sx={{ flexDirection: { lg: 'row', md: 'row', sm: 'column' }, gap: 2, marginBottom: '15px', justifyContent: 'center', alignItems: 'center' }}>
                             <Stack sx={{ padding: { lg: '20px 0 0', xs: '20px 0 0 0' }, width: { lg: '70%', md: '60%' } }}>
                                 <Typography variant='h5' component='h1' >
                                     <strong style={{ color: '#ff914d', fontSize: '30px' }}>
@@ -38,14 +38,46 @@ function CityscapeProjects() {
                                     is the largest and most important real estate exhibition in the Egypt and Africa.
                                 </Typography>
                                 <Typography>
-                                    Supported by public and private sectors connecting investors , and developers to unique oppoetunities throughout the country .
+                                    Explore all market offers
                                 </Typography>
                             </Stack>
                             <Stack sx={{ backgroundColor: '#edf0f0', gap: 1, color: '#1e4164', padding: '10px', borderRadius: '10px', alignItems: 'center', margin: '10px 0', width: { lg: '30%', md: '40%' } }}>
                                 <Typography sx={{ fontWeight: 'bold', textAlign: 'center' }}>
-                                    Egypt International Exhibition Center <br /> from 25-28 September 2024
+                                    Get Offer
                                 </Typography>
                                 <ContactUsBtn />
+                            </Stack>
+                        </Stack> */}
+                        <Stack sx={{ flexDirection: { xs: 'column', sm: 'row' }, justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', padding: '10px 0' }}>
+                            <div className="header">
+                                <h1 style={{
+                                    letterSpacing: '0px',
+                                    fontFamily: 'materialBold',
+                                    fontSize: '20px',
+                                    color: 'rgb(30, 65, 100)',
+                                    textTransform: 'uppercase',
+                                    letterSpacing: '4.14px',
+                                }}>Explore all
+                                    <span style={{
+                                        color: 'rgb(255 110 25)',
+                                        fontSize: '40px',
+                                        verticalAlign: 'middle',
+                                        letterSpacing: '0px'
+                                    }}>market offers</span>
+                                </h1>
+                                <h2 style={{
+                                    textTransform: 'uppercase',
+                                    letterSpacing: '2.34px',
+                                    color: 'rgb(100, 100, 100)',
+                                    fontSize: '18px',
+                                }}>Be The First One To Get Offers
+                                </h2>
+                            </div>
+                            <Stack sx={{ backgroundColor: '#edf0f0', gap: 1, color: '#1e4164', padding: '10px', borderRadius: '10px', alignItems: 'center', margin: '10px 0', width: { lg: '30%', md: '40%' } }}>
+                                <Typography sx={{ fontWeight: 'bold', textAlign: 'center' }}>
+                                    Get Offer
+                                </Typography>
+                                <ContactUsBtn sectionName='Market-Offers' />
                             </Stack>
                         </Stack>
                         <Row>
@@ -98,14 +130,14 @@ function CityscapeProjects() {
                                                     </Stack>
                                                 </Stack>
                                                 {project.data().CashDiscount ?
-                                                <Stack sx={{ flexDirection: 'row', gap: 1 }}>
-                                                    <Typography sx={{ fontWeight: 'bold', fontSize: '20px' }}>
-                                                        Cash Discount
-                                                    </Typography>
-                                                    <Typography sx={{ fontWeight: 'bold', color: '#ff914d', fontSize: '20px' }}>
-                                                        {`${project.data().CashDiscount}%`}
-                                                    </Typography>
-                                                </Stack>
+                                                    <Stack sx={{ flexDirection: 'row', gap: 1 }}>
+                                                        <Typography sx={{ fontWeight: 'bold', fontSize: '20px' }}>
+                                                            Cash Discount
+                                                        </Typography>
+                                                        <Typography sx={{ fontWeight: 'bold', color: '#ff914d', fontSize: '20px' }}>
+                                                            {`${project.data().CashDiscount}%`}
+                                                        </Typography>
+                                                    </Stack>
                                                     :
                                                     <Typography>
                                                         {project.data().dis}
@@ -142,41 +174,41 @@ function CityscapeProjects() {
                             })}
                         </Row>
                         <Divider sx={{ opacity: '1', borderWidth: '1px' }} />
-                        <Stack sx={{ paddingTop: '10px' }}>
+                        {/* <Stack sx={{ paddingTop: '10px' }}>
 
                             <HomeForm hedText='Need Invitation' text2='Fill out the form and will receive your invitation immediately' mail={true} Alert='Thank you you will receive your invitation as soon as possible' />
-                        </Stack>
-                        <Stack>
-                        <Typography sx={{ margin: '10px !important' }}>
-                            Cityscape is Egypt’s annual international real estate show. It gives a unique chance for the real estate sector to assemble house purchasers in one location.
+                        </Stack> */}
+                        {/* <Stack>
+                            <Typography sx={{ margin: '10px !important' }}>
+                                Cityscape is Egypt’s annual international real estate show. It gives a unique chance for the real estate sector to assemble house purchasers in one location.
 
-                        </Typography>
-                        <Typography sx={{ margin: '10px !important' }}>
+                            </Typography>
+                            <Typography sx={{ margin: '10px !important' }}>
                                 Cityscape, Egypt’s premier real estate investment, development, and networking event, returns to the Egypt International Exhibition Center from 25-28 September 2024 to commemorate its tenth anniversary (EIEC). To investors and homebuyers, visit and explore new investment opportunities, one-of-a-kind bargains, household projects, and compounds in Egypt and abroad. Over the last decade, Cityscape has grown to become Egypt’s most well-known real estate event brand, attracting thousands of attendees from the Middle East and North Africa.
-                        </Typography>
-                        <Typography sx={{ margin: '10px !important' }}>
-                            Who is responsible for this occurrence?
-                            Cityscape Egypt is a subsidiary of Informa PLC’s Informa Markets business. Informa is a globally recognised leader in events, intelligence, and academic research. They are committed to assisting professionals. They assist businesses and professionals via hundreds of firms in specialised fields. They help their clients in expanding their network, gaining access to knowledge, and taking advantage of chances that enable them to grow, perform, and develop insight and understanding.
-                        </Typography>
-                        <Typography sx={{ margin: '10px !important' }}>
+                            </Typography>
+                            <Typography sx={{ margin: '10px !important' }}>
+                                Who is responsible for this occurrence?
+                                Cityscape Egypt is a subsidiary of Informa PLC’s Informa Markets business. Informa is a globally recognised leader in events, intelligence, and academic research. They are committed to assisting professionals. They assist businesses and professionals via hundreds of firms in specialised fields. They help their clients in expanding their network, gaining access to knowledge, and taking advantage of chances that enable them to grow, perform, and develop insight and understanding.
+                            </Typography>
+                            <Typography sx={{ margin: '10px !important' }}>
                                 Why Should You Visit Cityscape 2024?
                                 In Egypt, real estate investment and development is the most well-known, significant, and high-value industrial event. Investors and purchasers may use Cityscape to explore, discover, and locate unique offers, housing projects, and compounds in Egypt and other countries. In 2024, the Egyptian cityscape will grow as a result of its variety. The event will serve as a catalyst for reviving Egypt’s real estate business by bringing together the country’s most important individuals and market participants in a secure environment.
-                        </Typography>
-                        <Typography sx={{ margin: '10px !important' }}>
-                            Attend this event to meet over 50 regional and international property developers that are selling houses and investment opportunities in Egypt starting at only half a million EGP. Additionally, you’ll be able to do price comparisons, see projects, and compare facilities in one convenient location. Additionally, you’ll be able to speak with industry specialists who can assist you in ensuring an excellent purchase method. Additionally, you may take advantage of unique prices, promotions, and an exhibition-only payment plan.
-                        </Typography>
-                        <Typography sx={{ margin: '10px !important' }}>
-                            Face-to-face with Egypt’s finest and most reputable developers.
-                            networking with industry experts and assisting in the revival of Egypt’s real estate sector.
-                            For homebuyers, one of the greatest ways to locate their future house is to do an online search for their desired property.
-                            Consider the latest homes with branded offerings that provide clients the widest range of five-star living from the industry’s leading developers.
-                            Get exclusive access to property discounts and offers only for event participants.
-                        </Typography>
-                        <Typography sx={{ margin: '10px !important' }}>
-                            By reducing time spent on property shopping, comparing projects or making comparisons, or organising meetings in many locations, you’ll have more time to focus on your own vibrant joys.
-                        </Typography>
+                            </Typography>
+                            <Typography sx={{ margin: '10px !important' }}>
+                                Attend this event to meet over 50 regional and international property developers that are selling houses and investment opportunities in Egypt starting at only half a million EGP. Additionally, you’ll be able to do price comparisons, see projects, and compare facilities in one convenient location. Additionally, you’ll be able to speak with industry specialists who can assist you in ensuring an excellent purchase method. Additionally, you may take advantage of unique prices, promotions, and an exhibition-only payment plan.
+                            </Typography>
+                            <Typography sx={{ margin: '10px !important' }}>
+                                Face-to-face with Egypt’s finest and most reputable developers.
+                                networking with industry experts and assisting in the revival of Egypt’s real estate sector.
+                                For homebuyers, one of the greatest ways to locate their future house is to do an online search for their desired property.
+                                Consider the latest homes with branded offerings that provide clients the widest range of five-star living from the industry’s leading developers.
+                                Get exclusive access to property discounts and offers only for event participants.
+                            </Typography>
+                            <Typography sx={{ margin: '10px !important' }}>
+                                By reducing time spent on property shopping, comparing projects or making comparisons, or organising meetings in many locations, you’ll have more time to focus on your own vibrant joys.
+                            </Typography>
 
-                        </Stack>
+                        </Stack> */}
                     </Stack>
                 </Container>
 
@@ -207,12 +239,12 @@ function CityscapeProjects() {
                                     setName(e.target.value)
                                 }}
                                 id="name" label="Your Name" variant="outlined" type="text" value={name} />
-                            <TextField
+                            {/* <TextField
                                 sx={{ margin: '10px', width: '100%' }}
                                 onChange={(e) => {
                                     setEmail(e.target.value)
                                 }}
-                                id="email" label="Your Email" variant="outlined" type="email" value={email} />
+                                id="email" label="Your Email" variant="outlined" type="email" value={email} /> */}
                             <Box sx={{ width: { xs: '100%', md: '100%' }, padding: '5px' }}>
                                 <PhoneInput
                                     inputProps={{ required: true }}
@@ -236,7 +268,7 @@ function CityscapeProjects() {
                                 }}
                             />
                             <Button variant='contained' sx={{ width: '150px' }} type='submit' disabled={name.length <= 0 || phone.length <= 2}>
-                                <a style={{ width: '100%' }} target='_blank' href={`https://wa.me/+201008582515?text=Section%20Name%20:%20Cityscape%0AProject%20Name%20:%20${projectName}%0ADeveloper%20Name%20:%20${devName}%0AName%20:%20${name}${email && `%0AEmail%20:%20${email}`}%0APhone%20Number%20:%20${phone}${message && `%0AMessage%20:%20${message}`}`}>
+                                <a style={{ width: '100%' }} target='_blank' href={`https://wa.me/+201008582515?text=Section%20Name%20:%20Market-Offers%0AProject%20Name%20:%20${projectName}%0ADeveloper%20Name%20:%20${devName}%0AName%20:%20${name}${email && `%0AEmail%20:%20${email}`}%0APhone%20Number%20:%20${phone}${message && `%0AMessage%20:%20${message}`}`}>
                                     Send
                                 </a>
                             </Button>

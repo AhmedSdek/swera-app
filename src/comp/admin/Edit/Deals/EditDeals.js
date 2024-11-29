@@ -12,7 +12,7 @@ function EditDeals() {
         collection(db, 'Resell')
     );
     return (
-        <Box sx={{ minHeight: 'calc(100vh - 140px)', padding: '70px 0' }}>
+        <Box sx={{ minHeight: 'calc(100vh - 100px)', padding: '70px 0' }}>
             <h2>
                 Deals Edit page
             </h2>

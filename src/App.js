@@ -42,6 +42,7 @@ import FavoriteList from './comp/FavList/FavoriteList';
 import Err from './comp/Err/Err';
 import Cityscape from './comp/admin/cityscape/Cityscape';
 import CityscapeProjects from './comp/home content/cityscape/CityscapeProjects';
+import EditCity from './comp/admin/Edit/City/EditCity';
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -95,6 +96,7 @@ function App() {
                   <Route path='editluanches' element={<Editluanches />} />
                   <Route path='editluanches/:editluanchesdetailsId' element={<Editluanchesdetails />} />
                   <Route path="cityscape" element={<Cityscape />} />
+                  <Route path="editcity" element={<EditCity />} />
                 </Route>
 
                 <Route path='findhome' element={<FindHomeDetails />} >
