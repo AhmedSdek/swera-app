@@ -5,24 +5,20 @@ import HomeForm from './Home Form/HomeForm';
 import SahelMap from './sahel map/SahelMap';
 import Calc from './Calc/Calc';
 import HomeDeals from '../deals/HomeDeals';
-import { Box, Button, Stack, TextField } from '@mui/material';
+import { Box, Stack } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Search } from '@mui/icons-material';
-import HomePup from './HomePup/HomePup';
+// import HomePup from './HomePup/HomePup';
 import im from './im.png'
 import im2 from './im2.jpg'
 import CityscapeHome from './cityscape/CityscapeHome';
+import SearchCom from './SearchCom';
 function Home() {
     const [pup, setPup] = useState(0);
+    const nav = useNavigate()
     useEffect(() => {
         setPup(1)
     }, []);
-    // const [serch, setSerch] = useState('')
-    // function cap(string) {
-    //     return string.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
-    // }
-    const nav = useNavigate()
     return (
         <div >
             <Box component='header' sx={{ position: 'relative', backgroundColor: 'white', backgroundImage: { xs: `url(${im2})`, md: `url(${im})` } }} className='home-header'>
@@ -38,16 +34,7 @@ function Home() {
                     <h2 className='hed3' style={{ textAlign: 'end', fontWeight: 'bold', color: 'white', margin: '5px 0  0 0', fontSize: '40px' }}>
                         The Move
                     </h2>
-                    {/* <Stack component='form' sx={{ flexDirection: 'column', width: '100%', gap: 1, alignItems: 'center', paddingTop: '10px', position: 'relative' }} onSubmit={(e) => {
-                        e.preventDefault();
-                        nav(`/developers/${cap(serch)}`)
-                    }}>
-                        <TextField color="warning" className='header-search' sx={{ backgroundColor: 'white', width: '100%', borderRadius: '10px' }} id="outlined-search" placeholder='Real estate Developer' type="search" onChange={(e) => setSerch(e.target.value)} />
-                        <Search sx={{ position: 'absolute', right: '10px', top: '27px' }} />
-                        <Button type='submit' variant='contained' sx={{ width: '130px', backgroundColor: '#ff914d' }}>
-                            Search
-                        </Button>
-                    </Stack> */}
+                    <SearchCom />
                 </div>
             </Box>
             <SahelMap />

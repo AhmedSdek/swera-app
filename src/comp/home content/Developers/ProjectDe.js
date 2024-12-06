@@ -67,7 +67,6 @@ function ProjectDe() {
                     for (let i = 0; i < dis3data.length; i++) {
                         dis3fiter = [...dis3fiter, dis3data[i]]
                     }
-                    console.log(value.data())
                     return (
                         <div key={fil}  >
                             <Container>
