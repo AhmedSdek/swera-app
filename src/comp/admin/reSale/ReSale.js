@@ -39,13 +39,14 @@ function ReSale() {
     const [delivery, setDelivery] = React.useState('');
     const [type, setType] = React.useState('');
     const [area, setArea] = React.useState('');
+    // console.log(area)
     const [bed, setBed] = React.useState('');
     const [bath, setBath] = React.useState('');
     const [finsh, setFinsh] = React.useState('');
     const [location, setLocation] = React.useState('');
     const [sale, setSale] = React.useState('');
     const [dis, setDis] = React.useState('');
-    const [dis2, setDis2] = React.useState('');
+    // const [dis2, setDis2] = React.useState('');
     const [gardenArea, setGardenArea] = React.useState('');
     const [dis3, setDis3] = React.useState('');
     const [prog, setProg] = useState(0)
@@ -62,22 +63,22 @@ function ReSale() {
         setImgText(event.target.value);
     };
     const handleRoofAreaChange = (event) => {
-        setRoofArea(event.target.value);
+        setRoofArea(Number(event.target.value));
     };
     const handleCompoundNameChange = (event) => {
         setCompoundName(event.target.value);
     };
     const handlePriceChange = (event) => {
-        setPrice(event.target.value);
+        setPrice(Number(event.target.value));
     };
     const handledownPaymentChange = (event) => {
-        setDownPayment(event.target.value);
+        setDownPayment(Number(event.target.value));
     };
     const handleremainingChange = (event) => {
         setRemaining(event.target.value);
     };
     const handleMonthChange = (event) => {
-        setMonth(event.target.value);
+        setMonth(Number(event.target.value));
     };
     const handleRentalChange = (event) => {
         setRental(event.target.value);
@@ -86,13 +87,13 @@ function ReSale() {
         setDelivery(event.target.value);
     };
     const handleLandAreaChange = (event) => {
-        setLandArea(event.target.value);
+        setLandArea(Number(event.target.value));
     };
     const handleTypeChange = (event) => {
         setType(event.target.value);
     };
     const handleAreaChange = (event) => {
-        setArea(event.target.value);
+        setArea(Number(event.target.value));
     };
     const handlebedChange = (event) => {
         setBed(event.target.value);
@@ -104,7 +105,7 @@ function ReSale() {
         setRefNum(event.target.value);
     };
     const handleGardenareaChange = (event) => {
-        setGardenArea(event.target.value);
+        setGardenArea(Number(event.target.value));
     };
     const handleFinshChange = (event) => {
         setFinsh(event.target.value);
@@ -118,9 +119,9 @@ function ReSale() {
     const handleDisChange = (event) => {
         setDis(event.target.value);
     };
-    const handleDis2Change = (event) => {
-        setDis2(event.target.value);
-    };
+    // const handleDis2Change = (event) => {
+    //     setDis2(event.target.value);
+    // };
     const handleDis3Change = (event) => {
         setDis3(event.target.value);
     };
@@ -312,7 +313,7 @@ function ReSale() {
                 month: month,
                 downPayment: downPayment,
                 remaining: remaining,
-                dis2: dis2,
+                // dis2: dis2,
                 dis3: dis3,
                 img: url,
                 Layoutimg: url2,
@@ -443,7 +444,7 @@ function ReSale() {
                             sx={{ margin: '10px', padding: '5px', width: { xs: '100%', md: '50%' } }}
                             value={price}
                             id="Price" label="Total Price"
-                            variant="outlined" type="text"
+                            variant="outlined" type="number"
                             onChange={(e) => {
                                 handlePriceChange(e)
                             }}
@@ -452,7 +453,7 @@ function ReSale() {
                             sx={{ margin: '10px', padding: '5px', width: { xs: '100%', md: '50%' } }}
                             value={downPayment}
                             id="downPayment" label="down Payment"
-                            variant="outlined" type="text"
+                            variant="outlined" type="number"
                             onChange={(e) => {
                                 handledownPaymentChange(e)
                             }}
@@ -479,7 +480,7 @@ function ReSale() {
                             sx={{ margin: '10px', padding: '5px', width: { xs: '100%', md: '50%' } }}
                             value={roofArea}
                             id="RoofArea" label="Roof Area"
-                            variant="outlined" type="text"
+                            variant="outlined" type="number"
                             onChange={(e) => {
                                 handleRoofAreaChange(e)
                             }}
@@ -488,7 +489,7 @@ function ReSale() {
                             sx={{ margin: '10px', padding: '5px', width: { xs: '100%', md: '50%' } }}
                             value={landArea}
                             id="Land-area" label="Land Area"
-                            variant="outlined" type="text"
+                            variant="outlined" type="number"
                             onChange={(e) => {
                                 handleLandAreaChange(e)
                             }}
@@ -506,7 +507,7 @@ function ReSale() {
                             sx={{ margin: '10px', padding: '5px', width: { xs: '100%', md: '50%' } }}
                             value={refNum}
                             id="RefNum" label="RefNum"
-                            variant="outlined" type="text"
+                            variant="outlined" type="number"
                             onChange={(e) => {
                                 handleRefNumChange(e)
                             }}
@@ -516,7 +517,7 @@ function ReSale() {
                             sx={{ margin: '10px', padding: '5px', width: { xs: '100%', md: '50%' } }}
                             value={gardenArea}
                             id="Garden-area" label="Garden area"
-                            variant="outlined" type="text"
+                            variant="outlined" type="number"
                             onChange={(e) => {
                                 handleGardenareaChange(e)
                             }}

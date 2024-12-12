@@ -19,7 +19,7 @@ import './styles.css';
 import { Autoplay, FreeMode, Navigation, Pagination } from 'swiper/modules';
 import ContactUsBtn from "../Contact Us/ContactUsBtn";
 import { useState } from "react";
-import { ArrowCircleLeft, ArrowCircleRight, Close, Payments } from "@mui/icons-material";
+import { ArrowCircleRight, Close } from "@mui/icons-material";
 import MavLoading from "../Loading/MavLoading";
 import { TransformComponent, TransformWrapper, useControls } from "react-zoom-pan-pinch";
 import { styled } from '@mui/material/styles';
@@ -62,17 +62,9 @@ function DealDetails() {
         },
     }));
 
-    function createData(name, calories, fat, carbs, protein) {
-        return { name, calories, fat, carbs, protein };
-    }
-
-    const rows = [
-        createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-        createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-        createData('Eclair', 262, 16.0, 24, 6.0),
-        createData('Cupcake', 305, 3.7, 67, 4.3),
-        createData('Gingerbread', 356, 16.0, 49, 3.9),
-    ];
+    // function createData(name, calories, fat, carbs, protein) {
+    //     return { name, calories, fat, carbs, protein };
+    // }
     const Controls = () => {
         const { zoomIn, zoomOut, resetTransform } = useControls();
 
@@ -92,7 +84,7 @@ function DealDetails() {
         )
     }
     if (value) {
-        console.log(value.data())
+        // console.log(value.data())
         const disdata = value.data().Dis.split('$')
         for (let i = 0; i < disdata.length; i++) {
             disfiter = [...disfiter, disdata[i]]
@@ -170,9 +162,8 @@ function DealDetails() {
                             <Stack sx={{ lineHeight: '1', margin: '10px 0 40px', position: 'relative', flexDirection: { xs: 'column', sm: 'row' }, justifyContent: 'space-between', alignItems: 'center', gap: 2 }}>
                                 <Stack>
                                     <img style={{ width: '100px', boxShadow: '0 -1px 15px -3px rgba(0, 0, 0, 0.2)', borderRadius: '50%' }} src={value.data().icon} alt='' />
-
                                 </Stack>
-                                <Stack sx={{ width: '100%' }}>
+                                <Stack sx={{ width: '100%', gap: 2 }}>
                                     <Stack sx={{ flexDirection: { lg: 'row', md: 'row', sm: 'column', xs: 'column' }, justifyContent: { lg: 'space-between', md: 'space-between', sm: 'center', xs: 'center' }, alignItems: 'center', gap: 2 }}>
                                         <Stack sx={{ gap: 1 }}>
                                             <Typography component='h2' variant="h5" sx={{ color: 'rgb(30, 65, 100)', lineHeight: '1', fontWeight: 'bold', textAlign: 'center' }}>
@@ -191,7 +182,8 @@ function DealDetails() {
 
                                     <Stack sx={{ flexDirection: { xs: 'column', sm: 'row' }, justifyContent: 'space-between', alignItems: 'center' }}>
                                         <Typography sx={{ fontWeight: 'bold', margin: '10px 0 !important', color: 'black' }}>
-                                            {`${value.data().price} EGP  `}
+                                            {`${Intl.NumberFormat('en-US').format(value.data().price)} ${value.data().monyType === 'dollar' ? "$" : "EGP"}`}
+
                                             {value.data().Sale === 'Rent' &&
                                                 <Typography variant="caption" sx={{ lineHeight: '1', color: '#1E4164' }}>
                                                     Per month
@@ -369,14 +361,14 @@ function DealDetails() {
                                         Payment Plan
                                     </Typography>
                                         <Stack sx={{ backgroundColor: '#f8f8f8', margin: '10px 0', borderRadius: '10px', padding: '30px 1px', alignItems: 'center', width: '100%', border: '1px solid black' }}>
-
+                                            {/* < */}
                                             <Stack>
                                                 {
                                                     !value.data().downPayment &&
                                                     <Stack sx={{ flexDirection: 'row', gap: 2, alignItems: 'center' }}>
                                                         <FontAwesomeIcon icon={faWallet} style={{ fontSize: '30px' }} />
                                                         <Typography>
-                                                                {`${value.data().price} EGP  Total Cash`}
+                                                                {`${Intl.NumberFormat('en-US').format(value.data().price)} ${value.data().monyType === 'dollar' ? "$" : "EGP"} Total Cash`}
                                                             </Typography>
                                                         </Stack>
                                                 }

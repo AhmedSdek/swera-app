@@ -1,19 +1,19 @@
-import { Box, Card, CardContent, Checkbox, Container, IconButton, Stack, Typography } from '@mui/material'
+import { Box, Card, CardContent, Checkbox, Container, Stack, Typography } from '@mui/material'
 import { collection, doc, updateDoc } from 'firebase/firestore';
 import React from 'react'
 import { useCollection } from 'react-firebase-hooks/firestore';
 import { db } from '../../firebase/config';
 import { Link } from 'react-router-dom';
-import { Col, Row } from 'react-bootstrap';
+import { Col } from 'react-bootstrap';
 import ContactUsIcon from '../Contact Us/ContactUsIcon';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { FreeMode, Pagination, Autoplay } from 'swiper/modules';
-import { Bookmark, BookmarkBorder, Call, Favorite, FavoriteBorder, WhatsApp } from '@mui/icons-material';
+import { Favorite, FavoriteBorder } from '@mui/icons-material';
 
 function HomeDeals() {
     const [value, loading, error] = useCollection(collection(db, 'Resell'));
-    let arr = [];
-    let arrfilt = [];
+    // let arr = [];
+    // let arrfilt = [];
     if (value) {
         // value.docs.map((item) => arr.push(item.data()))
         // for (let i = 0; i < 3; i++) {
@@ -134,7 +134,7 @@ function HomeDeals() {
                                                                     }
 
                                                                     <Typography sx={{ fontWeight: 'bold' }}>
-                                                                        {`${col.data().price} ${col.data().monyType === 'dollar' ? "$" : "EGP"}`}
+                                                                        {`${Intl.NumberFormat('en-US').format(col.data().price)} ${col.data().monyType === 'dollar' ? "$" : "EGP"}`}
                                                                     </Typography>
                                                                 </CardContent>
                                                             </Stack>

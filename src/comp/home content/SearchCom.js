@@ -35,7 +35,7 @@ function SearchCom() {
         <Stack component='form' sx={{ flexDirection: 'column', width: '100%', alignItems: 'center', paddingTop: '10px', position: 'relative' }} onSubmit={(e) => {
             e.preventDefault();
         }}>
-            <TextField color="warning" className='header-search' sx={{ backgroundColor: 'white', width: '100%', borderRadius: '10px' }} id="outlined-search" placeholder='Real estate Developer' type="search" onChange={(e) => {
+            <TextField color="warning" className='header-search' sx={{ backgroundColor: 'white', width: '100%', borderRadius: '10px' }} id="outlined-search" placeholder='Developers Or Area Or Compounds ' type="search" onChange={(e) => {
                 if (e.target.value === '') {
                     setSerch(null);
                     setMenu(false)

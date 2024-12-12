@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useCollection } from "react-firebase-hooks/firestore";
-import { collection, doc, query, updateDoc, where } from "firebase/firestore";
-import { Box, Card, CardContent, Checkbox, Container, FormControl, InputLabel, MenuItem, Select, Stack, Typography } from '@mui/material';
+import { collection, doc, updateDoc } from "firebase/firestore";
+import { Box, Card, CardContent, Checkbox, Container, FormControlLabel, FormGroup, FormLabel, IconButton, Stack, Typography } from '@mui/material';
 import { Col, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import img from './2238332.png'
@@ -9,54 +9,71 @@ import { db } from '../../firebase/config';
 import './styles.css'
 import ContactUsIcon from '../Contact Us/ContactUsIcon';
 import MavLoading from '../Loading/MavLoading';
-import { Favorite, FavoriteBorder } from '@mui/icons-material';
+import { Favorite, FavoriteBorder, Tune } from '@mui/icons-material';
 function MaverickDeals() {
+    const [value, loading, error] = useCollection(collection(db, 'Resell'));
+    const [data, setData] = useState([]);
+    const [filterIcon, setFilterIcon] = useState(false);
+    const [filteredData, setFilteredData] = useState(data);
+    // حالة لتخزين حالة الـ checkboxes
+    // const [filters, setFilters] = useState({});
+    useEffect(() => {
+        let firebasedata = [];
+        if (value) {
+            value.docs.map((item) => {
+                firebasedata.push(item.data());
+            });
+            setData(firebasedata);
+            setFilteredData(firebasedata)
+        }
+    }, [value]);
+    // حالة لتخزين حالة الـ checkboxes
+    const [filters, setFilters] = useState({
+        Finsh: [],
+        Location: [],
+        Sale: [],
+        Type: [],
+        compoundName: [],
+        delivery: [],
+        devname: []
+    });
 
-    const [dataHandel, setDataHandel] = useState(
-        query(collection(db, 'Resell'))
-    );
-    const [value, loading, error] = useCollection(
-        dataHandel
-    );
-    const [sale, setSale] = React.useState('All');
-    const [type, setType] = React.useState('All');
+    // استخراج القيم الفريدة لكل خاصية
+    const uniqueFinsh = [...new Set(data.map(item => item.Finsh))];
+    const uniqueLocation = [...new Set(data.map(item => item.Location))];
+    const uniqueSale = [...new Set(data.map(item => item.Sale))];
+    const uniqueType = [...new Set(data.map(item => item.Type))];
+    const uniqueCompoundName = [...new Set(data.map(item => item.compoundName))];
+    const uniqueDelivery = [...new Set(data.map(item => item.delivery))];
+    const uniqueDevname = [...new Set(data.map(item => item.devname))];
 
-    const [Finishing, setFinishing] = React.useState('All');
-
+    // دالة للتصفية بناءً على الـ checkboxes
+    function handleCheckboxChange(event, category) {
+        const { name, checked } = event.target;
+        // تحديث حالة الـ filters بناءً على القيم المختارة
+        const updatedFilters = { ...filters };
+        if (checked) {
+            updatedFilters[category].push(name);
+        } else {
+            updatedFilters[category] = updatedFilters[category].filter(value => value !== name);
+        }
+        setFilters(updatedFilters);
+        // تصفية البيانات بناءً على القيم المختارة في جميع الفئات
+        const newData = data.filter(item => {
+            return Object.keys(updatedFilters).every(category => {
+                if (updatedFilters[category].length === 0) {
+                    return true; // إذا لم يتم تحديد أي قيم في هذه الفئة، نعرض كل الكائنات
+                }
+                return updatedFilters[category].includes(item[category]); // التأكد من تطابق القيم
+            });
+        });
+        setFilteredData(newData);
+    }
     if (value) {
         return (
             <Box sx={{ padding: '70px 0 0', minHeight: 'calc(100vh - 100px)' }}>
                 <Container>
-                    {/* <div className="mav-header">
-                        <h4 style={{ fontWeight: 'bold' }}>Choose maverick deals Enjoy within days!</h4>
-                        <p>The “Move Now Pay Later” service is a financing option offered by Nawy that not only allows you to choose your perfect home but move in immediately while setting up a flexible payment plan that suits you. Nawy has your back from the beginning of the buying process to the end and provides the hassle-free service of managing all paperwork. Here is how to better understand how this service works:</p>
-                    </div>
-                    <div className="mav-steps">
-                        <div className="step">
-                            <div className="step-number">
-                                <span>1</span>
-                                <span>Step</span>
-                            </div>
-                            <p>After requesting one of our property consultants’ assistance, you will be able to look at the ready to move properties available in our inventory and explore them thoroughly with your assigned sales representative</p>
-                        </div>
-                        <div className="step">
-                            <div className="step-number">
-                                <span>2</span>
-                                <span>Step</span>
-                            </div>
-                            <p>Once settled on your desired property, then comes the step of setting up your flexible payment plan. Nawy is one of the few entities that offers plans extending up to 10 years.</p>
-                        </div>
-                        <div className="step">
-                            <div className="step-number">
-                                <span>3</span>
-                                <span>Step</span>
-                            </div>
-                            <p>As soon as you have your optimum payment plan in place, Nawy will proceed to handle all paperwork and logistics to obtain and provide your property for you. In under 45 days, your new home will be available for you to move in.</p>
-                        </div>
-                    </div> */}
-
-
-                    <div style={{ margin: '20px 0' }}>
+                    {/* <div style={{ margin: '20px 0' }}>
                         <h4 style={{
                             letterSpacing: '0px',
                             fontFamily: 'materialBold',
@@ -77,8 +94,8 @@ function MaverickDeals() {
                         }}>
                             Choose the unit that suits your needs
                         </Typography>
-                    </div>
-                    <Stack sx={{ padding: '0 0 20px 0', flexDirection: 'row', gap: 2 }}>
+                    </div> */}
+                    {/* <Stack sx={{ padding: '0 0 20px 0', flexDirection: 'row', gap: 2 }}>
                         <FormControl sx={{ width: '200px' }}>
                             <InputLabel id="Sale">Sale</InputLabel>
                             <Select
@@ -91,17 +108,17 @@ function MaverickDeals() {
                                         setDataHandel(query(collection(db, 'Resell')));
                                         setSale('All');
                                         setType('All')
-                                        setFinishing('All')
+                                        setFinshing('All')
                                     } else if (event.target.value === 'Resale') {
                                         setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Resale')));
                                         setSale('Resale');
                                         setType('All')
-                                        setFinishing('All')
+                                        setFinshing('All')
                                     } else if (event.target.value === 'Rent') {
                                         setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent')));
                                         setSale('Rent');
                                         setType('All')
-                                        setFinishing('All')
+                                        setFinshing('All')
                                     }
                                 }}
                             >
@@ -127,7 +144,7 @@ function MaverickDeals() {
                                             setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent')));
                                         }
                                         setType('All');
-                                        setFinishing('All')
+                                        setFinshing('All')
                                     } else if (event.target.value === 'Apartment') {
                                         if (sale === 'All') {
                                             setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Apartment')));
@@ -137,7 +154,7 @@ function MaverickDeals() {
                                             setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Type", "==", 'Apartment')));
                                         }
                                         setType('Apartment');
-                                        setFinishing('All')
+                                        setFinshing('All')
                                     } else if (event.target.value === 'Duplex') {
                                         if (sale === 'All') {
                                             setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Duplex')));
@@ -147,7 +164,7 @@ function MaverickDeals() {
                                             setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Type", "==", 'Duplex')));
                                         }
                                         setType('Duplex');
-                                        setFinishing('All')
+                                        setFinshing('All')
                                     } else if (event.target.value === 'Studio') {
                                         if (sale === 'All') {
                                             setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Studio')));
@@ -157,7 +174,7 @@ function MaverickDeals() {
                                             setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Type", "==", 'Studio')));
                                         }
                                         setType('Studio');
-                                        setFinishing('All')
+                                        setFinshing('All')
                                     } else if (event.target.value === 'Penthouse') {
                                         if (sale === 'All') {
                                             setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Penthouse')));
@@ -167,7 +184,7 @@ function MaverickDeals() {
                                             setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Type", "==", 'Penthouse')));
                                         }
                                         setType('Penthouse');
-                                        setFinishing('All')
+                                        setFinshing('All')
                                     } else if (event.target.value === 'Family house') {
                                         if (sale === 'All') {
                                             setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Family house')));
@@ -177,7 +194,7 @@ function MaverickDeals() {
                                             setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Type", "==", 'Family house')));
                                         }
                                         setType('Family house');
-                                        setFinishing('All')
+                                        setFinshing('All')
                                     } else if (event.target.value === 'Standalone') {
                                         if (sale === 'All') {
                                             setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Standalone')));
@@ -187,7 +204,7 @@ function MaverickDeals() {
                                             setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Type", "==", 'Standalone')));
                                         }
                                         setType('Standalone');
-                                        setFinishing('All')
+                                        setFinshing('All')
                                     } else if (event.target.value === 'Twin house') {
                                         if (sale === 'All') {
                                             setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Twin house')));
@@ -197,7 +214,7 @@ function MaverickDeals() {
                                             setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Type", "==", 'Twin house')));
                                         }
                                         setType('Twin house');
-                                        setFinishing('All')
+                                        setFinshing('All')
                                     } else if (event.target.value === 'One storey Villa') {
                                         if (sale === 'All') {
                                             setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'One storey Villa')));
@@ -207,7 +224,7 @@ function MaverickDeals() {
                                             setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Type", "==", 'One storey Villa')));
                                         }
                                         setType('One storey Villa');
-                                        setFinishing('All')
+                                        setFinshing('All')
                                     } else if (event.target.value === 'Chalet') {
                                         if (sale === 'All') {
                                             setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Chalet')));
@@ -217,7 +234,7 @@ function MaverickDeals() {
                                             setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Type", "==", 'Chalet')));
                                         }
                                         setType('Chalet');
-                                        setFinishing('All')
+                                        setFinshing('All')
                                     } else if (event.target.value === 'Townhouse') {
                                         if (sale === 'All') {
                                             setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Townhouse')));
@@ -227,7 +244,7 @@ function MaverickDeals() {
                                             setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Type", "==", 'Townhouse')));
                                         }
                                         setType('Townhouse');
-                                        setFinishing('All')
+                                        setFinshing('All')
                                     } else if (event.target.value === 'Cabin') {
                                         if (sale === 'All') {
                                             setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Cabin')));
@@ -237,7 +254,7 @@ function MaverickDeals() {
                                             setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Type", "==", 'Cabin')));
                                         }
                                         setType('Cabin');
-                                        setFinishing('All')
+                                        setFinshing('All')
                                     } else if (event.target.value === 'Clinic') {
                                         if (sale === 'All') {
                                             setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Clinic')));
@@ -247,7 +264,7 @@ function MaverickDeals() {
                                             setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Type", "==", 'Clinic')));
                                         }
                                         setType('Clinic');
-                                        setFinishing('All')
+                                        setFinshing('All')
                                     } else if (event.target.value === 'Office') {
                                         if (sale === 'All') {
                                             setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Office')));
@@ -257,7 +274,7 @@ function MaverickDeals() {
                                             setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Type", "==", 'Office')));
                                         }
                                         setType('Office');
-                                        setFinishing('All')
+                                        setFinshing('All')
                                     } else if (event.target.value === 'Retail') {
                                         if (sale === 'All') {
                                             setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Retail')));
@@ -267,7 +284,7 @@ function MaverickDeals() {
                                             setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Type", "==", 'Retail')));
                                         }
                                         setType('Retail');
-                                        setFinishing('All')
+                                        setFinshing('All')
                                     } else if (event.target.value === 'Villa') {
                                         if (sale === 'All') {
                                             setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Villa')));
@@ -277,7 +294,7 @@ function MaverickDeals() {
                                             setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Type", "==", 'Villa')));
                                         }
                                         setType('Villa');
-                                        setFinishing('All')
+                                        setFinshing('All')
                                     }
                                 }}
                             >
@@ -301,11 +318,11 @@ function MaverickDeals() {
                             </Select>
                         </FormControl>
                         <FormControl sx={{ width: '200px' }}>
-                            <InputLabel id="Finishing ">Finishing</InputLabel>
+                            <InputLabel id="Finshing ">Finshing</InputLabel>
                             <Select
-                                labelId="demo-simple-select-labelFinishing "
-                                id="demo-simple-selectFinishing "
-                                value={Finishing}
+                                labelId="demo-simple-select-labelFinshing "
+                                id="demo-simple-selectFinshing "
+                                value={Finshing}
                                 label="Choose"
                                 onChange={(event) => {
                                     if (event.target.value === 'All') {
@@ -418,229 +435,229 @@ function MaverickDeals() {
                                                 setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Type", "==", 'Villa')));
                                             }
                                         }
-                                        setFinishing('All')
-                                    } else if (event.target.value === 'Finished') {
+                                        setFinshing('All')
+                                    } else if (event.target.value === 'Finshed') {
                                         if (sale === 'All') {
                                             if (type === 'All') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Finsh", "==", 'Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Finsh", "==", 'Finshed')));
                                             } else if (type === 'Apartment') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Apartment'), where("Finsh", "==", 'Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Apartment'), where("Finsh", "==", 'Finshed')));
                                             } else if (type === 'Duplex') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Duplex'), where("Finsh", "==", 'Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Duplex'), where("Finsh", "==", 'Finshed')));
                                             } else if (type === 'Studio') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Studio'), where("Finsh", "==", 'Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Studio'), where("Finsh", "==", 'Finshed')));
                                             } else if (type === 'Penthouse') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Penthouse'), where("Finsh", "==", 'Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Penthouse'), where("Finsh", "==", 'Finshed')));
                                             } else if (type === 'Family house') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Family house'), where("Finsh", "==", 'Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Family house'), where("Finsh", "==", 'Finshed')));
                                             } else if (type === 'Standalone') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Standalone'), where("Finsh", "==", 'Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Standalone'), where("Finsh", "==", 'Finshed')));
                                             } else if (type === 'Penthouse') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Penthouse'), where("Finsh", "==", 'Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Penthouse'), where("Finsh", "==", 'Finshed')));
                                             } else if (type === 'Family house') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Family house'), where("Finsh", "==", 'Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Family house'), where("Finsh", "==", 'Finshed')));
                                             } else if (type === 'Standalone') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Standalone'), where("Finsh", "==", 'Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Standalone'), where("Finsh", "==", 'Finshed')));
                                             } else if (type === 'Twin house') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Twin house'), where("Finsh", "==", 'Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Twin house'), where("Finsh", "==", 'Finshed')));
                                             } else if (type === 'One storey Villa') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'One storey Villa'), where("Finsh", "==", 'Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'One storey Villa'), where("Finsh", "==", 'Finshed')));
                                             } else if (type === 'Chalet') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Chalet'), where("Finsh", "==", 'Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Chalet'), where("Finsh", "==", 'Finshed')));
                                             } else if (type === 'Townhouse') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Townhouse'), where("Finsh", "==", 'Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Townhouse'), where("Finsh", "==", 'Finshed')));
                                             } else if (type === 'Cabin') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Cabin'), where("Finsh", "==", 'Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Cabin'), where("Finsh", "==", 'Finshed')));
                                             } else if (type === 'Clinic') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Clinic'), where("Finsh", "==", 'Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Clinic'), where("Finsh", "==", 'Finshed')));
                                             } else if (type === 'Office') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Office'), where("Finsh", "==", 'Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Office'), where("Finsh", "==", 'Finshed')));
                                             } else if (type === 'Retail') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Retail'), where("Finsh", "==", 'Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Retail'), where("Finsh", "==", 'Finshed')));
                                             } else if (type === 'Villa') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Villa'), where("Finsh", "==", 'Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Villa'), where("Finsh", "==", 'Finshed')));
                                             }
                                         } else if (sale === 'Resale') {
                                             if (type === 'All') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Resale'), where("Finsh", "==", 'Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Resale'), where("Finsh", "==", 'Finshed')));
                                             } else if (type === 'Apartment') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Resale'), where("Type", "==", 'Apartment'), where("Finsh", "==", 'Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Resale'), where("Type", "==", 'Apartment'), where("Finsh", "==", 'Finshed')));
                                             } else if (type === 'Duplex') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Resale'), where("Type", "==", 'Duplex'), where("Finsh", "==", 'Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Resale'), where("Type", "==", 'Duplex'), where("Finsh", "==", 'Finshed')));
                                             } else if (type === 'Studio') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Resale'), where("Type", "==", 'Studio'), where("Finsh", "==", 'Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Resale'), where("Type", "==", 'Studio'), where("Finsh", "==", 'Finshed')));
                                             } else if (type === 'Penthouse') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Resale'), where("Type", "==", 'Penthouse'), where("Finsh", "==", 'Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Resale'), where("Type", "==", 'Penthouse'), where("Finsh", "==", 'Finshed')));
                                             } else if (type === 'Family house') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Resale'), where("Type", "==", 'Family house'), where("Finsh", "==", 'Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Resale'), where("Type", "==", 'Family house'), where("Finsh", "==", 'Finshed')));
                                             } else if (type === 'Standalone') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Resale'), where("Type", "==", 'Standalone'), where("Finsh", "==", 'Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Resale'), where("Type", "==", 'Standalone'), where("Finsh", "==", 'Finshed')));
                                             } else if (type === 'Twin house') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Resale'), where("Type", "==", 'Twin house'), where("Finsh", "==", 'Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Resale'), where("Type", "==", 'Twin house'), where("Finsh", "==", 'Finshed')));
                                             } else if (type === 'One storey Villa') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Resale'), where("Type", "==", 'One storey Villa'), where("Finsh", "==", 'Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Resale'), where("Type", "==", 'One storey Villa'), where("Finsh", "==", 'Finshed')));
                                             } else if (type === 'Chalet') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Resale'), where("Type", "==", 'Chalet'), where("Finsh", "==", 'Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Resale'), where("Type", "==", 'Chalet'), where("Finsh", "==", 'Finshed')));
                                             } else if (type === 'Townhouse') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Resale'), where("Type", "==", 'Townhouse'), where("Finsh", "==", 'Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Resale'), where("Type", "==", 'Townhouse'), where("Finsh", "==", 'Finshed')));
                                             } else if (type === 'Cabin') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Resale'), where("Type", "==", 'Cabin'), where("Finsh", "==", 'Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Resale'), where("Type", "==", 'Cabin'), where("Finsh", "==", 'Finshed')));
                                             } else if (type === 'Clinic') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Resale'), where("Type", "==", 'Clinic'), where("Finsh", "==", 'Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Resale'), where("Type", "==", 'Clinic'), where("Finsh", "==", 'Finshed')));
                                             } else if (type === 'Office') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Resale'), where("Type", "==", 'Office'), where("Finsh", "==", 'Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Resale'), where("Type", "==", 'Office'), where("Finsh", "==", 'Finshed')));
                                             } else if (type === 'Retail') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Resale'), where("Type", "==", 'Retail'), where("Finsh", "==", 'Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Resale'), where("Type", "==", 'Retail'), where("Finsh", "==", 'Finshed')));
                                             } else if (type === 'Villa') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Resale'), where("Type", "==", 'Villa'), where("Finsh", "==", 'Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Resale'), where("Type", "==", 'Villa'), where("Finsh", "==", 'Finshed')));
                                             }
                                         } else if (sale === 'Rent') {
                                             if (type === 'All') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Finsh", "==", 'Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Finsh", "==", 'Finshed')));
                                             } else if (type === 'Apartment') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Type", "==", 'Apartment'), where("Finsh", "==", 'Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Type", "==", 'Apartment'), where("Finsh", "==", 'Finshed')));
                                             } else if (type === 'Duplex') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Type", "==", 'Duplex'), where("Finsh", "==", 'Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Type", "==", 'Duplex'), where("Finsh", "==", 'Finshed')));
                                             } else if (type === 'Studio') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Type", "==", 'Studio'), where("Finsh", "==", 'Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Type", "==", 'Studio'), where("Finsh", "==", 'Finshed')));
                                             } else if (type === 'Penthouse') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Type", "==", 'Penthouse'), where("Finsh", "==", 'Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Type", "==", 'Penthouse'), where("Finsh", "==", 'Finshed')));
                                             } else if (type === 'Family house') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Type", "==", 'Family house'), where("Finsh", "==", 'Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Type", "==", 'Family house'), where("Finsh", "==", 'Finshed')));
                                             } else if (type === 'Standalone') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Type", "==", 'Standalone'), where("Finsh", "==", 'Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Type", "==", 'Standalone'), where("Finsh", "==", 'Finshed')));
                                             } else if (type === 'Twin house') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Type", "==", 'Twin house'), where("Finsh", "==", 'Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Type", "==", 'Twin house'), where("Finsh", "==", 'Finshed')));
                                             } else if (type === 'One storey Villa') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Type", "==", 'One storey Villa'), where("Finsh", "==", 'Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Type", "==", 'One storey Villa'), where("Finsh", "==", 'Finshed')));
                                             } else if (type === 'Chalet') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Type", "==", 'Chalet'), where("Finsh", "==", 'Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Type", "==", 'Chalet'), where("Finsh", "==", 'Finshed')));
                                             } else if (type === 'Townhouse') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Type", "==", 'Townhouse'), where("Finsh", "==", 'Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Type", "==", 'Townhouse'), where("Finsh", "==", 'Finshed')));
                                             } else if (type === 'Cabin') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Type", "==", 'Cabin'), where("Finsh", "==", 'Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Type", "==", 'Cabin'), where("Finsh", "==", 'Finshed')));
                                             } else if (type === 'Clinic') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Type", "==", 'Clinic'), where("Finsh", "==", 'Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Type", "==", 'Clinic'), where("Finsh", "==", 'Finshed')));
                                             } else if (type === 'Office') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Type", "==", 'Office'), where("Finsh", "==", 'Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Type", "==", 'Office'), where("Finsh", "==", 'Finshed')));
                                             } else if (type === 'Retail') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Type", "==", 'Retail'), where("Finsh", "==", 'Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Type", "==", 'Retail'), where("Finsh", "==", 'Finshed')));
                                             } else if (type === 'Villa') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Type", "==", 'Villa'), where("Finsh", "==", 'Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Type", "==", 'Villa'), where("Finsh", "==", 'Finshed')));
                                             }
                                         }
-                                        setFinishing('Finished')
-                                    } else if (event.target.value === 'Semi Finished') {
+                                        setFinshing('Finshed')
+                                    } else if (event.target.value === 'Semi Finshed') {
                                         if (sale === 'All') {
                                             if (type === 'All') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Finsh", "==", 'Semi Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Finsh", "==", 'Semi Finshed')));
                                             } else if (type === 'Apartment') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Apartment'), where("Finsh", "==", 'Semi Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Apartment'), where("Finsh", "==", 'Semi Finshed')));
                                             } else if (type === 'Duplex') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Duplex'), where("Finsh", "==", 'Semi Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Duplex'), where("Finsh", "==", 'Semi Finshed')));
                                             } else if (type === 'Studio') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Studio'), where("Finsh", "==", 'Semi Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Studio'), where("Finsh", "==", 'Semi Finshed')));
                                             } else if (type === 'Penthouse') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Penthouse'), where("Finsh", "==", 'Semi Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Penthouse'), where("Finsh", "==", 'Semi Finshed')));
                                             } else if (type === 'Family house') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Family house'), where("Finsh", "==", 'Semi Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Family house'), where("Finsh", "==", 'Semi Finshed')));
                                             } else if (type === 'Standalone') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Standalone'), where("Finsh", "==", 'Semi Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Standalone'), where("Finsh", "==", 'Semi Finshed')));
                                             } else if (type === 'Penthouse') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Penthouse'), where("Finsh", "==", 'Semi Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Penthouse'), where("Finsh", "==", 'Semi Finshed')));
                                             } else if (type === 'Family house') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Family house'), where("Finsh", "==", 'Semi Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Family house'), where("Finsh", "==", 'Semi Finshed')));
                                             } else if (type === 'Standalone') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Standalone'), where("Finsh", "==", 'Semi Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Standalone'), where("Finsh", "==", 'Semi Finshed')));
                                             } else if (type === 'Twin house') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Twin house'), where("Finsh", "==", 'Semi Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Twin house'), where("Finsh", "==", 'Semi Finshed')));
                                             } else if (type === 'One storey Villa') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'One storey Villa'), where("Finsh", "==", 'Semi Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'One storey Villa'), where("Finsh", "==", 'Semi Finshed')));
                                             } else if (type === 'Chalet') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Chalet'), where("Finsh", "==", 'Semi Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Chalet'), where("Finsh", "==", 'Semi Finshed')));
                                             } else if (type === 'Townhouse') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Townhouse'), where("Finsh", "==", 'Semi Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Townhouse'), where("Finsh", "==", 'Semi Finshed')));
                                             } else if (type === 'Cabin') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Cabin'), where("Finsh", "==", 'Semi Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Cabin'), where("Finsh", "==", 'Semi Finshed')));
                                             } else if (type === 'Clinic') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Clinic'), where("Finsh", "==", 'Semi Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Clinic'), where("Finsh", "==", 'Semi Finshed')));
                                             } else if (type === 'Office') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Office'), where("Finsh", "==", 'Semi Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Office'), where("Finsh", "==", 'Semi Finshed')));
                                             } else if (type === 'Retail') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Retail'), where("Finsh", "==", 'Semi Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Retail'), where("Finsh", "==", 'Semi Finshed')));
                                             } else if (type === 'Villa') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Villa'), where("Finsh", "==", 'Semi Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Type", "==", 'Villa'), where("Finsh", "==", 'Semi Finshed')));
                                             }
                                         } else if (sale === 'Resale') {
                                             if (type === 'All') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Resale'), where("Finsh", "==", 'Semi Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Resale'), where("Finsh", "==", 'Semi Finshed')));
                                             } else if (type === 'Apartment') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Resale'), where("Type", "==", 'Apartment'), where("Finsh", "==", 'Semi Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Resale'), where("Type", "==", 'Apartment'), where("Finsh", "==", 'Semi Finshed')));
                                             } else if (type === 'Duplex') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Resale'), where("Type", "==", 'Duplex'), where("Finsh", "==", 'Semi Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Resale'), where("Type", "==", 'Duplex'), where("Finsh", "==", 'Semi Finshed')));
                                             } else if (type === 'Studio') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Resale'), where("Type", "==", 'Studio'), where("Finsh", "==", 'Semi Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Resale'), where("Type", "==", 'Studio'), where("Finsh", "==", 'Semi Finshed')));
                                             } else if (type === 'Penthouse') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Resale'), where("Type", "==", 'Penthouse'), where("Finsh", "==", 'Semi Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Resale'), where("Type", "==", 'Penthouse'), where("Finsh", "==", 'Semi Finshed')));
                                             } else if (type === 'Family house') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Resale'), where("Type", "==", 'Family house'), where("Finsh", "==", 'Semi Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Resale'), where("Type", "==", 'Family house'), where("Finsh", "==", 'Semi Finshed')));
                                             } else if (type === 'Standalone') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Resale'), where("Type", "==", 'Standalone'), where("Finsh", "==", 'Semi Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Resale'), where("Type", "==", 'Standalone'), where("Finsh", "==", 'Semi Finshed')));
                                             } else if (type === 'Twin house') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Resale'), where("Type", "==", 'Twin house'), where("Finsh", "==", 'Semi Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Resale'), where("Type", "==", 'Twin house'), where("Finsh", "==", 'Semi Finshed')));
                                             } else if (type === 'One storey Villa') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Resale'), where("Type", "==", 'One storey Villa'), where("Finsh", "==", 'Semi Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Resale'), where("Type", "==", 'One storey Villa'), where("Finsh", "==", 'Semi Finshed')));
                                             } else if (type === 'Chalet') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Resale'), where("Type", "==", 'Chalet'), where("Finsh", "==", 'Semi Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Resale'), where("Type", "==", 'Chalet'), where("Finsh", "==", 'Semi Finshed')));
                                             } else if (type === 'Townhouse') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Resale'), where("Type", "==", 'Townhouse'), where("Finsh", "==", 'Semi Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Resale'), where("Type", "==", 'Townhouse'), where("Finsh", "==", 'Semi Finshed')));
                                             } else if (type === 'Cabin') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Resale'), where("Type", "==", 'Cabin'), where("Finsh", "==", 'Semi Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Resale'), where("Type", "==", 'Cabin'), where("Finsh", "==", 'Semi Finshed')));
                                             } else if (type === 'Clinic') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Resale'), where("Type", "==", 'Clinic'), where("Finsh", "==", 'Semi Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Resale'), where("Type", "==", 'Clinic'), where("Finsh", "==", 'Semi Finshed')));
                                             } else if (type === 'Office') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Resale'), where("Type", "==", 'Office'), where("Finsh", "==", 'Semi Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Resale'), where("Type", "==", 'Office'), where("Finsh", "==", 'Semi Finshed')));
                                             } else if (type === 'Retail') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Resale'), where("Type", "==", 'Retail'), where("Finsh", "==", 'Semi Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Resale'), where("Type", "==", 'Retail'), where("Finsh", "==", 'Semi Finshed')));
                                             } else if (type === 'Villa') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Resale'), where("Type", "==", 'Villa'), where("Finsh", "==", 'Semi Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Resale'), where("Type", "==", 'Villa'), where("Finsh", "==", 'Semi Finshed')));
                                             }
                                         } else if (sale === 'Rent') {
                                             if (type === 'All') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Finsh", "==", 'Semi Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Finsh", "==", 'Semi Finshed')));
                                             } else if (type === 'Apartment') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Type", "==", 'Apartment'), where("Finsh", "==", 'Semi Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Type", "==", 'Apartment'), where("Finsh", "==", 'Semi Finshed')));
                                             } else if (type === 'Duplex') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Type", "==", 'Duplex'), where("Finsh", "==", 'Semi Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Type", "==", 'Duplex'), where("Finsh", "==", 'Semi Finshed')));
                                             } else if (type === 'Studio') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Type", "==", 'Studio'), where("Finsh", "==", 'Semi Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Type", "==", 'Studio'), where("Finsh", "==", 'Semi Finshed')));
                                             } else if (type === 'Penthouse') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Type", "==", 'Penthouse'), where("Finsh", "==", 'Semi Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Type", "==", 'Penthouse'), where("Finsh", "==", 'Semi Finshed')));
                                             } else if (type === 'Family house') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Type", "==", 'Family house'), where("Finsh", "==", 'Semi Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Type", "==", 'Family house'), where("Finsh", "==", 'Semi Finshed')));
                                             } else if (type === 'Standalone') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Type", "==", 'Standalone'), where("Finsh", "==", 'Semi Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Type", "==", 'Standalone'), where("Finsh", "==", 'Semi Finshed')));
                                             } else if (type === 'Twin house') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Type", "==", 'Twin house'), where("Finsh", "==", 'Semi Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Type", "==", 'Twin house'), where("Finsh", "==", 'Semi Finshed')));
                                             } else if (type === 'One storey Villa') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Type", "==", 'One storey Villa'), where("Finsh", "==", 'Semi Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Type", "==", 'One storey Villa'), where("Finsh", "==", 'Semi Finshed')));
                                             } else if (type === 'Chalet') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Type", "==", 'Chalet'), where("Finsh", "==", 'Semi Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Type", "==", 'Chalet'), where("Finsh", "==", 'Semi Finshed')));
                                             } else if (type === 'Townhouse') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Type", "==", 'Townhouse'), where("Finsh", "==", 'Semi Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Type", "==", 'Townhouse'), where("Finsh", "==", 'Semi Finshed')));
                                             } else if (type === 'Cabin') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Type", "==", 'Cabin'), where("Finsh", "==", 'Semi Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Type", "==", 'Cabin'), where("Finsh", "==", 'Semi Finshed')));
                                             } else if (type === 'Clinic') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Type", "==", 'Clinic'), where("Finsh", "==", 'Semi Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Type", "==", 'Clinic'), where("Finsh", "==", 'Semi Finshed')));
                                             } else if (type === 'Office') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Type", "==", 'Office'), where("Finsh", "==", 'Semi Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Type", "==", 'Office'), where("Finsh", "==", 'Semi Finshed')));
                                             } else if (type === 'Retail') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Type", "==", 'Retail'), where("Finsh", "==", 'Semi Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Type", "==", 'Retail'), where("Finsh", "==", 'Semi Finshed')));
                                             } else if (type === 'Villa') {
-                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Type", "==", 'Villa'), where("Finsh", "==", 'Semi Finished')));
+                                                setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Type", "==", 'Villa'), where("Finsh", "==", 'Semi Finshed')));
                                             }
                                         }
-                                        setFinishing('Semi Finished')
+                                        setFinshing('Semi Finshed')
                                     } else if (event.target.value === 'Cor & Shell') {
                                         if (sale === 'All') {
                                             if (type === 'All') {
@@ -751,7 +768,7 @@ function MaverickDeals() {
                                                 setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Type", "==", 'Villa'), where("Finsh", "==", 'Cor & Shell')));
                                             }
                                         }
-                                        setFinishing('Cor & Shell')
+                                        setFinshing('Cor & Shell')
                                     } else if (event.target.value === 'Furnished') {
                                         if (sale === 'All') {
                                             if (type === 'All') {
@@ -862,44 +879,110 @@ function MaverickDeals() {
                                                 setDataHandel(query(collection(db, 'Resell'), where("Sale", "==", 'Rent'), where("Type", "==", 'Villa'), where("Finsh", "==", 'Furnished')));
                                             }
                                         }
-                                        setFinishing('Furnished')
+                                        setFinshing('Furnished')
                                     }
                                 }}
                             >
                                 <MenuItem value='All'>All</MenuItem>
-                                <MenuItem value='Finished'>Finished</MenuItem>
-                                <MenuItem value='Semi Finished'>Semi Finished</MenuItem>
+                                <MenuItem value='Finshed'>Finshed</MenuItem>
+                                <MenuItem value='Semi Finshed'>Semi Finshed</MenuItem>
                                 <MenuItem value='Cor & Shell'>Cor & Shell</MenuItem>
                                 <MenuItem value='Furnished'>Furnished</MenuItem>
                             </Select>
                         </FormControl>
+                    </Stack> */}
+                    <IconButton onClick={() => {
+                        if (filterIcon) {
+                            setFilterIcon(false)
+                        } else {
+                            setFilterIcon(true)
+                        }
+                    }}>
+                        <Tune />
+                    </IconButton>
+                    <Stack sx={{ display: filterIcon ? 'flex' : 'none', justifyContent: 'space-between', flexDirection: 'row', flexWrap: 'wrap' }}>
+                        <FormGroup>
+                            <FormLabel >Finsh</FormLabel>
+                            {uniqueFinsh.map((finsh, index) => (
+                                <FormControlLabel checked={filters.Finsh.includes(finsh)} key={index} onChange={(e) => handleCheckboxChange(e, 'Finsh')}
+                                    control={<Checkbox name={finsh} />} label={finsh} />
+                            ))}
+                        </FormGroup>
+
+                        <FormGroup>
+                            <FormLabel >Location</FormLabel>
+                            {uniqueLocation.map((location, index) => (
+                                <FormControlLabel checked={filters.Location.includes(location)} key={index} onChange={(e) => handleCheckboxChange(e, 'Location')}
+                                    control={<Checkbox name={location} />} label={location} />
+                            ))}
+                        </FormGroup>
+
+                        <FormGroup>
+                            <FormLabel >Sale</FormLabel>
+                            {uniqueSale.map((sale, index) => (
+                                <FormControlLabel checked={filters.Sale.includes(sale)} key={index} onChange={(e) => handleCheckboxChange(e, 'Sale')}
+                                    control={<Checkbox name={sale} />} label={sale} />
+                            ))}
+                        </FormGroup>
+
+                        <FormGroup>
+                            <FormLabel >Type</FormLabel>
+                            {uniqueType.map((type, index) => (
+                                <FormControlLabel checked={filters.Type.includes(type)} key={index} onChange={(e) => handleCheckboxChange(e, 'Type')}
+                                    control={<Checkbox name={type} />} label={type} />
+                            ))}
+                        </FormGroup>
+
+                        <FormGroup>
+                            <FormLabel >Compound Name</FormLabel>
+                            {uniqueCompoundName.map((compoundName, index) => (
+                                <FormControlLabel checked={filters.compoundName.includes(compoundName)} key={index} onChange={(e) => handleCheckboxChange(e, 'compoundName')}
+                                    control={<Checkbox name={compoundName} />} label={compoundName} />
+                            ))}
+                        </FormGroup>
+
+                        <FormGroup>
+                            <FormLabel >Delivery</FormLabel>
+                            {uniqueDelivery.map((delivery, index) => (
+                                <FormControlLabel checked={filters.delivery.includes(delivery)} key={index} onChange={(e) => handleCheckboxChange(e, 'delivery')}
+                                    control={<Checkbox name={delivery} />} label={delivery} />
+                            ))}
+                        </FormGroup>
+
+                        <FormGroup>
+                            <FormLabel >Developer Name</FormLabel>
+                            {uniqueDevname.map((devname, index) => (
+                                <FormControlLabel checked={filters.devname.includes(devname)} key={index} onChange={(e) => handleCheckboxChange(e, 'devname')}
+                                    control={<Checkbox name={devname} />} label={devname} />
+                            ))}
+                        </FormGroup>
                     </Stack>
                     <Row>
-                        {value.docs.map((item, index) => {
+                        {filteredData.map((item, index) => {
                             return (
                                 <Col className=" col-sm-6 col-12 col-lg-4 col-md-6" style={{ marginBottom: '15px', position: 'relative', maxHeight: '100%' }} key={index}>
-                                        <Card sx={{ position: 'relative', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-                                        <Link to={`/maverickdeals/${item.data().id}`} style={{ textDecoration: 'none' }}>
+                                    <Card sx={{ position: 'relative', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                                        <Link to={`/maverickdeals/${item.id}`} style={{ textDecoration: 'none' }}>
                                             <Stack>
                                                 <Box sx={{ height: '215px' }}>
-                                                    <img style={{ height: '100%', width: '100%', objectFit: 'cover' }} src={item.data().img[0]} alt='' />
+                                                    <img style={{ height: '100%', width: '100%', objectFit: 'cover' }} src={item.img[0]} alt='' />
                                                 </Box>
                                                 <CardContent style={{ padding: '15px 15px 0 15px' }}>
                                                     <Stack>
                                                         <Typography sx={{ lineHeight: '1.3', fontWeight: 'bold' }} variant="h6">
-                                                            {`${item.data().imgtext} ${item.data().compoundName}`}
+                                                            {`${item.imgtext} ${item.compoundName}`}
                                                         </Typography>
                                                         <Typography variant="caption" sx={{ color: " rgb(100, 100, 100) ", lineHeight: '1', padding: '0 0 0 5px' }}>
-                                                            {item.data().Location}
+                                                            {item.Location}
                                                         </Typography>
                                                     </Stack>
                                                     <Typography sx={{ paddingTop: '10px' }}>
                                                         <img style={{ width: '25px', height: '25px' }} src={img} alt='' />
-                                                        {` ${item.data().delivery}`}
+                                                        {` ${item.delivery}`}
                                                     </Typography>
                                                     <Stack sx={{ flexDirection: 'row', margin: '16px 0', gap: '0px 8px' }}>
                                                         <div className='svgicon'>
-                                                            <p style={{ fontWeight: 'bold' }}>{item.data().Bed}</p>
+                                                            <p style={{ fontWeight: 'bold' }}>{item.Bed}</p>
                                                             <svg width="23" height="16" viewBox="0 0 23 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                                 <path fill="#666666" stroke="#666666" strokeWidth="0.25"
                                                                     d="M20.5811 14.1659C20.5691 14.3825 20.545 14.563 20.545 14.7435C20.5209 15.5617 20.3525 15.7542 19.6305 15.7783C18.5476 15.8144 18.355 15.6941 18.2949 14.8037C18.2708 14.3705 18.1144 14.2261 17.6812 14.2261C13.5058 14.2381 9.34251 14.2381 5.16714 14.2261C4.69786 14.2261 4.5294 14.3584 4.54144 14.8398C4.55347 15.5497 4.31281 15.7542 3.60288 15.7783C3.44646 15.7783 3.278 15.7783 3.12157 15.7783C2.30334 15.7663 2.11082 15.5738 2.09879 14.7315C2.09879 14.575 2.08675 14.4186 2.07472 14.2261C1.94236 14.202 1.83407 14.1659 1.72577 14.1659C0.727052 14.1298 0.570627 13.9854 0.570627 13.0108C0.570627 11.988 0.522495 10.9652 0.618758 9.94242C0.84738 7.6562 2.4357 6.40479 4.70989 6.65748C4.81819 6.66951 4.93852 6.65748 4.98665 6.65748C4.98665 5.06916 4.98665 3.541 4.98665 2.0008C4.98665 1.90454 4.96258 1.79625 4.95055 1.69998C4.86632 0.845659 5.01071 0.76143 5.86504 0.773463C8.35582 0.809561 10.8346 0.809561 13.3133 0.773463C14.1436 0.76143 14.312 0.89379 14.1797 1.73608C14.1195 2.1091 14.0834 2.47008 14.0232 2.86716C14.9498 2.86716 15.8041 2.91529 16.6584 2.85513C17.5007 2.79497 17.6331 2.89123 17.5127 3.70946C17.4887 3.86588 17.4646 4.02231 17.4646 4.19077C17.4646 4.9729 17.4646 5.74299 17.4646 6.60935C17.8015 6.60935 18.1024 6.62138 18.3911 6.60935C20.2682 6.50106 21.7603 7.99312 21.9167 9.68974C22.025 10.9171 22.001 12.1685 21.9889 13.4079C21.9889 13.8651 21.7122 14.1539 21.2188 14.1539C21.0143 14.1659 20.8218 14.1659 20.5811 14.1659ZM20.0517 12.6739C20.0517 11.988 20.0276 11.3142 20.0637 10.6283C20.0878 10.171 19.8832 10.0507 19.4621 10.0507C14.0353 10.0628 8.60851 10.0628 3.18173 10.0507C2.74856 10.0507 2.56806 10.1831 2.56806 10.6283C2.5801 11.988 2.59213 13.3597 2.56806 14.7194C2.55603 15.2609 2.84482 15.309 3.25393 15.2729C3.62695 15.2489 4.07216 15.4294 4.07216 14.7435C4.07216 13.8892 4.26468 13.7327 5.11901 13.7327C9.29438 13.7327 13.4577 13.7327 17.6331 13.7327C18.5837 13.7327 18.7281 13.841 18.7642 14.7796C18.7882 15.3211 19.1131 15.2609 19.45 15.2729C19.823 15.285 20.0757 15.2368 20.0517 14.7676C20.0276 14.0817 20.0517 13.3838 20.0517 12.6739ZM21.5798 13.6605C21.4956 12.1685 21.5437 10.7005 21.291 9.28062C21.0504 7.92092 19.823 7.05456 18.5355 7.04253C17.3443 7.0305 16.153 7.0305 14.9618 7.04253C12.459 7.06659 9.96821 7.11473 7.4654 7.12676C6.57497 7.12676 5.67251 7.00643 4.78209 7.06659C3.99996 7.12676 3.15767 7.22302 2.48383 7.57197C1.54528 8.05328 1.13617 9.02793 1.076 10.0868C1.02787 11.0013 1.05194 11.9278 1.05194 12.8544C1.05194 13.7688 1.076 13.7929 2.07472 13.6244C2.07472 12.6618 2.07472 11.6872 2.07472 10.7125C2.07472 9.79803 2.26725 9.61754 3.15767 9.61754C5.25137 9.61754 7.34507 9.61754 9.4508 9.61754C12.7718 9.61754 16.0929 9.61754 19.4139 9.61754C20.2923 9.61754 20.5209 9.84616 20.5209 10.7246C20.5209 11.6992 20.5209 12.6859 20.5209 13.6846C20.8819 13.6605 21.1466 13.6605 21.5798 13.6605ZM11.5565 6.63342C11.5565 5.5625 11.5926 4.56378 11.5445 3.5771C11.5084 2.96342 11.5926 2.807 12.2063 2.8431C12.6395 2.86716 13.0606 2.91529 13.4938 2.95139C13.578 2.34975 13.6623 1.84438 13.7345 1.31494C10.9669 1.31494 8.22346 1.31494 5.50406 1.31494C5.50406 3.05969 5.50406 4.8285 5.50406 6.63342C7.57369 6.63342 9.5591 6.63342 11.5565 6.63342ZM16.9833 6.58528C16.9833 5.45421 16.9833 4.40736 16.9833 3.37254C15.3228 3.37254 13.6984 3.37254 12.11 3.37254C12.11 4.45549 12.11 5.50234 12.11 6.58528C13.7465 6.58528 15.3228 6.58528 16.9833 6.58528ZM12.4831 6.8861V6.89814C13.2892 6.89814 14.0954 6.89814 14.9016 6.89814V6.8861C14.0954 6.8861 13.2892 6.8861 12.4831 6.8861Z"
@@ -909,7 +992,7 @@ function MaverickDeals() {
                                                         </div>
                                                         <div className='svgicon'>
                                                             <p style={{ fontWeight: 'bold' }}>
-                                                                {item.data().Bath}
+                                                                {item.Bath}
                                                             </p>
                                                             <svg width="22" height="21" viewBox="0 0 22 21" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                                 <path
@@ -926,25 +1009,25 @@ function MaverickDeals() {
                                                                 </path>
                                                                 <rect x="0.682617" y="0.548828" width="15.9014" height="15.9014" rx="2.5" stroke="#313131"></rect>
                                                             </svg>
-                                                            <p style={{ margin: '0 0 3px', fontWeight: 'bold' }}>{item.data().Area}
+                                                            <p style={{ margin: '0 0 3px', fontWeight: 'bold' }}>{item.Area}
                                                                 &nbsp;m²</p>
                                                         </div>
                                                     </Stack >
                                                     <Box sx={{ position: 'absolute', top: '16px', backgroundColor: 'rgb(255 145 77)', color: 'white', borderRadius: '50%', width: '50px', height: '50px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                                                         <p style={{ fontWeight: 'bold', color: '#1e4164' }}>
-                                                            {`${item.data().Sale}`}
+                                                            {`${item.Sale}`}
                                                         </p>
                                                     </Box>
-                                                    {item.data().sold === 'SOLD OUT' &&
+                                                    {item.sold === 'SOLD OUT' &&
                                                         <Box sx={{ position: 'absolute', top: '20px', right: '5px', backgroundColor: 'white', color: 'red', borderRadius: ' 5px ', border: '2px solid red', width: '100px', height: '30px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                                                             <p style={{ fontWeight: 'bold', color: 'white', backgroundColor: 'red', width: '95%', textAlign: 'center' }}>
-                                                                {`${item.data().sold}`}
+                                                                {`${item.sold}`}
                                                             </p>
                                                         </Box>
 
                                                     }
                                                     <Typography sx={{ fontWeight: 'bold' }}>
-                                                        {`${item.data().price} ${item.data().monyType === 'dollar' ? "$" : "EGP"}`}
+                                                        {`${Intl.NumberFormat('en-US').format(item.price)} ${item.monyType === 'dollar' ? "$" : "EGP"}`}
                                                     </Typography>
                                                 </CardContent>
                                             </Stack>
@@ -952,39 +1035,35 @@ function MaverickDeals() {
 
                                         <Stack sx={{ padding: '0 10px 10px 0', flexDirection: 'row', justifyContent: 'space-between' }}>
                                             <Stack sx={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                                                <Checkbox checked={localStorage.getItem(item.data().id) === 'true' ? true : false} aria-label='like' icon={<FavoriteBorder />} checkedIcon={<Favorite sx={{ color: 'red' }} />}
+                                                <Checkbox checked={localStorage.getItem(item.id) === 'true' ? true : false} aria-label='like' icon={<FavoriteBorder />} checkedIcon={<Favorite sx={{ color: 'red' }} />}
                                                     onChange={async (e) => {
                                                         if (e.target.checked) {
-                                                            localStorage.setItem(item.data().id, true);
-                                                            localStorage.setItem(item.data().refNum, item.data().id);
+                                                            localStorage.setItem(item.id, true);
+                                                            localStorage.setItem(item.refNum, item.id);
                                                             try {
                                                                 await updateDoc(doc(db, 'Resell', item.data().id), {
-                                                                    like: item.data().like + 1
+                                                                    like: item.like + 1
                                                                 });
                                                             } catch (er) {
                                                                 console.log(er)
                                                             }
                                                         } else {
-                                                            localStorage.removeItem(item.data().id);
-                                                            localStorage.removeItem(item.data().refNum)
-                                                            await updateDoc(doc(db, 'Resell', item.data().id), {
-                                                                like: item.data().like - 1
+                                                            localStorage.removeItem(item.id);
+                                                            localStorage.removeItem(item.refNum)
+                                                            await updateDoc(doc(db, 'Resell', item.id), {
+                                                                like: item.like - 1
                                                             });
                                                         }
                                                     }} />
-                                                {/* <Typography>
-                                                    {item.data().like}
-                                                </Typography> */}
                                             </Stack>
-                                            <ContactUsIcon sectionName='Maverick-Deals' sectionData={item.data()} />
+                                            <ContactUsIcon sectionName='Maverick-Deals' sectionData={item} />
                                         </Stack>
                                     </Card>
                                 </Col>
                             )
                         })}
-                    </Row> 
+                    </Row>
                 </Container>
-
             </Box>
         )
     }
@@ -995,7 +1074,6 @@ function MaverickDeals() {
             </div>
         )
     }
-
 }
 
 export default MaverickDeals
