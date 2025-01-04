@@ -16,6 +16,12 @@ function MaverickDeals() {
     const [data, setData] = useState([]);
     const [filterIcon, setFilterIcon] = useState(false);
     const [filteredData, setFilteredData] = useState(data);
+    const [areaSort1, setAreaSort1] = useState(false);
+    const [areaSort2, setAreaSort2] = useState(false);
+    const [priceSort1, setPriceSort1] = useState(false);
+    const [priceSort2, setPriceSort2] = useState(false);
+
+
     useEffect(() => {
         let firebasedata = [];
         if (value) {
@@ -1050,13 +1056,13 @@ function MaverickDeals() {
                         <Close color='error' />
                     </Button>
                     <Stack >
-                        <FormGroup >
-                            <Typography variant='body1' sx={{ fontWeight: 'bold' }}>Finsh</Typography>
-                            <Stack sx={{ flexDirection: 'row', flexWrap: 'wrap', padding: '5px' }}>
-                                {uniqueFinsh.map((finsh, index) => (
-                                    <FormControlLabel sx={{ border: '1px solid rgb(224, 224, 224)', borderRadius: '30px', padding: '5px', margin: '5px', backgroundColor: filters.Finsh.includes(finsh) && '#015c9a', color: filters.Finsh.includes(finsh) && 'white' }} checked={filters.Finsh.includes(finsh)} key={index}
-                                        onChange={(e) => handleCheckboxChange(e, 'Finsh')}
-                                        control={<Checkbox sx={{ display: 'none' }} name={finsh} />} label={finsh} />
+                        <FormGroup>
+                            <Typography variant='body1' sx={{ fontWeight: 'bold' }}>Owner Ship</Typography>
+                            <Stack sx={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+                                {uniqueSale.map((sale, index) => (
+                                    <FormControlLabel sx={{ border: '1px solid rgb(224, 224, 224)', borderRadius: '30px', padding: '5px', margin: '5px', backgroundColor: filters.Sale.includes(sale) && '#015c9a', color: filters.Sale.includes(sale) && 'white' }}
+                                        checked={filters.Sale.includes(sale)} key={index} onChange={(e) => handleCheckboxChange(e, 'Sale')}
+                                        control={<Checkbox sx={{ display: 'none' }} name={sale} />} label={sale} />
                                 ))}
                             </Stack>
                         </FormGroup>
@@ -1073,15 +1079,16 @@ function MaverickDeals() {
                         </FormGroup>
                         <Divider sx={{ borderColor: 'rgb(1, 92, 154)', margin: '10px 0' }} />
                         <FormGroup>
-                            <Typography variant='body1' sx={{ fontWeight: 'bold' }}>Sale</Typography>
+                            <Typography variant='body1' sx={{ fontWeight: 'bold' }}>Developer Name</Typography>
                             <Stack sx={{ flexDirection: 'row', flexWrap: 'wrap' }}>
-                                {uniqueSale.map((sale, index) => (
-                                    <FormControlLabel sx={{ border: '1px solid rgb(224, 224, 224)', borderRadius: '30px', padding: '5px', margin: '5px', backgroundColor: filters.Sale.includes(sale) && '#015c9a', color: filters.Sale.includes(sale) && 'white' }}
-                                        checked={filters.Sale.includes(sale)} key={index} onChange={(e) => handleCheckboxChange(e, 'Sale')}
-                                        control={<Checkbox sx={{ display: 'none' }} name={sale} />} label={sale} />
+                                {uniqueDevname.map((devname, index) => (
+                                    <FormControlLabel sx={{ border: '1px solid rgb(224, 224, 224)', borderRadius: '30px', padding: '5px', margin: '5px', backgroundColor: filters.devname.includes(devname) && '#015c9a', color: filters.devname.includes(devname) && 'white' }}
+                                        checked={filters.devname.includes(devname)} key={index} onChange={(e) => handleCheckboxChange(e, 'devname')}
+                                        control={<Checkbox sx={{ display: 'none' }} name={devname} />} label={devname} />
                                 ))}
                             </Stack>
                         </FormGroup>
+
                         <Divider sx={{ borderColor: 'rgb(1, 92, 154)', margin: '10px 0' }} />
 
                         <FormGroup>
@@ -1095,19 +1102,6 @@ function MaverickDeals() {
                             </Stack>
                         </FormGroup>
                         <Divider sx={{ borderColor: 'rgb(1, 92, 154)', margin: '10px 0' }} />
-
-                        <FormGroup>
-                            <Typography variant='body1' sx={{ fontWeight: 'bold' }}>Compound Name</Typography>
-                            <Stack sx={{ flexDirection: 'row', flexWrap: 'wrap' }}>
-                                {uniqueCompoundName.map((compoundName, index) => (
-                                    <FormControlLabel sx={{ border: '1px solid rgb(224, 224, 224)', borderRadius: '30px', padding: '5px', margin: '5px', backgroundColor: filters.compoundName.includes(compoundName) && '#015c9a', color: filters.compoundName.includes(compoundName) && 'white' }}
-                                        checked={filters.compoundName.includes(compoundName)} key={index} onChange={(e) => handleCheckboxChange(e, 'compoundName')}
-                                        control={<Checkbox sx={{ display: 'none' }} name={compoundName} />} label={compoundName} />
-                                ))}
-                            </Stack>
-                        </FormGroup>
-                        <Divider sx={{ borderColor: 'rgb(1, 92, 154)', margin: '10px 0' }} />
-
                         <FormGroup>
                             <Typography variant='body1' sx={{ fontWeight: 'bold' }}>Delivery</Typography>
                             <Stack sx={{ flexDirection: 'row', flexWrap: 'wrap' }}>
@@ -1120,29 +1114,99 @@ function MaverickDeals() {
                         </FormGroup>
                         <Divider sx={{ borderColor: 'rgb(1, 92, 154)', margin: '10px 0' }} />
 
-                        <FormGroup>
-                            <Typography variant='body1' sx={{ fontWeight: 'bold' }}>Developer Name</Typography>
-                            <Stack sx={{ flexDirection: 'row', flexWrap: 'wrap' }}>
-                                {uniqueDevname.map((devname, index) => (
-                                    <FormControlLabel sx={{ border: '1px solid rgb(224, 224, 224)', borderRadius: '30px', padding: '5px', margin: '5px', backgroundColor: filters.devname.includes(devname) && '#015c9a', color: filters.devname.includes(devname) && 'white' }}
-                                        checked={filters.devname.includes(devname)} key={index} onChange={(e) => handleCheckboxChange(e, 'devname')}
-                                        control={<Checkbox sx={{ display: 'none' }} name={devname} />} label={devname} />
+                        <FormGroup >
+                            <Typography variant='body1' sx={{ fontWeight: 'bold' }}>Finshing</Typography>
+                            <Stack sx={{ flexDirection: 'row', flexWrap: 'wrap', padding: '5px' }}>
+                                {uniqueFinsh.map((finsh, index) => (
+                                    <FormControlLabel sx={{ border: '1px solid rgb(224, 224, 224)', borderRadius: '30px', padding: '5px', margin: '5px', backgroundColor: filters.Finsh.includes(finsh) && '#015c9a', color: filters.Finsh.includes(finsh) && 'white' }} checked={filters.Finsh.includes(finsh)} key={index}
+                                        onChange={(e) => handleCheckboxChange(e, 'Finsh')}
+                                        control={<Checkbox sx={{ display: 'none' }} name={finsh} />} label={finsh} />
                                 ))}
                             </Stack>
                         </FormGroup>
+
+                        <Divider sx={{ borderColor: 'rgb(1, 92, 154)', margin: '10px 0' }} />
+                        <FormGroup>
+                            <Typography variant='body1' sx={{ fontWeight: 'bold' }}>Compound Name</Typography>
+                            <Stack sx={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+                                {uniqueCompoundName.map((compoundName, index) => (
+                                    <FormControlLabel sx={{ border: '1px solid rgb(224, 224, 224)', borderRadius: '30px', padding: '5px', margin: '5px', backgroundColor: filters.compoundName.includes(compoundName) && '#015c9a', color: filters.compoundName.includes(compoundName) && 'white' }}
+                                        checked={filters.compoundName.includes(compoundName)} key={index} onChange={(e) => handleCheckboxChange(e, 'compoundName')}
+                                        control={<Checkbox sx={{ display: 'none' }} name={compoundName} />} label={compoundName} />
+                                ))}
+                            </Stack>
+                        </FormGroup>
+
                         <Divider sx={{ borderColor: 'rgb(1, 92, 154)', margin: '10px 0' }} />
 
-                        <Stack sx={{ width: 'fit-content', flexDirection: 'row' }} gap={2}>
-                            <Stack gap={2}>
-                                <Typography variant='body1' sx={{ fontWeight: 'bold' }}>Sort Area</Typography>
-                                <Button variant='contained' onClick={() => sortByArea('asc')}>ترتيب تصاعدي</Button>
-                                <Button variant='contained' onClick={() => sortByArea('desc')}>ترتيب تنازلي</Button>
+                        <Typography variant='body1' sx={{ fontWeight: 'bold', color: 'rgb(255 145 77)' }}>Sort</Typography>
+                        <Stack gap={2} sx={{ width: '60%' }}>
+                            <Typography variant='body1' sx={{ fontWeight: 'bold' }}>Area</Typography>
+                            <Button variant='text' sx={{
+                                border: '1px solid rgb(224, 224, 224)', borderRadius: '30px', backgroundColor: areaSort1 && 'rgb(255 145 77)', color: areaSort1 && "white", "&:hover": {
+                                    color: areaSort1 && 'rgb(255 145 77)'
+                                }
+                            }}
+                                onClick={
+                                    () => {
+                                        sortByArea('asc');
+                                        if (areaSort1) {
+                                            setAreaSort1(false)
+                                        } else {
+                                            setAreaSort1(true)
+                                        }
+                                    }
+                                }> From low</Button>
+                            <Button variant='text' sx={{
+                                border: '1px solid rgb(224, 224, 224)', borderRadius: '30px', backgroundColor: areaSort2 && 'rgb(255 145 77)', color: areaSort2 && "white", "&:hover": {
+                                    color: areaSort2 && 'rgb(255 145 77)'
+                                }
+                            }}
+                                onClick={
+                                    () => {
+                                        sortByArea('desc');
+                                        if (areaSort2) {
+                                            setAreaSort2(false)
+                                        } else {
+                                            setAreaSort2(true)
+                                        }
+                                    }
+                                } > From high</Button>
                             </Stack>
-                            <Stack gap={2}>
-                                <Typography variant='body1' sx={{ fontWeight: 'bold' }}>Sort Price</Typography>
-                                <Button variant='contained' onClick={() => sortByPrice('asc')}>ترتيب تصاعدي</Button>
-                                <Button variant='contained' onClick={() => sortByPrice('desc')}>ترتيب تنازلي</Button>
-                            </Stack>
+                        <Divider sx={{ borderColor: 'rgb(1, 92, 154)', margin: '10px 0' }} />
+
+                        <Stack gap={2} sx={{ width: '60%' }}>
+                            <Typography variant='body1' sx={{ fontWeight: 'bold' }}>Price</Typography>
+                            <Button variant='text' sx={{
+                                border: '1px solid rgb(224, 224, 224)', borderRadius: '30px', backgroundColor: priceSort1 && 'rgb(255 145 77)', color: priceSort1 && "white", "&:hover": {
+                                    color: priceSort1 && 'rgb(255 145 77)'
+                                }
+                            }}
+                                onClick={
+                                    () => {
+                                        sortByPrice('asc');
+                                        if (priceSort1) {
+                                            setPriceSort1(false)
+                                        } else {
+                                            setPriceSort1(true)
+                                        }
+                                    }
+                                }> From low</Button>
+                            <Button variant='text' sx={{
+                                border: '1px solid rgb(224, 224, 224)', borderRadius: '30px', backgroundColor: priceSort2 && 'rgb(255 145 77)', color: priceSort2 && "white", "&:hover": {
+                                    color: priceSort2 && 'rgb(255 145 77)'
+                                }
+                            }}
+                                onClick={
+                                    () => {
+                                        sortByPrice('desc');
+                                        if (priceSort2) {
+                                            setPriceSort2(false)
+                                        } else {
+                                            setPriceSort2(true)
+                                        }
+                                    }
+                                } > From high</Button>
                         </Stack>
                     </Stack>
                 </Stack>
